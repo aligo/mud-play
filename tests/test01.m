@@ -11,11 +11,14 @@ int main() {
 
   // NSDictionary * json = openAndParseJson(@"fixtures/test03.json");
 
-  // NSLog(@"%@", json);
-
   mud_object_t * object_nil = initMudObjectWithNSObject([NSNull null]);
   NSLog(@"object_nil should be mud_nil: 1 == %d", object_nil->type == MUD_OBJ_TYPE_NIL);
   
+
+  mud_object_t * object_boolean = initMudObjectWithNSObject(@(YES));
+  NSLog(@"object_boolean should be mud_boolean: 1 == %d", object_boolean->type == MUD_OBJ_TYPE_BOOLEAN);
+  NSLog(@"object_boolean value should be: 1 == %d", *(BOOL *)object_boolean->ptr);
+
   mud_object_t * object_number = initMudObjectWithNSObject([NSNumber numberWithInt: 100]);
   NSLog(@"object_number should be mud_number: 1 == %d", object_number->type == MUD_OBJ_TYPE_NUMBER);
   NSLog(@"object_number value should be: 100 == %@", NSDecimalString((NSDecimal *)object_number->ptr, nil));

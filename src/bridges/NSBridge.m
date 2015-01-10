@@ -25,7 +25,12 @@ void MudWarningToNSLog(NSString * formatString, ...) {
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   mud_object_t * ret;
   if ( [ns_object isKindOfClass: [NSNumber class]] ) {
-    ret = mud_number_init([(NSNumber*)ns_object decimalValue]);
+    if ( [ns_object class] == [@(YES) class] ) {
+      NSLog(@"bool");
+      ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
+    } else {
+      ret = mud_number_init([(NSNumber*)ns_object decimalValue]);
+    }
   } else if ( [ns_object isKindOfClass: [NSString class]] ) {
     ret = mud_string_init([(NSString *)ns_object UTF8String]);
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
