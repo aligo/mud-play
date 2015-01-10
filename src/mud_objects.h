@@ -1,3 +1,5 @@
+#import "mud_operators.h"
+
 typedef enum {
   MUD_OBJ_TYPE_EXPR     = 10,
   MUD_OBJ_TYPE_EXPRS    = 20,
@@ -12,14 +14,27 @@ typedef enum {
 
 typedef struct mud_object_s mud_object_t;
 struct mud_object_s {
-  mud_object_type_e type;
-  void *ptr;
+  mud_object_type_e     type;
+  void *                ptr;
+};
+
+typedef struct mud_expr_s mud_expr_t;
+struct mud_expr_s {
+  mud_operator_e        oper;
+  mud_object_t **       args;
+};
+
+typedef struct mud_stack_s mud_stack_t;
+struct mud_stack_s {
+  mud_object_t *        cur;
+  mud_stack_t *         next;
 };
 
 mud_object_t * mud_object_alloc(mud_object_type_e type);
 
 mud_object_t * mud_nil_init();
-
+mud_object_t * mud_boolean_init(mud_boolean_t value);
 mud_object_t * mud_number_init(mud_number_t value);
-
 mud_object_t * mud_string_init(const char * value);
+
+mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args);

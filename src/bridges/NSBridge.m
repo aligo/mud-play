@@ -41,3 +41,14 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   }
   return ret;
 }
+
+mud_object_t * initMudExprWithNSArray(NSArray * expr) {
+  NSNumber * oper = (NSNumber *)[(NSArray *)expr objectAtIndex: 0];
+  NSUInteger args_count = [expr count] - 1;
+  mud_object_t ** args = malloc(args_count * sizeof(mud_object_t *));
+  for (NSUInteger i = 0; i < args_count; i++ ) {
+    args[i] = initMudObjectWithNSObject([expr objectAtIndex: i + 1]);
+  }
+  mud_object_t * ret = mud_expr_init((mud_operator_e)[oper unsignedIntegerValue], args);
+  return ret;
+}
