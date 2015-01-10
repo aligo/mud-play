@@ -1,0 +1,10 @@
+.DS_Store
+
+# Ignore bundler config.
+/.bundle
+
+/build
+/tmp
+/old.m
+/old
+/old2
