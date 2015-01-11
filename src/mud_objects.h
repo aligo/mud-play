@@ -24,12 +24,6 @@ struct mud_expr_s {
   mud_object_t **       args;
 };
 
-typedef struct mud_stack_s mud_stack_t;
-struct mud_stack_s {
-  mud_object_t *        cur;
-  mud_stack_t *         next;
-};
-
 mud_object_t * mud_object_alloc(mud_object_type_e type);
 
 mud_object_t * mud_nil_init();
@@ -38,3 +32,4 @@ mud_object_t * mud_number_init(mud_number_t value);
 mud_object_t * mud_string_init(const char * value);
 
 mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args);
+mud_object_t * mud_exprs_init(mud_object_t ** exprs);

@@ -39,3 +39,9 @@ mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args) {
   expr->args = args;
   return object;
 }
+
+mud_object_t * mud_exprs_init(mud_object_t ** exprs) {
+  mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_EXPRS);
+  object->ptr = exprs;
+  return object;
+}

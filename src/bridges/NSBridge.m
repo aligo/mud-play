@@ -24,7 +24,14 @@ void MudWarningToNSLog(NSString * formatString, ...) {
 
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   mud_object_t * ret;
-  if ( [ns_object isKindOfClass: [NSNumber class]] ) {
+  if ( [ns_object isKindOfClass: [NSArray class]] ) {
+    NSObject * first_el = [(NSArray *)ns_object objectAtIndex: 0];
+    if ( [first_el isKindOfClass: [NSNumber class]] ) {
+      return _initMudExprWithNSArray((NSArray *) ns_object);
+    } else {
+      return _initMudExprsWithNSArray((NSArray *) ns_object);
+    }
+  } else if ( [ns_object isKindOfClass: [NSNumber class]] ) {
     if ( [ns_object class] == [@(YES) class] ) {
       NSLog(@"bool");
       ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
@@ -42,13 +49,21 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   return ret;
 }
 
-mud_object_t * initMudExprWithNSArray(NSArray * expr) {
-  NSNumber * oper = (NSNumber *)[(NSArray *)expr objectAtIndex: 0];
-  NSUInteger args_count = [expr count] - 1;
+mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {
+  NSNumber * oper = (NSNumber *)[(NSArray *)ns_expr objectAtIndex: 0];
+  NSUInteger args_count = [ns_expr count] - 1;
   mud_object_t ** args = malloc(args_count * sizeof(mud_object_t *));
   for (NSUInteger i = 0; i < args_count; i++ ) {
-    args[i] = initMudObjectWithNSObject([expr objectAtIndex: i + 1]);
+    args[i] = initMudObjectWithNSObject([ns_expr objectAtIndex: i + 1]);
   }
-  mud_object_t * ret = mud_expr_init((mud_operator_e)[oper unsignedIntegerValue], args);
-  return ret;
+  return mud_expr_init((mud_operator_e)[oper unsignedIntegerValue], args);
+}
+
+mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs) {
+  NSUInteger exprs_count = [ns_exprs count];
+  mud_object_t ** exprs = malloc(exprs_count * sizeof(mud_object_t *));
+  for (NSUInteger i = 0; i < exprs_count; i++ ) {
+    exprs[i] = initMudObjectWithNSObject([ns_exprs objectAtIndex: i]);
+  }
+  return mud_exprs_init(exprs);
 }

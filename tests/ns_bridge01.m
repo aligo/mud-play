@@ -27,17 +27,34 @@ int main() {
   NSLog(@"object_string should be mud_string: 1 == %d", object_string->type == MUD_OBJ_TYPE_STRING);
   NSLog(@"object_string value should be: %@", [NSString stringWithUTF8String: (char *)object_string->ptr]);
 
-  mud_object_t * object_expr1 = initMudExprWithNSArray(@[@2015, @"test", @"test2"]);
+  mud_object_t * object_expr1 = _initMudExprWithNSArray(@[@2015, @"test", @"test2"]);
   NSLog(@"object_expr1 should be mud_expr: 1 == %d", object_expr1->type == MUD_OBJ_TYPE_EXPR);
   mud_expr_t * expr1 = object_expr1->ptr;
   NSLog(@"object_expr1 operator should be: 2015 == %d", expr1->oper);
   NSLog(@"object_expr1 argument 1 should be: test == %s", (char *)expr1->args[0]->ptr);
   NSLog(@"object_expr1 argument 1 should be: test2 == %s", (char *)expr1->args[1]->ptr);
 
-  mud_object_t * object_expr2 = initMudExprWithNSArray(@[@2014]);
+  mud_object_t * object_expr2 = _initMudExprWithNSArray(@[@2014]);
   NSLog(@"object_expr2 should be mud_expr: 1 == %d", object_expr2->type == MUD_OBJ_TYPE_EXPR);
   mud_expr_t * expr2 = object_expr2->ptr;
   NSLog(@"object_expr2 operator should be: 2014 == %d", expr2->oper);
+
+  NSArray * ns_exprs1 = @[
+                            @[@2015, @"expr1"],
+                            @"expr2"
+                        ];
+  mud_object_t * object_exprs1 = _initMudExprsWithNSArray(ns_exprs1);
+  NSLog(@"object_exprs1 should be mud_exprs: 1 == %d", object_exprs1->type == MUD_OBJ_TYPE_EXPRS);
+  mud_object_t ** exprs1 = object_exprs1->ptr;
+  mud_object_t * exprs1_0 = exprs1[0];
+  NSLog(@"exprs1_0 should be mud_expr: 1 == %d", exprs1_0->type == MUD_OBJ_TYPE_EXPR);
+  mud_expr_t * exprs1_expr0 = exprs1_0->ptr;
+  NSLog(@"exprs1_expr0 operator should be: 2015 == %d", exprs1_expr0->oper);
+  NSLog(@"exprs1_expr0 argument 1 should be: expr1 == %s", (char *)exprs1_expr0->args[0]->ptr);
+
+  mud_object_t * exprs1_1 = exprs1[1];
+  NSLog(@"exprs1_1 should be mud_expr: 1 == %d", exprs1_1->type == MUD_OBJ_TYPE_STRING);
+  NSLog(@"exprs1_1 should be: expr2 == %s", (char *)exprs1_1->ptr);
 
   NSLog(@"ok");
 }
