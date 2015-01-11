@@ -25,6 +25,7 @@ struct mud_expr_s {
 };
 
 mud_object_t * mud_object_alloc(mud_object_type_e type);
+void mud_object_free(mud_object_t * object);
 
 mud_object_t * mud_nil_init();
 mud_object_t * mud_boolean_init(mud_boolean_t value);

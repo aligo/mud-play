@@ -1,10 +1,25 @@
 #import "mud_objects.h"
+#import "mud_gc.h"
 
 mud_object_t * mud_object_alloc(mud_object_type_e type) {
   mud_object_t * object = (mud_object_t *)malloc(sizeof(mud_object_t));
   memset(object, 0, sizeof(mud_object_t));
   object->type = type;
+  mud_gc_stack_cur_push(object);
   return object;
+}
+
+void mud_object_free(mud_object_t * object) {
+  if ( object->type == MUD_OBJ_TYPE_EXPR ) {
+    mud_expr_t * expr = (mud_expr_t *)object->ptr;
+    free(expr->args);
+    expr->args = NULL;
+    expr->oper = 0;
+  }
+  free(object->ptr);
+  object->ptr = NULL;
+  object->type = 0;
+  free(object);
 }
 
 mud_object_t * mud_nil_init() {

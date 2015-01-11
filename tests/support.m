@@ -16,7 +16,7 @@ NSDictionary * openAndParseJson(NSString * path) {
 //   return ret;
 // }
 
-void reportMemory(void) {
+void reportMemory() {
   struct task_basic_info info;
   mach_msg_type_number_t size = sizeof(info);
   kern_return_t kerr = task_info(mach_task_self(),
