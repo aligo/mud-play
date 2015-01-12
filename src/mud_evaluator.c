@@ -33,13 +33,25 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
 
 const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i) {
   mud_object_t * arg = evaluator->args[i];
+  char * _str = "";
+  size_t _len;
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
-      return arg->ptr;
+      _str = arg->ptr;
+      break;
+    case MUD_OBJ_TYPE_INT:
+      _len = (size_t)snprintf(NULL, 0, "%ld", *(mud_int_t *)arg->ptr);
+      _str = malloc(_len);
+      sprintf(_str, "%ld", *(mud_int_t *)arg->ptr);
+      break;
+    case MUD_OBJ_TYPE_FLOAT:
+      _len = (size_t)snprintf(NULL, 0, "%lf", *(mud_float_t *)arg->ptr);
+      _str = malloc(_len);
+      sprintf(_str, "%lf", *(mud_float_t *)arg->ptr);
       break;
     default:
       mud_warning(@"casting Type:%lu as mud_string", arg->type);
-      return "";
       break;
   }
+  return _str;
 }

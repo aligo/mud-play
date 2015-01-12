@@ -13,7 +13,7 @@ int main() {
     @autoreleasepool {
       for (int i = 0; i < t; i++ ) {
         mud_gc_stack_start();
-        _mud_expr_evaluate(mud_expr->ptr);
+        mud_evaluate(mud_expr);
         mud_gc_stack_finish();
       }
     }
