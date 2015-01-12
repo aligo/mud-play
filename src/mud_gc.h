@@ -1,5 +1,7 @@
 #import "mud_objects.h"
 
+#define MUD_GC_POOL_ALLOC_SIZE 4096;
+
 typedef struct mud_gc_stack_s mud_gc_stack_t;
 struct mud_gc_stack_s {
   mud_object_t **       pool;
