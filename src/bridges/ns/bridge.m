@@ -91,7 +91,7 @@ mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs) {
   for (NSUInteger i = 0; i < exprs_count; i++ ) {
     exprs[i] = initMudObjectWithNSObject([ns_exprs objectAtIndex: i]);
   }
-  return mud_exprs_init(exprs);
+  return mud_exprs_init(exprs, exprs_count);
 }
 
 void mud_object_bridge_free(mud_object_t * object) {

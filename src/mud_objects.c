@@ -14,7 +14,13 @@ void mud_object_free(mud_object_t * object) {
     mud_expr_t * expr = (mud_expr_t *)object->ptr;
     free(expr->args);
     expr->args = NULL;
+    expr->argc = 0;
     expr->oper = 0;
+  } else if ( object->type == MUD_OBJ_TYPE_EXPRS ) {
+    mud_exprs_t * exprs = (mud_exprs_t *)object->ptr;
+    free(exprs->exprs);
+    exprs->exprs = NULL;
+    exprs->count = 0;
   } else if ( object-> type >= MUD_OBJ_TYPE_BRIDGE ) {
     mud_object_bridge_free(object);
   }
@@ -64,8 +70,11 @@ mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned
   return object;
 }
 
-mud_object_t * mud_exprs_init(mud_object_t ** exprs) {
+mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count) {
   mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_EXPRS);
-  object->ptr = exprs;
+  object->ptr = malloc(sizeof(mud_exprs_t));
+  mud_exprs_t * mud_exprs = (mud_exprs_t *)object->ptr;
+  mud_exprs->exprs = exprs;
+  mud_exprs->count = count;
   return object;
 }

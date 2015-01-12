@@ -15,12 +15,14 @@ NSDictionary * openAndParseJson(NSString * path) {
   return json;
 }
 
-// NSObject * MudTestEvaluate(NSObject * input) {
-//   MudEvaluator * evaluator = [[MudEvaluator alloc] init];
-//   NSObject * ret = [evaluator evaluate: input];
-//   [evaluator release];
-//   return ret;
-// }
+NSObject * nsMudTestEvaluate(NSObject * input) {
+  mud_gc_stack_start();
+  mud_object_t * code = initMudObjectWithNSObject(input);
+  mud_object_t * result = mud_evaluate(code);
+  NSObject * ret = nsWithMudObject(result);
+  mud_gc_stack_finish();
+  return ret;
+}
 
 void reportMemory() {
   struct task_basic_info info;

@@ -5,10 +5,21 @@ mud_object_t * mud_evaluate(mud_object_t * object) {
     case MUD_OBJ_TYPE_EXPR:
       return _mud_expr_evaluate(object->ptr);
       break;
+    case MUD_OBJ_TYPE_EXPRS:
+      return _mud_exprs_evaluate(object->ptr);
+      break;
     default:
       return object;
       break;
   }
+}
+
+mud_object_t * _mud_exprs_evaluate(mud_exprs_t * exprs) {
+  mud_object_t * ret;
+  for ( unsigned i = 0; i < exprs->count; i++ ) {
+    ret = mud_evaluate(exprs->exprs[i]);
+  }
+  return ret;
 }
 
 mud_expr_evaluator_t * mud_expr_evaluator_init(mud_expr_t * expr) {
