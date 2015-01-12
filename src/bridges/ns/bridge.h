@@ -12,6 +12,7 @@ void MudWarningToNSLog(NSString * formatString, ...);
 #import "_operators.c"
 
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object);
+NSObject * nsWithMudObject(mud_object_t * object);
 
 mud_object_t * _initMudExprWithNSArray(NSArray * expr);
 mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs);

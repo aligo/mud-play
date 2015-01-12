@@ -15,14 +15,18 @@ int main() {
   mud_object_t * object_int = initMudObjectWithNSObject([NSNumber numberWithInt: 100]);
   NSLog(@"object_int should be mud_int: 1 == %d", object_int->type == MUD_OBJ_TYPE_INT);
   NSLog(@"object_int value should be: 100 == %ld", *(mud_int_t *)object_int->ptr);
+  NSLog(@"object_int to nsWithMudObject should be: 100 == %@", nsWithMudObject(object_int));
+  
 
   mud_object_t * object_float = initMudObjectWithNSObject([NSNumber numberWithDouble: 2015.0112]);
   NSLog(@"object_float should be mud_float: 1 == %d", object_float->type == MUD_OBJ_TYPE_FLOAT);
   NSLog(@"object_float value should be: 2015.0112 == %lf", *(mud_float_t *)object_float->ptr);
+  NSLog(@"object_float to nsWithMudObject should be: 2015.0112 == %@", nsWithMudObject(object_float));
   
   mud_object_t * object_string = initMudObjectWithNSObject(@"hello world! 你好世界！");
   NSLog(@"object_string should be mud_string: 1 == %d", object_string->type == MUD_OBJ_TYPE_STRING);
   NSLog(@"object_string value should be: %@", [NSString stringWithUTF8String: (char *)object_string->ptr]);
+  NSLog(@"object_string to nsWithMudObject should be: %@", nsWithMudObject(object_string));
 
   mud_object_t * object_expr1 = _initMudExprWithNSArray(@[@2015, @"test", @"test2"]);
   NSLog(@"object_expr1 should be mud_expr: 1 == %d", object_expr1->type == MUD_OBJ_TYPE_EXPR);

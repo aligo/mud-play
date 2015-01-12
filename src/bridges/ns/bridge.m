@@ -52,6 +52,29 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   return ret;
 }
 
+NSObject * nsWithMudObject(mud_object_t * object) {
+  NSObject * ret;
+  switch ( object->type ) {
+    case MUD_OBJ_TYPE_NIL:
+      ret = [NSNull null];
+      break;
+    case MUD_OBJ_TYPE_INT:
+      ret = [NSNumber numberWithLong: *(mud_int_t *)object->ptr];
+      break;
+    case MUD_OBJ_TYPE_FLOAT:
+      ret = [NSNumber numberWithDouble: *(mud_float_t *)object->ptr];
+      break;
+    case MUD_OBJ_TYPE_STRING:
+      ret = [NSString stringWithUTF8String: (char *)object->ptr];
+      break;
+    default:
+      mud_error(@"Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
+      ret = [NSNull null];
+      break;
+  }
+  return ret;
+}
+
 mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {
   NSNumber * oper = (NSNumber *)[(NSArray *)ns_expr objectAtIndex: 0];
   NSUInteger args_count = [ns_expr count] - 1;
