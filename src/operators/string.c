@@ -4,8 +4,12 @@
 */
 
 
-mud_object_t * _mud_op_str_concat_evaluate(mud_object_t ** args) {
+mud_object_t * _mud_op_str_concat_evaluate(mud_expr_t * expr) {
   // Enum: 300
-  mud_object_t * ret = mud_nil_init();
+  // char * _str;
+  for ( unsigned i = 0; i < expr->argc; i++ ) {
+    printf("%p\n", expr->args[i]);
+  }
+  mud_object_t * ret = mud_string_init("xxxx");
   return ret;
 }

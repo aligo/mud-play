@@ -54,12 +54,13 @@ mud_object_t * mud_string_init(const char * value) {
   return object; 
 }
 
-mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args) {
+mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc) {
   mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_EXPR);
   object->ptr = malloc(sizeof(mud_expr_t));
   mud_expr_t * expr = (mud_expr_t *)object->ptr;
   expr->oper = oper;
   expr->args = args;
+  expr->argc = argc;
   return object;
 }
 

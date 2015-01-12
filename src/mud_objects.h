@@ -23,6 +23,7 @@ typedef struct mud_expr_s mud_expr_t;
 struct mud_expr_s {
   mud_operator_e        oper;
   mud_object_t **       args;
+  unsigned              argc;
 };
 
 typedef signed char   mud_boolean_t;
@@ -38,5 +39,5 @@ mud_object_t * mud_int_init(mud_int_t value);
 mud_object_t * mud_float_init(mud_float_t value);
 mud_object_t * mud_string_init(const char * value);
 
-mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args);
+mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc);
 mud_object_t * mud_exprs_init(mud_object_t ** exprs);

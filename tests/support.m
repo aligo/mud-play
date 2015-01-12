@@ -1,4 +1,10 @@
 #import <mach/mach.h>
+#import <Foundation/Foundation.h>
+
+#import "../src/bridges/ns/bridge.h"
+#import "../src/mud.c"
+#import "../src/bridges/ns/bridge.m"
+
 
 NSDictionary * openAndParseJson(NSString * path) {
   NSError * error;

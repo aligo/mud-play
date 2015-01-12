@@ -60,7 +60,7 @@ mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {
   for (NSUInteger i = 0; i < args_count; i++ ) {
     args[i] = initMudObjectWithNSObject([ns_expr objectAtIndex: i + 1]);
   }
-  return mud_expr_init((mud_operator_e)[oper unsignedIntegerValue], args);
+  return mud_expr_init((mud_operator_e)[oper unsignedIntegerValue], args, args_count);
 }
 
 mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs) {
