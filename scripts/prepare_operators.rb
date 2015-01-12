@@ -82,7 +82,7 @@ end
     @mud_operators.each do |enum, operator|
       if operator[:func]
         f.puts "    case #{operator[:name]}:"
-        f.puts "      ret = #{operator[:func]}(expr);"
+        f.puts "      ret = #{operator[:func]}(evaluator);"
         f.puts "      break;"
       end
     end

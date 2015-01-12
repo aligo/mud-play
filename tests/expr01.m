@@ -1,7 +1,7 @@
 #import "support.m"
 
 int main() {
-  NSArray * ns_expr = @[@300, @"He", @"llo", @" ", @"World", @"!", @"你好世界"];
+  NSArray * ns_expr = @[@300, @"He", @"llo", @" ", @"World", @"!", @"你好世界", @2014];
   mud_object_t * mud_expr = _initMudExprWithNSArray(ns_expr);
   NSLog(@"%p", mud_expr);
 
