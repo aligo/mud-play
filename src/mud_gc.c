@@ -49,7 +49,9 @@ void _mud_gc_stack_realloc(mud_gc_stack_t * stack) {
 
 void _mud_gc_stack_release(mud_gc_stack_t * stack) {
   for ( unsigned int i = 0; i < stack->count; i++ ) {
-    mud_object_free((mud_object_t *)stack->pool[i]);
+    if ( stack->pool[i] ) {
+      mud_object_free((mud_object_t *)stack->pool[i]);
+    }
   }
 }
 

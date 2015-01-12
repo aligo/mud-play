@@ -11,7 +11,7 @@ all: run
 
 prepare:
 	mkdir -p ./build/tests
-	# ./scripts/prepare_operators.rb
+	./scripts/prepare_operators.rb
 
 main: prepare
 	$(CC) $(CFLAGS) main.c $(LDFLAGS) -o build/$@

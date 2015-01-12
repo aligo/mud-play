@@ -1,4 +1,5 @@
-#import "NSBridge.h"
+#import "bridge.h"
+#import "_operators.c"
 
 void MudErrorToNSLog(NSString * formatString, ...) {
   #ifndef MUD_MUTE_ERROR
