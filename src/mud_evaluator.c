@@ -64,27 +64,39 @@ void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_
   return ptr;
 }
 
-const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i) {
-  char * _str = "";
+const char * mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, const char * fmt, unsigned i) {
+  char * ret;
+  size_t len;
   mud_object_t * arg = evaluator->args[i];
-  size_t _len;
+  switch (arg->type) {
+    case MUD_OBJ_TYPE_NIL:      len = (size_t)snprintf(NULL, 0, fmt, 0); break;
+    case MUD_OBJ_TYPE_BOOLEAN:  len = (size_t)snprintf(NULL, 0, fmt, *(mud_boolean_t *)arg->ptr); break;
+    case MUD_OBJ_TYPE_INT:      len = (size_t)snprintf(NULL, 0, fmt, *(mud_int_t *)arg->ptr); break;
+    case MUD_OBJ_TYPE_FLOAT:    len = (size_t)snprintf(NULL, 0, fmt, *(mud_float_t *)arg->ptr); break;
+    default:                    len = (size_t)snprintf(NULL, 0, fmt, arg->ptr); break;
+  }
+  ret = (char *)mud_expr_evaluator_tmp_pool_alloc(evaluator, len);
+  switch (arg->type) {
+    case MUD_OBJ_TYPE_NIL:      sprintf(ret, fmt, 0); break;
+    case MUD_OBJ_TYPE_BOOLEAN:  sprintf(ret, fmt, *(mud_boolean_t *)arg->ptr); break;
+    case MUD_OBJ_TYPE_INT:      sprintf(ret, fmt, *(mud_int_t *)arg->ptr); break;
+    case MUD_OBJ_TYPE_FLOAT:    sprintf(ret, fmt, *(mud_float_t *)arg->ptr); break;
+    default:                    sprintf(ret, fmt, arg->ptr); break;
+  }
+  return ret;
+}
+
+const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i) {
+  mud_object_t * arg = evaluator->args[i];
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
-      _str = arg->ptr;
-      break;
+      return arg->ptr;
     case MUD_OBJ_TYPE_INT:
-      _len = (size_t)snprintf(NULL, 0, "%ld", *(mud_int_t *)arg->ptr);
-      _str = mud_expr_evaluator_tmp_pool_alloc(evaluator, _len);
-      sprintf(_str, "%ld", *(mud_int_t *)arg->ptr);
-      break;
+      return mud_expr_evaluator_sprintf(evaluator, "%ld", i);
     case MUD_OBJ_TYPE_FLOAT:
-      _len = (size_t)snprintf(NULL, 0, "%lf", *(mud_float_t *)arg->ptr);
-      _str = mud_expr_evaluator_tmp_pool_alloc(evaluator, _len);
-      sprintf(_str, "%lf", *(mud_float_t *)arg->ptr);
-      break;
+      return mud_expr_evaluator_sprintf(evaluator, "%lf", i);
     default:
       mud_warning(@"casting Type:%lu as mud_string", arg->type);
-      break;
+      return "";
   }
-  return _str;
 }

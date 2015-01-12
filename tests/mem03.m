@@ -6,7 +6,7 @@
 int main() {
   NSMutableArray * _code = [[NSMutableArray alloc] init];
 
-  for (int i = 1; i < 4; i++) {
+  for (int i = 3; i < 4; i++) {
     NSDictionary * json = openAndParseJson([NSString stringWithFormat: @"fixtures/test0%d.json", i]);
     for ( NSArray * test in [json allValues] ) {
       for ( NSArray * expr in test ) {
