@@ -33,10 +33,16 @@ mud_object_t * mud_boolean_init(mud_boolean_t value) {
   return object;
 }
 
-mud_object_t * mud_number_init(mud_number_t value) {
-  mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_NUMBER);
-  object->ptr = malloc(sizeof(mud_number_t));
-  * (mud_number_t *)object->ptr = value;
+mud_object_t * mud_int_init(mud_int_t value) {
+  mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_INT);
+  object->ptr = malloc(sizeof(mud_int_t));
+  * (mud_int_t *)object->ptr = value;
+  return object;
+}
+mud_object_t * mud_float_init(mud_float_t value){
+  mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_FLOAT);
+  object->ptr = malloc(sizeof(mud_float_t));
+  * (mud_float_t *)object->ptr = value;
   return object;
 }
 

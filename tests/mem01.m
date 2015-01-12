@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
 
-
-#import "../src/bridges/NSBridge.h"
 #import "../src/mud.c"
 #import "../src/bridges/NSBridge.m"
 
@@ -10,7 +8,7 @@
 int main() {
   NSArray * ns01 = @[
                       @[ @2015.0111, @"expr1"],
-                      @[ @[ @2015.0111, @"expr2"], @"expr3"]
+                      @[ @[ @2015, @"expr2"], @"expr3"]
                     ];
   mud_object_t * test01;
 

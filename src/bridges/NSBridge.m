@@ -36,7 +36,11 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
       NSLog(@"bool");
       ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
     } else {
-      ret = mud_number_init([(NSNumber*)ns_object decimalValue]);
+      if ( CFNumberIsFloatType((CFNumberRef)ns_object) ) {
+        ret = mud_float_init([(NSNumber*)ns_object doubleValue]);
+      } else {
+        ret = mud_int_init([(NSNumber*)ns_object longValue]);
+      }
     }
   } else if ( [ns_object isKindOfClass: [NSString class]] ) {
     ret = mud_string_init([(NSString *)ns_object UTF8String]);

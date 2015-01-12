@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
-
-typedef BOOL      mud_boolean_t;
-typedef NSDecimal mud_number_t;
+#import "../mud_objects.h"
 
 void MudErrorToNSLog(NSString * formatString, ...);
 

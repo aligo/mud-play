@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
 
-
-#import "../src/bridges/NSBridge.h"
 #import "../src/mud.c"
 #import "../src/bridges/NSBridge.m"
 
@@ -19,9 +17,13 @@ int main() {
   NSLog(@"object_boolean should be mud_boolean: 1 == %d", object_boolean->type == MUD_OBJ_TYPE_BOOLEAN);
   NSLog(@"object_boolean value should be: 1 == %d", *(BOOL *)object_boolean->ptr);
 
-  mud_object_t * object_number = initMudObjectWithNSObject([NSNumber numberWithInt: 100]);
-  NSLog(@"object_number should be mud_number: 1 == %d", object_number->type == MUD_OBJ_TYPE_NUMBER);
-  NSLog(@"object_number value should be: 100 == %@", NSDecimalString((NSDecimal *)object_number->ptr, nil));
+  mud_object_t * object_int = initMudObjectWithNSObject([NSNumber numberWithInt: 100]);
+  NSLog(@"object_int should be mud_int: 1 == %d", object_int->type == MUD_OBJ_TYPE_INT);
+  NSLog(@"object_int value should be: 100 == %ld", *(mud_int_t *)object_int->ptr);
+
+  mud_object_t * object_float = initMudObjectWithNSObject([NSNumber numberWithDouble: 2015.0112]);
+  NSLog(@"object_float should be mud_float: 1 == %d", object_float->type == MUD_OBJ_TYPE_FLOAT);
+  NSLog(@"object_float value should be: 2015.0112 == %lf", *(mud_float_t *)object_float->ptr);
   
   mud_object_t * object_string = initMudObjectWithNSObject(@"hello world! 你好世界！");
   NSLog(@"object_string should be mud_string: 1 == %d", object_string->type == MUD_OBJ_TYPE_STRING);
