@@ -1,15 +1,16 @@
 #import "mud_operators.h"
 
 typedef enum {
-  MUD_OBJ_TYPE_EXPR     = 10,
-  MUD_OBJ_TYPE_EXPRS    = 20,
-  MUD_OBJ_TYPE_NIL      = 100,
-  MUD_OBJ_TYPE_BOOLEAN  = 110,
-  MUD_OBJ_TYPE_INT      = 120,
-  MUD_OBJ_TYPE_FLOAT    = 121,
-  MUD_OBJ_TYPE_STRING   = 130,
-  MUD_OBJ_TYPE_ARRAY    = 140,
-  MUD_OBJ_TYPE_HASH     = 150
+  MUD_OBJ_TYPE_EXPR       = 10,
+  MUD_OBJ_TYPE_EXPRS      = 20,
+  MUD_OBJ_TYPE_NIL        = 100,
+  MUD_OBJ_TYPE_BOOLEAN    = 110,
+  MUD_OBJ_TYPE_INT        = 120,
+  MUD_OBJ_TYPE_FLOAT      = 121,
+  MUD_OBJ_TYPE_STRING     = 130,
+  MUD_OBJ_TYPE_ARRAY      = 140,
+  MUD_OBJ_TYPE_HASH       = 150,
+  MUD_OBJ_TYPE_BRIDGE     = 300
 } mud_object_type_e;
 
 

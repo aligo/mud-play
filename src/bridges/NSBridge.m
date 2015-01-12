@@ -33,7 +33,6 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
     }
   } else if ( [ns_object isKindOfClass: [NSNumber class]] ) {
     if ( [ns_object class] == [@(YES) class] ) {
-      NSLog(@"bool");
       ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
     } else {
       if ( CFNumberIsFloatType((CFNumberRef)ns_object) ) {
@@ -70,4 +69,7 @@ mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs) {
     exprs[i] = initMudObjectWithNSObject([ns_exprs objectAtIndex: i]);
   }
   return mud_exprs_init(exprs);
+}
+
+void mud_object_bridge_free(mud_object_t * object) {
 }

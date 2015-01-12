@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 
+#import "../src/bridges/NSBridge.h"
 #import "../src/mud.c"
 #import "../src/bridges/NSBridge.m"
 

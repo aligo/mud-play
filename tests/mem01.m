@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+
+#import "../src/bridges/NSBridge.h"
 #import "../src/mud.c"
 #import "../src/bridges/NSBridge.m"
 
@@ -13,7 +15,7 @@ int main() {
   mud_object_t * test01;
 
   int t = 10;
-  while ( t <= 1000000 ) {
+  while ( t <= 100000 ) {
     NSLog(@"%d units", t);
     reportMemory();
     @autoreleasepool {

@@ -15,6 +15,8 @@ void mud_object_free(mud_object_t * object) {
     free(expr->args);
     expr->args = NULL;
     expr->oper = 0;
+  } else if ( object-> type >= MUD_OBJ_TYPE_BRIDGE ) {
+    mud_object_bridge_free(object);
   }
   free(object->ptr);
   object->ptr = NULL;
