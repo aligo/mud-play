@@ -23,6 +23,14 @@ int main() {
   NSLog(@"t06e should be logged out 'dividing by zero':");
   NSLog(@"t06e should: 1 == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
 
+  // [%, 200, 11]
+  NSLog(@"t07e should: 2 == %@", nsMudTestEvaluate([json objectForKey: @"07"]));
+
+  // [**, 2, 10]
+  NSLog(@"t08e should: 1024 == %@", nsMudTestEvaluate([json objectForKey: @"08"]));
+
+  // [log, 1000]
+  NSLog(@"t09e should: 2.302585093 =~ %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
   NSLog(@"ok");
 }

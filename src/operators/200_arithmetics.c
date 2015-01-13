@@ -169,3 +169,23 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
   return ret;
 }
 
+mud_object_t * _mud_op_arithmetic_remainder_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 204
+  return mud_int_init(
+    mud_expr_evaluator_get_int(evaluator, 0) % mud_expr_evaluator_get_int(evaluator, 1)
+  );
+}
+
+mud_object_t * _mud_op_arithmetic_pow_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 205
+  return mud_float_init( 
+    pow( mud_expr_evaluator_get_float(evaluator, 0), mud_expr_evaluator_get_float(evaluator, 1) )
+  );
+}
+
+mud_object_t * _mud_op_arithmetic_log_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 206
+  return mud_float_init( 
+    log( mud_expr_evaluator_get_float(evaluator, 0) )
+  );
+}

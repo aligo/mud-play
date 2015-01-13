@@ -23,6 +23,15 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
     case MUD_OP_ARITHMETIC_DIVIDING:
       ret = _mud_op_arithmetic_dividing_evaluate(evaluator);
       break;
+    case MUD_OP_ARITHMETIC_REMAINDER:
+      ret = _mud_op_arithmetic_remainder_evaluate(evaluator);
+      break;
+    case MUD_OP_ARITHMETIC_POW:
+      ret = _mud_op_arithmetic_pow_evaluate(evaluator);
+      break;
+    case MUD_OP_ARITHMETIC_LOG:
+      ret = _mud_op_arithmetic_log_evaluate(evaluator);
+      break;
     case MUD_OP_STRING_CONCAT:
       ret = _mud_op_string_concat_evaluate(evaluator);
       break;
