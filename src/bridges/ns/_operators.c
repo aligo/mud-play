@@ -14,6 +14,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
     case MUD_OP_ARITHMETIC_ADDING:
       ret = _mud_op_arithmetic_adding_evaluate(evaluator);
       break;
+    case MUD_OP_ARITHMETIC_SUBTRACTING:
+      ret = _mud_op_arithmetic_subtracting_evaluate(evaluator);
+      break;
     case MUD_OP_STRING_CONCAT:
       ret = _mud_op_string_concat_evaluate(evaluator);
       break;

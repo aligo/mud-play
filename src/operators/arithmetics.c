@@ -83,3 +83,34 @@ mud_object_t * _mud_op_arithmetic_adding_evaluate(mud_expr_evaluator_t * evaluat
   _mud_arithmetic_free(arithmetic);
   return ret;
 }
+
+mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 201
+  mud_arithmetic_t * arithmetic = _mud_arithmetic_init(evaluator);
+  mud_object_t * ret;
+  switch ( arithmetic->type ) {
+    case MUD_OBJ_TYPE_INT:
+      if ( evaluator->argc > 1 ) { 
+        arithmetic->int_res = arithmetic->ints[0];
+        for (unsigned i = 1; i < evaluator->argc; i++) {
+          arithmetic->int_res -= arithmetic->ints[i];
+        }
+      } else {
+        arithmetic->int_res = -arithmetic->ints[0];
+      }
+      ret = mud_int_init(arithmetic->int_res); break;
+    case MUD_OBJ_TYPE_FLOAT:
+    default:
+      if ( evaluator->argc > 1 ) { 
+        arithmetic->float_res = arithmetic->floats[0];
+        for (unsigned i = 1; i < evaluator->argc; i++) {
+          arithmetic->float_res -= arithmetic->floats[i];
+        }
+      } else {
+        arithmetic->float_res = -arithmetic->floats[0];
+      }
+      ret = mud_float_init(arithmetic->float_res); break;
+  }
+  _mud_arithmetic_free(arithmetic);
+  return ret;
+}
