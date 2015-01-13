@@ -10,6 +10,19 @@ int main() {
   // [-, "100", 200, -50, [-, 51]]
   NSLog(@"t02e should: 1 == %@", nsMudTestEvaluate([json objectForKey: @"02"]));
 
+   // [*, 1, 100, "0.01"]
+  NSLog(@"t03e should: 1 == %@", nsMudTestEvaluate([json objectForKey: @"03"]));
+
+  // [/, 4000, 4, "5"]
+  NSLog(@"t04e should: 200 == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
+
+  // [/, 2.0, 3, 2]
+  NSLog(@"t05e should: 0.333...3 == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+
+  // [/, 1, 0]
+  NSLog(@"t06e should be logged out 'dividing by zero':");
+  NSLog(@"t06e should: 1 == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
+
 
   NSLog(@"ok");
 }

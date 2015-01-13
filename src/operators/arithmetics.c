@@ -114,3 +114,58 @@ mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * ev
   _mud_arithmetic_free(arithmetic);
   return ret;
 }
+
+mud_object_t * _mud_op_arithmetic_multiplying_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 202
+  mud_arithmetic_t * arithmetic = _mud_arithmetic_init(evaluator);
+  mud_object_t * ret;
+  switch ( arithmetic->type ) {
+    case MUD_OBJ_TYPE_INT:
+      arithmetic->int_res = 1;
+      for (unsigned i = 0; i < evaluator->argc; i++) {
+        arithmetic->int_res *= arithmetic->ints[i];
+      }
+      ret = mud_int_init(arithmetic->int_res); break;
+    case MUD_OBJ_TYPE_FLOAT:
+    default:
+      arithmetic->float_res = 1;
+      for (unsigned i = 0; i < evaluator->argc; i++) {
+        arithmetic->float_res *= arithmetic->floats[i];
+      }
+      ret = mud_float_init(arithmetic->float_res); break;
+  }
+  _mud_arithmetic_free(arithmetic);
+  return ret;
+}
+
+mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 203
+  mud_arithmetic_t * arithmetic = _mud_arithmetic_init(evaluator);
+  mud_object_t * ret;
+  switch ( arithmetic->type ) {
+    case MUD_OBJ_TYPE_INT:
+      arithmetic->int_res = arithmetic->ints[0];
+      for (unsigned i = 1; i < evaluator->argc; i++) {
+        if ( arithmetic->ints[i] == 0 ) {
+          mud_error(@"dividing by zero, ignored.");
+        } else {
+          arithmetic->int_res /= arithmetic->ints[i];
+        }
+      }
+      ret = mud_int_init(arithmetic->int_res); break;
+    case MUD_OBJ_TYPE_FLOAT:
+    default:
+      arithmetic->float_res = arithmetic->floats[0];
+      for (unsigned i = 1; i < evaluator->argc; i++) {
+        if ( arithmetic->floats[i] == 0 ) {
+          mud_error(@"dividing by zero, ignored.");
+        } else {
+          arithmetic->float_res /= arithmetic->floats[i];
+        }
+      }
+      ret = mud_float_init(arithmetic->float_res); break;
+  }
+  _mud_arithmetic_free(arithmetic);
+  return ret;
+}
+
