@@ -5,8 +5,9 @@
 */
 
 char * substr(const char * src, size_t start, size_t length) {
-  char * ret = (char *)malloc_empty(length * sizeof(char));
+  char * ret = (char *)malloc((length + 1) * sizeof(char));
   memcpy(ret, &src[start], length);
+  ret[length] = '\0';
   return ret;
 } 
 
@@ -34,7 +35,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   
   char * fmt = (char *)mud_expr_evaluator_get_str(evaluator, 0);
   size_t fmt_len = strlen(fmt);
-  
+
   size_t s = 0;
   unsigned partial_fmt_arg = 0;
   size_t partial_fmt_len = 0;
@@ -50,7 +51,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
         partial_res = (char *)mud_expr_evaluator_sprintf(evaluator, partial_fmt, partial_fmt_arg);
         free(partial_fmt);
         partial_fmt = NULL;
-        partial_res_size = strlen(partial_res) * sizeof(char);
+        partial_res_size = strlen(partial_res) * sizeof(char) + 1;
         ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
         ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size);
         memcpy(ret->ptr + ret_old_size, partial_res, partial_res_size);
