@@ -13,5 +13,11 @@ int main() {
   // [format, "%s %s %lf", "PI", "is", 3.1415926535]
   NSLog(@"t03e should: %@", nsMudTestEvaluate([json objectForKey: @"03"]));
 
+  // [format, "format with no arguments"]
+  NSLog(@"t04e should: %@", nsMudTestEvaluate([json objectForKey: @"04"]));
+
+  // [format, 1024]
+  NSLog(@"t05e should: 1024 = %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+
   NSLog(@"ok");
 }

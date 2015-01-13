@@ -20,12 +20,17 @@ mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) 
     length += strlen(_strs[i]);
   }
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
-  ret->ptr = (char *)malloc_empty(length * sizeof(char));
+  ret->ptr = (char *)malloc((length + 1) * sizeof(char));
+  size_t cpy_len = 0;
+  length = 0;
   for ( unsigned i = 0; i < evaluator->argc; i++ ) {
-    strcat(ret->ptr, _strs[i]);
+    cpy_len = strlen(_strs[i]) * sizeof(char);
+    memcpy(ret->ptr + length, _strs[i], cpy_len);
+    length += cpy_len;
   }
   free(_strs);
   _strs = NULL;
+  *(char *)(ret->ptr + (length + 1) * sizeof(char)) = '\0';
   return ret;
 }
 
@@ -51,14 +56,15 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
         partial_res = (char *)mud_expr_evaluator_sprintf(evaluator, partial_fmt, partial_fmt_arg);
         free(partial_fmt);
         partial_fmt = NULL;
-        partial_res_size = strlen(partial_res) * sizeof(char) + 1;
+        partial_res_size = strlen(partial_res) * sizeof(char);
         ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
-        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size);
+        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size + 1);
         memcpy(ret->ptr + ret_old_size, partial_res, partial_res_size);
       }
       partial_fmt_arg++;
       s = i;
     }
   }
+  *(char *)(ret->ptr + ret_old_size + partial_res_size) = '\0';
   return ret;
 }
