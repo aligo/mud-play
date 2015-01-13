@@ -11,4 +11,5 @@ int main() {
   mud_ret = mud_evaluate(mud_expr);
   NSLog(@"mud_ret should be mud_string: 1 == %d", mud_ret->type == MUD_OBJ_TYPE_STRING);
   NSLog(@"mud_ret value should be: %@", [NSString stringWithUTF8String: (char *)mud_ret->ptr]);
+  NSLog(@"mud_ret length should be: %zu == %zu", strlen("Hello World! 2014-3.141593 你好世界"),  strlen((char *)mud_ret->ptr));
 }

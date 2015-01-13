@@ -30,7 +30,7 @@ mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) 
   }
   free(_strs);
   _strs = NULL;
-  *(char *)(ret->ptr + (length + 1) * sizeof(char)) = '\0';
+  *(char *)(ret->ptr + length) = '\0';
   return ret;
 }
 
