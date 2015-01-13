@@ -9,9 +9,9 @@
     - log: 206
     - abs: 207
 
-    - round: 210
-    - floor: 211
-    - ceil: 212
+    - round: 220
+    - floor: 221
+    - ceil: 222
 */
 
 typedef struct mud_arithmetic_s mud_arithmetic_t;
@@ -187,5 +187,12 @@ mud_object_t * _mud_op_arithmetic_log_evaluate(mud_expr_evaluator_t * evaluator)
 // Enum: 206
   return mud_float_init( 
     log( mud_expr_evaluator_get_float(evaluator, 0) )
+  );
+}
+
+mud_object_t * _mud_op_arithmetic_abs_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 207
+  return mud_float_init( 
+    fabs( mud_expr_evaluator_get_float(evaluator, 0) )
   );
 }

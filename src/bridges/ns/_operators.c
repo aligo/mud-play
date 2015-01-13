@@ -1,5 +1,6 @@
 // auto-generated: operators import - begin
 #import "../../operators/200_arithmetics.c"
+#import "../../operators/220_int.c"
 #import "../../operators/300_string.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
@@ -31,6 +32,18 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
       break;
     case MUD_OP_ARITHMETIC_LOG:
       ret = _mud_op_arithmetic_log_evaluate(evaluator);
+      break;
+    case MUD_OP_ARITHMETIC_ABS:
+      ret = _mud_op_arithmetic_abs_evaluate(evaluator);
+      break;
+    case MUD_OP_FLOAT_ROUND:
+      ret = _mud_op_float_round_evaluate(evaluator);
+      break;
+    case MUD_OP_FLOAT_FLOOR:
+      ret = _mud_op_float_floor_evaluate(evaluator);
+      break;
+    case MUD_OP_FLOAT_CEIL:
+      ret = _mud_op_float_ceil_evaluate(evaluator);
       break;
     case MUD_OP_STRING_CONCAT:
       ret = _mud_op_string_concat_evaluate(evaluator);

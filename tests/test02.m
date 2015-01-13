@@ -32,5 +32,24 @@ int main() {
   // [log, 1000]
   NSLog(@"t09e should: 2.302585093 =~ %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
+    // [round, 10.4]
+  NSLog(@"t10e should: 10 = %@", nsMudTestEvaluate([json objectForKey: @"10"]));
+
+  // [round, 9.5]
+  NSLog(@"t11e should: 10 = %@", nsMudTestEvaluate([json objectForKey: @"11"]));
+
+  // [floor, 10.9]
+  NSLog(@"t12e should: 10 = %@", nsMudTestEvaluate([json objectForKey: @"12"]));
+
+  // [ceil, 9.1]
+  NSLog(@"t13e should: 10 = %@", nsMudTestEvaluate([json objectForKey: @"13"]));
+
+
+  // [abs, -123456789.87654321]
+  NSLog(@"t14e should: 123456789.87654321 = %@", nsMudTestEvaluate([json objectForKey: @"14"]));
+
+  // [abs, 123456789.87654321]
+  NSLog(@"t15e should: 123456789.87654321 = %@", nsMudTestEvaluate([json objectForKey: @"15"]));
+
   NSLog(@"ok");
 }
