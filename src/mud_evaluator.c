@@ -104,3 +104,33 @@ const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsign
       return "";
   }
 }
+
+mud_int_t mud_expr_evaluator_get_int(mud_expr_evaluator_t * evaluator, unsigned i) {
+  mud_object_t * arg = evaluator->args[i];
+  switch ( arg->type ) {
+    case MUD_OBJ_TYPE_STRING:
+      return atol(arg->ptr);
+    case MUD_OBJ_TYPE_INT:
+      return *(mud_int_t *)arg->ptr;
+    case MUD_OBJ_TYPE_FLOAT:
+      return (mud_float_t)(*(mud_float_t *)arg->ptr);
+    default:
+      mud_warning(@"casting Type:%lu as mud_int, return 0", arg->type);
+      return 0;
+  }
+}
+
+mud_float_t mud_expr_evaluator_get_float(mud_expr_evaluator_t * evaluator, unsigned i) {
+  mud_object_t * arg = evaluator->args[i];
+  switch ( arg->type ) {
+    case MUD_OBJ_TYPE_STRING:
+      return atof(arg->ptr);
+    case MUD_OBJ_TYPE_INT:
+      return (mud_int_t)(*(mud_int_t *)arg->ptr);
+    case MUD_OBJ_TYPE_FLOAT:
+      return *(mud_float_t *)arg->ptr;
+    default:
+      mud_warning(@"casting Type:%lu as mud_float, return 0.0", arg->type);
+      return 0.0;
+  }
+}

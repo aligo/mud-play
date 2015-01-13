@@ -27,3 +27,5 @@ int _mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, unsigned i, ch
 
 const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt);
 const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i);
+mud_int_t mud_expr_evaluator_get_int(mud_expr_evaluator_t * evaluator, unsigned i);
+mud_float_t mud_expr_evaluator_get_float(mud_expr_evaluator_t * evaluator, unsigned i);
