@@ -5,4 +5,4 @@ compiler:
 script:
   - make test TEST=eval01
   - make test TEST=test03
-  - make test TEST=eval01
+  - make test TEST=ns_bridge01
