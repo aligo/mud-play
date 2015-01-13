@@ -4,13 +4,10 @@ mud_object_t * mud_evaluate(mud_object_t * object) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_EXPR:
       return _mud_expr_evaluate(object->ptr);
-      break;
     case MUD_OBJ_TYPE_EXPRS:
       return _mud_exprs_evaluate(object->ptr);
-      break;
     default:
       return object;
-      break;
   }
 }
 
@@ -65,7 +62,7 @@ void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_
 }
 
 const char * mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, const char * fmt, unsigned i) {
-  char * ret;
+  char * ret = NULL;
   size_t len;
   mud_object_t * arg = evaluator->args[i];
   switch (arg->type) {

@@ -36,7 +36,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   
   size_t s = 0;
   unsigned partial_fmt_arg = 0;
-  size_t partial_fmt_len;
+  size_t partial_fmt_len = 0;
   char * partial_fmt;
   char * partial_res;
   for ( size_t i = 0; i < (fmt_len + 1); i++ ) {
@@ -46,6 +46,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
         partial_fmt = substr(fmt, s, partial_fmt_len);
         partial_res = (char *)mud_expr_evaluator_sprintf(evaluator, partial_fmt, partial_fmt_arg);
         free(partial_fmt);
+        partial_fmt = NULL;
         ret->ptr = (char *)realloc( ret->ptr, (strlen((char *)ret->ptr) + strlen(partial_res)) * sizeof(char) );
         strcat(ret->ptr, partial_res);
       }
