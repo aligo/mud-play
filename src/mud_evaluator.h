@@ -18,10 +18,12 @@ mud_object_t * mud_evaluate(mud_object_t * object);
 mud_object_t * _mud_exprs_evaluate(mud_exprs_t * exprs);
 
 mud_expr_evaluator_t * mud_expr_evaluator_init(mud_expr_t * expr);
-
 void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator);
 
-void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size);
+void * _mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size);
+
+int _mud_expr_evaluator_snprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, size_t n, const char * fmt);
+int _mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, const char * fmt);
 
 const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt);
 const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i);

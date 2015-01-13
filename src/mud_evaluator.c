@@ -51,7 +51,7 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
   free(evaluator);
 }
 
-void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size) {
+void * _mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size) {
   void * ptr = malloc(size);
   if (evaluator->tmp_pool_count == evaluator->tmp_pool_size) {
     evaluator->tmp_pool_size *= 2;
@@ -61,25 +61,32 @@ void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_
   return ptr;
 }
 
-const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt) {
-  char * ret = NULL;
-  size_t len;
+int _mud_expr_evaluator_snprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, size_t n, const char * fmt) {
   mud_object_t * arg = evaluator->args[i];
   switch (arg->type) {
-    case MUD_OBJ_TYPE_NIL:      len = (size_t)snprintf(NULL, 0, fmt, 0); break;
-    case MUD_OBJ_TYPE_BOOLEAN:  len = (size_t)snprintf(NULL, 0, fmt, *(mud_boolean_t *)arg->ptr); break;
-    case MUD_OBJ_TYPE_INT:      len = (size_t)snprintf(NULL, 0, fmt, *(mud_int_t *)arg->ptr); break;
-    case MUD_OBJ_TYPE_FLOAT:    len = (size_t)snprintf(NULL, 0, fmt, *(mud_float_t *)arg->ptr); break;
-    default:                    len = (size_t)snprintf(NULL, 0, fmt, arg->ptr); break;
+    case MUD_OBJ_TYPE_NIL:      return snprintf(ret, n, fmt, 0);
+    case MUD_OBJ_TYPE_BOOLEAN:  return snprintf(ret, n, fmt, *(mud_boolean_t *)arg->ptr);
+    case MUD_OBJ_TYPE_INT:      return snprintf(ret, n, fmt, *(mud_int_t *)arg->ptr);
+    case MUD_OBJ_TYPE_FLOAT:    return snprintf(ret, n, fmt, *(mud_float_t *)arg->ptr);
+    default:                    return snprintf(ret, n, fmt, arg->ptr);
   }
-  ret = (char *)mud_expr_evaluator_tmp_pool_alloc(evaluator, len);
+}
+
+int _mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, const char * fmt) {
+  mud_object_t * arg = evaluator->args[i];
   switch (arg->type) {
-    case MUD_OBJ_TYPE_NIL:      sprintf(ret, fmt, 0); break;
-    case MUD_OBJ_TYPE_BOOLEAN:  sprintf(ret, fmt, *(mud_boolean_t *)arg->ptr); break;
-    case MUD_OBJ_TYPE_INT:      sprintf(ret, fmt, *(mud_int_t *)arg->ptr); break;
-    case MUD_OBJ_TYPE_FLOAT:    sprintf(ret, fmt, *(mud_float_t *)arg->ptr); break;
-    default:                    sprintf(ret, fmt, arg->ptr); break;
+    case MUD_OBJ_TYPE_NIL:      return sprintf(ret, fmt, 0);
+    case MUD_OBJ_TYPE_BOOLEAN:  return sprintf(ret, fmt, *(mud_boolean_t *)arg->ptr);
+    case MUD_OBJ_TYPE_INT:      return sprintf(ret, fmt, *(mud_int_t *)arg->ptr);
+    case MUD_OBJ_TYPE_FLOAT:    return sprintf(ret, fmt, *(mud_float_t *)arg->ptr);
+    default:                    return sprintf(ret, fmt, arg->ptr);
   }
+}
+
+const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt) {
+  size_t len = _mud_expr_evaluator_snprintf(evaluator, i, NULL, 0, fmt);
+  char * ret = (char *)_mud_expr_evaluator_tmp_pool_alloc(evaluator, len);
+  _mud_expr_evaluator_sprintf(evaluator, i, ret, fmt);
   return ret;
 }
 

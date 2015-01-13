@@ -45,7 +45,6 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   unsigned partial_fmt_arg = 0;
   size_t partial_fmt_len = 0;
   char * partial_fmt;
-  char * partial_res;
   size_t partial_res_size = 0;
   size_t ret_old_size = 0;
   for ( size_t i = 0; i < (fmt_len + 1); i++ ) {
@@ -53,13 +52,12 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
       if ( i > 0 ) {
         partial_fmt_len = i - s;
         partial_fmt = substr(fmt, s, partial_fmt_len);
-        partial_res = (char *)mud_expr_evaluator_get_str_format(evaluator, partial_fmt_arg, partial_fmt);
+        partial_res_size = _mud_expr_evaluator_snprintf(evaluator, partial_fmt_arg, NULL, 0, partial_fmt);
+        ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
+        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size);
+        _mud_expr_evaluator_sprintf(evaluator, partial_fmt_arg, (char *)(ret->ptr + ret_old_size), partial_fmt);
         free(partial_fmt);
         partial_fmt = NULL;
-        partial_res_size = strlen(partial_res) * sizeof(char);
-        ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
-        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size + 1);
-        memcpy(ret->ptr + ret_old_size, partial_res, partial_res_size);
       }
       partial_fmt_arg++;
       s = i;
