@@ -15,6 +15,8 @@ void mud_gc_stack_finish() {
     _mud_gc_stack_free(_mud_gc_stack_cur);
     if ( prev ) {
       _mud_gc_stack_cur = prev;
+    } else {
+      _mud_gc_stack_cur = NULL;
     }
   }
 }
@@ -30,6 +32,7 @@ mud_gc_stack_t * _mud_gc_stack_init() {
   stack->count = 0;
   stack->size  = MUD_GC_POOL_ALLOC_SIZE;
   stack->pool  = (mud_object_t **)malloc(stack->size * sizeof(mud_object_t *));
+  stack->prev  = NULL;
   return stack;
 }
 

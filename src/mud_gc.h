@@ -10,7 +10,7 @@ struct mud_gc_stack_s {
   mud_gc_stack_t *      prev;
 };
 
-mud_gc_stack_t * _mud_gc_stack_cur;
+mud_gc_stack_t * _mud_gc_stack_cur = NULL;
 
 void mud_gc_stack_start();
 void mud_gc_stack_finish();
