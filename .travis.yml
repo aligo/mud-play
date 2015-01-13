@@ -1,0 +1,8 @@
+language: objective-c
+compiler:
+  - clang
+  - gcc
+script:
+  - make test TEST=eval01
+  - make test TEST=test03
+  - make test TEST=eval01
