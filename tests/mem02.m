@@ -3,10 +3,11 @@
 int main() {
 
   NSArray * ns_expr1 = @[@300, @"He", @"llo", @" ", @"World", @"!", @"你好世界"];
-  NSArray * ns_expr2 = @[@301,  @"%s %s %lf 你好", @"PI", @"is", @3.1415926535];
-  // mud_object_t * mud_expr = _initMudExprWithNSArray(ns_expr1);
+  
+  mud_object_t * mud_exprs = _initMudExprWithNSArray(ns_expr1);
 
-  mud_object_t * mud_exprs = initMudObjectWithNSObject(@[ns_expr1, ns_expr2]);
+  // NSArray * ns_expr2 = @[@301,  @"%s %s %lf 你好", @"PI", @"is", @3.1415926535];
+  // mud_object_t * mud_exprs = initMudObjectWithNSObject(@[ns_expr1, ns_expr2]);
 
   int ft = 1000;
   int t = ft;
