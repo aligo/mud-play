@@ -63,6 +63,6 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
       s = i;
     }
   }
-  *(char *)(ret->ptr + ret_old_size + partial_res_size) = '\0';
+  *(char *)(ret->ptr + ret_old_size + partial_res_size - 1) = '\0';
   return ret;
 }
