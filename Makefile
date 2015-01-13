@@ -22,3 +22,6 @@ run: main
 test: prepare
 	$(CC) $(CFLAGS) tests/$(TEST).m $(LDFLAGS) -o build/tests/$(TEST)
 	./build/tests/$(TEST)
+
+clean:
+	rm -Rf ./build
