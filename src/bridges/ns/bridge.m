@@ -1,21 +1,21 @@
 #import "bridge.h"
 
-void MudErrorToNSLog(NSString * formatString, ...) {
+void MudErrorToNSLog(char * formatString, ...) {
   #ifndef MUD_MUTE_ERROR
   va_list args;
   va_start(args, formatString);
-  NSString * output = [[NSString alloc] initWithFormat: formatString arguments: args];
+  NSString * output = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: formatString] arguments: args];
   NSLog(@"[Mud Runtime] [Error] %@", output);
   [output release];
   va_end(args);
   #endif
 }
 
-void MudWarningToNSLog(NSString * formatString, ...) {
+void MudWarningToNSLog(char * formatString, ...) {
   #ifndef MUD_MUTE_WARNING
   va_list args;
   va_start(args, formatString);
-  NSString * output = [[NSString alloc] initWithFormat: formatString arguments: args];
+  NSString * output = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: formatString] arguments: args];
   NSLog(@"[Mud Runtime] [Warning] %@", output);
   [output release];
   va_end(args);
@@ -46,7 +46,7 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
     ret = mud_nil_init(); 
   } else {
-    mud_error(@"Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
+    mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
     ret = mud_nil_init();
   }
   return ret;
@@ -68,7 +68,7 @@ NSObject * nsWithMudObject(mud_object_t * object) {
       ret = [NSString stringWithUTF8String: (char *)object->ptr];
       break;
     default:
-      mud_error(@"Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
+      mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
       ret = [NSNull null];
       break;
   }

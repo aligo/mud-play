@@ -11,7 +11,7 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
 
 // auto-generated: operators switch - end
     default:
-      mud_error(@"Unknown operator: %lu", expr->oper);
+      mud_error("Unknown operator: %lu", expr->oper);
       ret = mud_nil_init();
       break;
   }

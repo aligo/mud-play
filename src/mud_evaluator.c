@@ -100,7 +100,7 @@ const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsign
     case MUD_OBJ_TYPE_FLOAT:
       return mud_expr_evaluator_get_str_format(evaluator, i, "%lf");
     default:
-      mud_warning(@"casting Type:%lu as mud_string", arg->type);
+      mud_warning("casting Type:%lu as mud_string", arg->type);
       return "";
   }
 }
@@ -115,7 +115,7 @@ mud_int_t mud_expr_evaluator_get_int(mud_expr_evaluator_t * evaluator, unsigned 
     case MUD_OBJ_TYPE_FLOAT:
       return (mud_float_t)(*(mud_float_t *)arg->ptr);
     default:
-      mud_warning(@"casting Type:%lu as mud_int, return 0", arg->type);
+      mud_warning("casting Type:%lu as mud_int, return 0", arg->type);
       return 0;
   }
 }
@@ -130,7 +130,7 @@ mud_float_t mud_expr_evaluator_get_float(mud_expr_evaluator_t * evaluator, unsig
     case MUD_OBJ_TYPE_FLOAT:
       return *(mud_float_t *)arg->ptr;
     default:
-      mud_warning(@"casting Type:%lu as mud_float, return 0.0", arg->type);
+      mud_warning("casting Type:%lu as mud_float, return 0.0", arg->type);
       return 0.0;
   }
 }

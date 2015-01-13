@@ -3,6 +3,7 @@ compiler:
   - clang
   - gcc
 script:
-  - make test TEST=eval01
-  - make test TEST=test03
   - make test TEST=ns_bridge01
+  - make test TEST=eval01
+  - make test TEST=test02
+  - make test TEST=test03

@@ -147,7 +147,7 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
       arithmetic->int_res = arithmetic->ints[0];
       for (unsigned i = 1; i < evaluator->argc; i++) {
         if ( arithmetic->ints[i] == 0 ) {
-          mud_error(@"dividing by zero, ignored.");
+          mud_error("dividing by zero, ignored.");
         } else {
           arithmetic->int_res /= arithmetic->ints[i];
         }
@@ -158,7 +158,7 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
       arithmetic->float_res = arithmetic->floats[0];
       for (unsigned i = 1; i < evaluator->argc; i++) {
         if ( arithmetic->floats[i] == 0 ) {
-          mud_error(@"dividing by zero, ignored.");
+          mud_error("dividing by zero, ignored.");
         } else {
           arithmetic->float_res /= arithmetic->floats[i];
         }

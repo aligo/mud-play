@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
-void MudErrorToNSLog(NSString * formatString, ...);
-void MudWarningToNSLog(NSString * formatString, ...);
+void MudErrorToNSLog(char * formatString, ...);
+void MudWarningToNSLog(char * formatString, ...);
 
 #define mud_error(...)    MudErrorToNSLog(__VA_ARGS__)
 #define mud_warning(...)  MudWarningToNSLog(__VA_ARGS__)
