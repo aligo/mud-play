@@ -29,7 +29,7 @@ mud_gc_stack_t * _mud_gc_stack_init() {
   mud_gc_stack_t * stack = (mud_gc_stack_t *)malloc(sizeof(mud_gc_stack_t));
   stack->count = 0;
   stack->size  = MUD_GC_POOL_ALLOC_SIZE;
-  stack->pool  = (mud_object_t **)malloc_empty(stack->size * sizeof(mud_object_t *));
+  stack->pool  = (mud_object_t **)malloc(stack->size * sizeof(mud_object_t *));
   return stack;
 }
 

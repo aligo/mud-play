@@ -3,7 +3,7 @@
 
 mud_object_t * mud_object_alloc(mud_object_type_e type) {
   mud_object_t * object = (mud_object_t *)malloc(sizeof(mud_object_t));
-  memset(object, 0, sizeof(mud_object_t));
+  object->ptr  = NULL;
   object->type = type;
   mud_gc_stack_cur_push(object);
   return object;

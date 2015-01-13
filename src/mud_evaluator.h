@@ -1,3 +1,5 @@
+#import "mud_helpers.c"
+
 #define MUD_EXPR_EVALUATOR_TMP_POOL_ALLOC_SIZE 128;
 
 typedef struct mud_expr_evaluator_s mud_expr_evaluator_t;

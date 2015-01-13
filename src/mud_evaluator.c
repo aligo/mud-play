@@ -52,7 +52,7 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
 }
 
 void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size) {
-  void * ptr = malloc(size);
+  void * ptr = malloc_empty(size);
   if (evaluator->tmp_pool_count == evaluator->tmp_pool_size) {
     evaluator->tmp_pool_size *= 2;
     evaluator->tmp_pool = (void **)realloc(evaluator->tmp_pool, evaluator->tmp_pool_size * sizeof(void *));
