@@ -15,6 +15,8 @@ int main() {
     }
   }
 
+  mud_object_t * code = initMudObjectWithNSObject(_code);
+
   int ft = 100;
   int t = ft;
   while ( t <= ( 1024 * ft ) ) {
@@ -22,7 +24,7 @@ int main() {
     reportMemory();
     for (int i = 0; i < t; i++ ) {
       mud_gc_stack_start();
-      mud_evaluate(initMudObjectWithNSObject(_code));
+      mud_evaluate(code);
       mud_gc_stack_finish();
     }
     reportMemory();
