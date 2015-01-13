@@ -53,7 +53,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
       if ( i > 0 ) {
         partial_fmt_len = i - s;
         partial_fmt = substr(fmt, s, partial_fmt_len);
-        partial_res = (char *)mud_expr_evaluator_sprintf(evaluator, partial_fmt, partial_fmt_arg);
+        partial_res = (char *)mud_expr_evaluator_get_str_format(evaluator, partial_fmt_arg, partial_fmt);
         free(partial_fmt);
         partial_fmt = NULL;
         partial_res_size = strlen(partial_res) * sizeof(char);

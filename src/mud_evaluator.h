@@ -23,5 +23,5 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator);
 
 void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size);
 
-const char * mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, const char * fmt, unsigned i);
+const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt);
 const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i);

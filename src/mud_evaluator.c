@@ -61,7 +61,7 @@ void * mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_
   return ptr;
 }
 
-const char * mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, const char * fmt, unsigned i) {
+const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt) {
   char * ret = NULL;
   size_t len;
   mud_object_t * arg = evaluator->args[i];
@@ -89,9 +89,9 @@ const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsign
     case MUD_OBJ_TYPE_STRING:
       return arg->ptr;
     case MUD_OBJ_TYPE_INT:
-      return mud_expr_evaluator_sprintf(evaluator, "%ld", i);
+      return mud_expr_evaluator_get_str_format(evaluator, i, "%ld");
     case MUD_OBJ_TYPE_FLOAT:
-      return mud_expr_evaluator_sprintf(evaluator, "%lf", i);
+      return mud_expr_evaluator_get_str_format(evaluator, i, "%lf");
     default:
       mud_warning(@"casting Type:%lu as mud_string", arg->type);
       return "";
