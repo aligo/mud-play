@@ -1,6 +1,6 @@
 // auto-generated: operators import - begin
-#import "../../operators/arithmetics.c"
-#import "../../operators/string.c"
+#import "../../operators/200_arithmetics.c"
+#import "../../operators/300_string.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
 
