@@ -5,5 +5,6 @@ compiler:
 script:
   - make test TEST=ns_bridge01
   - make test TEST=eval01
+  - make test TEST=float
   - make test TEST=test02
   - make test TEST=test03
