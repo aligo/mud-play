@@ -8,10 +8,6 @@
     - **: 205
     - log: 206
     - abs: 207
-
-    - round: 220
-    - floor: 221
-    - ceil: 222
 */
 
 typedef struct mud_arithmetic_s mud_arithmetic_t;
