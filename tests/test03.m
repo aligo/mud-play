@@ -49,5 +49,8 @@ int main() {
   // [substr, "Hello world! 你好世界！", 6, 11]
   NSLog(@"t15e should: world! 你好世界 = %@", nsMudTestEvaluate([json objectForKey: @"15"]));
 
+  // [subrep, "你好世界！", "世界", " aligo"]
+  NSLog(@"t16e should: 你好 aligo！ = %@", nsMudTestEvaluate([json objectForKey: @"16"]));
+
   NSLog(@"ok");
 }

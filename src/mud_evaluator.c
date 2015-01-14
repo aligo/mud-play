@@ -61,8 +61,16 @@ void * _mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size
   return ptr;
 }
 
+mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigned i) {
+  if ( evaluator->argc > i ) {
+    return evaluator->args[i];
+  } else {
+    return mud_nil_init();
+  }
+}
+
 int _mud_expr_evaluator_snprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, size_t n, const char * fmt) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch (arg->type) {
     case MUD_OBJ_TYPE_NIL:      return snprintf(ret, n, fmt, 0);
     case MUD_OBJ_TYPE_BOOLEAN:  return snprintf(ret, n, fmt, *(mud_boolean_t *)arg->ptr);
@@ -73,7 +81,7 @@ int _mud_expr_evaluator_snprintf(mud_expr_evaluator_t * evaluator, unsigned i, c
 }
 
 int _mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, const char * fmt) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch (arg->type) {
     case MUD_OBJ_TYPE_NIL:      return sprintf(ret, fmt, 0);
     case MUD_OBJ_TYPE_BOOLEAN:  return sprintf(ret, fmt, *(mud_boolean_t *)arg->ptr);
@@ -91,7 +99,7 @@ const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator,
 }
 
 const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsigned i) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
       return arg->ptr;
@@ -108,7 +116,7 @@ const char * mud_expr_evaluator_get_str(mud_expr_evaluator_t * evaluator, unsign
 }
 
 mud_boolean_t mud_expr_evaluator_get_boolean(mud_expr_evaluator_t * evaluator, unsigned i) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
       return 1;
@@ -118,14 +126,16 @@ mud_boolean_t mud_expr_evaluator_get_boolean(mud_expr_evaluator_t * evaluator, u
       return ( (*(mud_float_t *)arg->ptr) != 0.0 );
     case MUD_OBJ_TYPE_BOOLEAN:
       return *(mud_boolean_t *)arg->ptr;
+    case MUD_OBJ_TYPE_NIL:
+      return 0;
     default:
-      mud_warning("casting Type:%lu as mud_int, return false", arg->type);
+      mud_warning("casting Type:%lu as mud_boolean, return false", arg->type);
       return 0;
   }
 }
 
 mud_int_t mud_expr_evaluator_get_int(mud_expr_evaluator_t * evaluator, unsigned i) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
       return atol(arg->ptr);
@@ -142,7 +152,7 @@ mud_int_t mud_expr_evaluator_get_int(mud_expr_evaluator_t * evaluator, unsigned 
 }
 
 mud_float_t mud_expr_evaluator_get_float(mud_expr_evaluator_t * evaluator, unsigned i) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
       return atof(arg->ptr);

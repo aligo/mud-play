@@ -8,7 +8,7 @@
     - strlen: 305
     - strstr: 306
     - substr: 307
-    - replace: 308
+    - strrep: 308
 */
 
 char * _mud_string_substr(const char * src, size_t start, size_t length) {
@@ -31,7 +31,7 @@ size_t _mud_string_strstr_utf8(const char * str, const char * search) {
   char * ptr = strstr(str, search);
   if ( ptr ) {
     char * part = _mud_string_substr(str, 0, ptr - str);
-    int len = _mud_string_strlen_utf8(part);
+    size_t len = _mud_string_strlen_utf8(part);
     free(part);
     return len;
   } else {
@@ -53,6 +53,24 @@ char * _mud_string_substr_utf8(const char * str, size_t start, size_t length) {
   return _mud_string_substr(str, s, l);
 }
 
+char * _mud_string_strrep(const char * str, const char * search, const char * replace, mud_boolean_t all) {
+  char * ptr = strstr(str, search);
+  if ( ptr ) {
+    size_t r_len = strlen(replace);
+    size_t s_len = strlen(search);
+    size_t str_len = strlen(str);
+    size_t ret_len = str_len - s_len + r_len;
+    char * ret = (char *)malloc( (ret_len + 1) * sizeof(char));
+    char * suf = (char *)&str[ptr - str + s_len * sizeof(char)];
+    memcpy(ret, str, ( ptr - str ));
+    memcpy((char *)&ret[ptr - str], replace, r_len * sizeof(char));
+    memcpy((char *)&ret[ptr - str + r_len * sizeof(char)], suf, str_len * sizeof(char) - ( suf - str ) );
+    ret[ret_len] = '\0';
+    return ret;
+  } else {
+    return (char *)str;
+  }
+}
 
 mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 300
@@ -154,4 +172,11 @@ mud_object_t * _mud_op_string_substr_evaluate(mud_expr_evaluator_t * evaluator) 
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
   ret->ptr = _mud_string_substr_utf8((char *)mud_expr_evaluator_get_str(evaluator, 0), mud_expr_evaluator_get_int(evaluator, 1), mud_expr_evaluator_get_int(evaluator, 2));
   return ret;
+}
+
+mud_object_t * _mud_op_string_strrep_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 308
+  return mud_string_init(
+    _mud_string_strrep((char *)mud_expr_evaluator_get_str(evaluator, 0), (char *)mud_expr_evaluator_get_str(evaluator, 1), (char *)mud_expr_evaluator_get_str(evaluator, 2), mud_expr_evaluator_get_boolean(evaluator, 3))
+  );
 }
