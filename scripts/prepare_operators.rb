@@ -60,4 +60,3 @@ Dir[expand_src_path('bridges/*')].each do |bridge_path|
   end
 
 end
-

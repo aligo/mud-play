@@ -1,8 +1,8 @@
 /*
-  float
-    - round: 210
-    - floor: 211
-    - ceil: 212
+  int
+    - round:  210
+    - floor:  211
+    - ceil:   212
 */
 
 mud_object_t * _mud_op_float_round_evaluate(mud_expr_evaluator_t * evaluator) {

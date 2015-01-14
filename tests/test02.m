@@ -51,5 +51,12 @@ int main() {
   // [abs, 123456789.87654321]
   NSLog(@"t15e should: 123456789.87654321 = %@", nsMudTestEvaluate([json objectForKey: @"15"]));
 
+  // [%, 23.22, 11.11]
+  NSLog(@"t16e should: 1 = %@", nsMudTestEvaluate([json objectForKey: @"16"]));
+
+  // [%, 23.22, 0]
+  NSLog(@"t17e should be logged out 'dividing by zero':");
+  NSLog(@"t17e should: 0 = %@", nsMudTestEvaluate([json objectForKey: @"17"]));
+
   NSLog(@"ok");
 }
