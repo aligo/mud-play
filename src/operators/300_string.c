@@ -56,16 +56,37 @@ char * _mud_string_substr_utf8(const char * str, size_t start, size_t length) {
 char * _mud_string_strrep(const char * str, const char * search, const char * replace, mud_boolean_t all) {
   char * ptr = strstr(str, search);
   if ( ptr ) {
+    char * _str = (char *)str;
+    char * ret = NULL;
     size_t r_len = strlen(replace);
     size_t s_len = strlen(search);
-    size_t str_len = strlen(str);
-    size_t ret_len = str_len - s_len + r_len;
-    char * ret = (char *)malloc( (ret_len + 1) * sizeof(char));
-    char * suf = (char *)&str[ptr - str + s_len * sizeof(char)];
-    memcpy(ret, str, ( ptr - str ));
-    memcpy((char *)&ret[ptr - str], replace, r_len * sizeof(char));
-    memcpy((char *)&ret[ptr - str + r_len * sizeof(char)], suf, str_len * sizeof(char) - ( suf - str ) );
-    ret[ret_len] = '\0';
+    int need_free_str = 0;
+    do {
+      size_t str_len = strlen(_str);
+      size_t ret_len = str_len - s_len + r_len;
+      ret = (char *)malloc( (ret_len + 1) * sizeof(char));
+      char * suf = (char *)&_str[ptr - _str + s_len * sizeof(char)];
+      size_t suf_start = ptr - _str + r_len * sizeof(char);
+      memcpy(ret, _str, ( ptr - _str ));
+      memcpy((char *)&ret[ptr - _str], replace, r_len * sizeof(char));
+      memcpy((char *)&ret[suf_start], suf, str_len * sizeof(char) - ( suf - _str ) );
+      ret[ret_len] = '\0';
+      if ( all ) {
+        if ( need_free_str ) {
+          free(_str);
+        }
+        _str = ret;
+        ptr = strstr((char *)&_str[suf_start], search);
+        if ( ptr ) {
+          _str = strdup(ret);
+          need_free_str = 1;
+          ptr = ptr - ret + _str;
+          free(ret);
+        }
+      } else {
+        ptr = NULL;
+      }
+    } while ( ptr );
     return ret;
   } else {
     return (char *)str;
@@ -176,7 +197,7 @@ mud_object_t * _mud_op_string_substr_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_string_strrep_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 308
-  return mud_string_init(
-    _mud_string_strrep((char *)mud_expr_evaluator_get_str(evaluator, 0), (char *)mud_expr_evaluator_get_str(evaluator, 1), (char *)mud_expr_evaluator_get_str(evaluator, 2), mud_expr_evaluator_get_boolean(evaluator, 3))
-  );
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  ret->ptr = _mud_string_strrep((char *)mud_expr_evaluator_get_str(evaluator, 0), (char *)mud_expr_evaluator_get_str(evaluator, 1), (char *)mud_expr_evaluator_get_str(evaluator, 2), mud_expr_evaluator_get_boolean(evaluator, 3));
+  return ret;
 }
