@@ -5,7 +5,9 @@
     - strlen_byte: 302
     - strstr_byte: 303
     - substr_byte: 304
-    - strlen_byte: 305
+    - strlen: 305
+    - strstr: 306
+    - substr: 307
 */
 
 char * _mud_string_substr(const char * src, size_t start, size_t length) {
@@ -22,6 +24,18 @@ int _mud_string_strlen_utf8(const char * s) {
     i++;
   }
   return j;
+}
+
+int _mud_string_strstr_utf8(const char * str, const char * search) {
+  char * ptr = strstr(str, search);
+  if ( ptr ) {
+    char * part = _mud_string_substr(str, 0, ptr - str);
+    int len = _mud_string_strlen_utf8(part);
+    free(part);
+    return len;
+  } else {
+    return -1;
+  }
 }
 
 mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -94,7 +108,7 @@ mud_object_t * _mud_op_string_strstr_byte_evaluate(mud_expr_evaluator_t * evalua
   if ( ptr ) {
     return mud_int_init(ptr - str);
   } else {
-    return mud_nil_init();
+    return mud_int_init(-1);
   }
 }
 
@@ -109,5 +123,12 @@ mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) 
 // Enum: 305
   return mud_int_init(
     _mud_string_strlen_utf8((char *)mud_expr_evaluator_get_str(evaluator, 0))
+  );
+}
+
+mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 306
+  return mud_int_init(
+    _mud_string_strstr_utf8((char *)mud_expr_evaluator_get_str(evaluator, 0), (char *)mud_expr_evaluator_get_str(evaluator, 1))
   );
 }

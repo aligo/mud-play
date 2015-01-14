@@ -25,11 +25,11 @@ int main() {
   // [strstr_byte, "Hello world! 你好世界！", "world"]
   NSLog(@"t07e should: 6 = %@", nsMudTestEvaluate([json objectForKey: @"07"]));
 
-  // [strstr_byte, "Hello world! 你好世界！", "你好"]
-  NSLog(@"t08e should: 13 = %@", nsMudTestEvaluate([json objectForKey: @"08"]));
+  // [strstr_byte, "Hello world! 你好世界！", "世界"]
+  NSLog(@"t08e should: 19 = %@", nsMudTestEvaluate([json objectForKey: @"08"]));
 
   // [strstr_byte, "Hello world! 你好世界！", "404"]
-  NSLog(@"t09e should: <null> = %@", nsMudTestEvaluate([json objectForKey: @"09"]));
+  NSLog(@"t09e should: -1 = %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
   // [substr_byte, "Hello world! 你好世界！", 0, 5]
   NSLog(@"t10e should: Hello = %@", nsMudTestEvaluate([json objectForKey: @"10"]));
@@ -37,6 +37,8 @@ int main() {
   // [strlen, [concat, "Hello", " world! 你好世界！"]]
   NSLog(@"t11e should: 18 = %@", nsMudTestEvaluate([json objectForKey: @"11"]));
 
+  // [strstr_byte, "Hello world! 你好世界！", "世界"]
+  NSLog(@"t12e should: 15 = %@", nsMudTestEvaluate([json objectForKey: @"12"]));
 
   NSLog(@"ok");
 }
