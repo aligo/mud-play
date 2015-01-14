@@ -8,6 +8,7 @@
     - strlen: 305
     - strstr: 306
     - substr: 307
+    - replace: 308
 */
 
 char * _mud_string_substr(const char * src, size_t start, size_t length) {
