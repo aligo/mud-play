@@ -34,5 +34,9 @@ int main() {
   // [substr_byte, "Hello world! 你好世界！", 0, 5]
   NSLog(@"t10e should: Hello = %@", nsMudTestEvaluate([json objectForKey: @"10"]));
 
+  // [strlen, [concat, "Hello", " world! 你好世界！"]]
+  NSLog(@"t11e should: 18 = %@", nsMudTestEvaluate([json objectForKey: @"11"]));
+
+
   NSLog(@"ok");
 }

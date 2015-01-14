@@ -94,6 +94,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
     case MUD_OP_STRING_SUBSTR_BYTE:
       ret = _mud_op_string_substr_byte_evaluate(evaluator);
       break;
+    case MUD_OP_STRING_STRLEN:
+      ret = _mud_op_string_strlen_evaluate(evaluator);
+      break;
 // auto-generated: operators switch - end
     default:
       mud_error("Unknown operator: %lu", expr->oper);
