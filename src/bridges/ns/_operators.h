@@ -23,6 +23,8 @@ typedef enum {
   MUD_OP_ARITHMETIC_LOG1P = 228,
   MUD_OP_ARITHMETIC_LOG2 = 229,
   MUD_OP_STRING_CONCAT = 300,
-  MUD_OP_STRING_FORMAT = 301
+  MUD_OP_STRING_FORMAT = 301,
+  MUD_OP_STRING_STRLEN = 302,
+  MUD_OP_STRING_STRSTR = 303
 // auto-generated: operators enum - end
 } mud_operator_e;

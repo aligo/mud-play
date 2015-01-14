@@ -2,6 +2,9 @@
   string
     - concat: 300
     - format: 301
+    - strlen: 302
+    - strstr: 303
+    - substr: 304
 */
 
 char * substr(const char * src, size_t start, size_t length) {
@@ -65,4 +68,22 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   }
   *(char *)(ret->ptr + ret_old_size + partial_res_size - 1) = '\0';
   return ret;
+}
+
+mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 302
+  return mud_int_init(
+    strlen((char *)mud_expr_evaluator_get_str(evaluator, 0))
+  );
+}
+
+mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 303
+  char * str = (char *)mud_expr_evaluator_get_str(evaluator, 0);
+  char * ptr = strstr(str, (char *)mud_expr_evaluator_get_str(evaluator, 1));
+  if ( ptr ) {
+    return mud_int_init(ptr - str);
+  } else {
+    return mud_nil_init();
+  }
 }
