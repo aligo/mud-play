@@ -37,8 +37,17 @@ int main() {
   // [strlen, [concat, "Hello", " world! 你好世界！"]]
   NSLog(@"t11e should: 18 = %@", nsMudTestEvaluate([json objectForKey: @"11"]));
 
-  // [strstr_byte, "Hello world! 你好世界！", "世界"]
+  // [strstr, "Hello world! 你好世界！", "世界"]
   NSLog(@"t12e should: 15 = %@", nsMudTestEvaluate([json objectForKey: @"12"]));
+
+  // [substr, "Hello world! 你好世界！", 0, 5]
+  NSLog(@"t13e should: Hello = %@", nsMudTestEvaluate([json objectForKey: @"13"]));
+
+  // [substr, "Hello world! 你好世界！", 15, 2]
+  NSLog(@"t14e should: 世界 = %@", nsMudTestEvaluate([json objectForKey: @"14"]));
+
+  // [substr, "Hello world! 你好世界！", 6, 11]
+  NSLog(@"t15e should: world! 你好世界 = %@", nsMudTestEvaluate([json objectForKey: @"15"]));
 
   NSLog(@"ok");
 }

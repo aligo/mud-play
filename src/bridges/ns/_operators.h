@@ -28,6 +28,7 @@ typedef enum {
   MUD_OP_STRING_STRSTR_BYTE = 303,
   MUD_OP_STRING_SUBSTR_BYTE = 304,
   MUD_OP_STRING_STRLEN = 305,
-  MUD_OP_STRING_STRSTR = 306
+  MUD_OP_STRING_STRSTR = 306,
+  MUD_OP_STRING_SUBSTR = 307
 // auto-generated: operators enum - end
 } mud_operator_e;

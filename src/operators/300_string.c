@@ -17,8 +17,8 @@ char * _mud_string_substr(const char * src, size_t start, size_t length) {
   return ret;
 }
 
-int _mud_string_strlen_utf8(const char * s) {
-  int i = 0, j = 0;
+size_t _mud_string_strlen_utf8(const char * s) {
+  size_t i = 0, j = 0;
   while (s[i]) {
     if ((s[i] & 0xc0) != 0x80) j++;
     i++;
@@ -26,7 +26,7 @@ int _mud_string_strlen_utf8(const char * s) {
   return j;
 }
 
-int _mud_string_strstr_utf8(const char * str, const char * search) {
+size_t _mud_string_strstr_utf8(const char * str, const char * search) {
   char * ptr = strstr(str, search);
   if ( ptr ) {
     char * part = _mud_string_substr(str, 0, ptr - str);
@@ -37,6 +37,21 @@ int _mud_string_strstr_utf8(const char * str, const char * search) {
     return -1;
   }
 }
+
+char * _mud_string_substr_utf8(const char * str, size_t start, size_t length) {
+  size_t i = 0, j = 0, s = 0, l = 0;
+  while (str[i]) {
+    if ( j == start ) s = i;
+    if ((str[i] & 0xc0) != 0x80) j++;
+    i++;
+    if ( j == ( start + length + 1 ) ) {
+      l = i - s - 1;
+      break;
+    }
+  }
+  return _mud_string_substr(str, s, l);
+}
+
 
 mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 300
@@ -131,4 +146,11 @@ mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) 
   return mud_int_init(
     _mud_string_strstr_utf8((char *)mud_expr_evaluator_get_str(evaluator, 0), (char *)mud_expr_evaluator_get_str(evaluator, 1))
   );
+}
+
+mud_object_t * _mud_op_string_substr_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 307
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  ret->ptr = _mud_string_substr_utf8((char *)mud_expr_evaluator_get_str(evaluator, 0), mud_expr_evaluator_get_int(evaluator, 1), mud_expr_evaluator_get_int(evaluator, 2));
+  return ret;
 }
