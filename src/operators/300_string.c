@@ -2,9 +2,9 @@
   string
     - concat: 300
     - format: 301
-    - strlen: 302
-    - strstr: 303
-    - substr: 304
+    - strlen_byte: 302
+    - strstr_byte: 303
+    - substr_byte: 304
 */
 
 char * substr(const char * src, size_t start, size_t length) {
@@ -70,14 +70,14 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   return ret;
 }
 
-mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) {
+mud_object_t * _mud_op_string_strlen_byte_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 302
   return mud_int_init(
     strlen((char *)mud_expr_evaluator_get_str(evaluator, 0))
   );
 }
 
-mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) {
+mud_object_t * _mud_op_string_strstr_byte_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 303
   char * str = (char *)mud_expr_evaluator_get_str(evaluator, 0);
   char * ptr = strstr(str, (char *)mud_expr_evaluator_get_str(evaluator, 1));
@@ -86,4 +86,11 @@ mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) 
   } else {
     return mud_nil_init();
   }
+}
+
+mud_object_t * _mud_op_string_substr_byte_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 304
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  ret->ptr = substr((char *)mud_expr_evaluator_get_str(evaluator, 0), mud_expr_evaluator_get_int(evaluator, 1), mud_expr_evaluator_get_int(evaluator, 2));
+  return ret;
 }

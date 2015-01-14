@@ -85,11 +85,14 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
     case MUD_OP_STRING_FORMAT:
       ret = _mud_op_string_format_evaluate(evaluator);
       break;
-    case MUD_OP_STRING_STRLEN:
-      ret = _mud_op_string_strlen_evaluate(evaluator);
+    case MUD_OP_STRING_STRLEN_BYTE:
+      ret = _mud_op_string_strlen_byte_evaluate(evaluator);
       break;
-    case MUD_OP_STRING_STRSTR:
-      ret = _mud_op_string_strstr_evaluate(evaluator);
+    case MUD_OP_STRING_STRSTR_BYTE:
+      ret = _mud_op_string_strstr_byte_evaluate(evaluator);
+      break;
+    case MUD_OP_STRING_SUBSTR_BYTE:
+      ret = _mud_op_string_substr_byte_evaluate(evaluator);
       break;
 // auto-generated: operators switch - end
     default:
