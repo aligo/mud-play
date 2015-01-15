@@ -48,32 +48,11 @@ mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigne
   }
 }
 
-int _mud_expr_evaluator_snprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, size_t n, const char * fmt) {
-  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
-  switch (arg->type) {
-    case MUD_OBJ_TYPE_NIL:      return snprintf(ret, n, fmt, 0);
-    case MUD_OBJ_TYPE_BOOLEAN:  return snprintf(ret, n, fmt, *(mud_boolean_t *)arg->ptr);
-    case MUD_OBJ_TYPE_INT:      return snprintf(ret, n, fmt, *(mud_int_t *)arg->ptr);
-    case MUD_OBJ_TYPE_FLOAT:    return snprintf(ret, n, fmt, *(mud_float_t *)arg->ptr);
-    default:                    return snprintf(ret, n, fmt, arg->ptr);
-  }
-}
-
-int _mud_expr_evaluator_sprintf(mud_expr_evaluator_t * evaluator, unsigned i, char * ret, const char * fmt) {
-  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
-  switch (arg->type) {
-    case MUD_OBJ_TYPE_NIL:      return sprintf(ret, fmt, 0);
-    case MUD_OBJ_TYPE_BOOLEAN:  return sprintf(ret, fmt, *(mud_boolean_t *)arg->ptr);
-    case MUD_OBJ_TYPE_INT:      return sprintf(ret, fmt, *(mud_int_t *)arg->ptr);
-    case MUD_OBJ_TYPE_FLOAT:    return sprintf(ret, fmt, *(mud_float_t *)arg->ptr);
-    default:                    return sprintf(ret, fmt, arg->ptr);
-  }
-}
-
 const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt) {
-  size_t len = _mud_expr_evaluator_snprintf(evaluator, i, NULL, 0, fmt);
+  mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
+  size_t len = _mud_object_try_cast_snprintf(arg, NULL, 0, fmt);
   char * ret = (char *)_mud_expr_evaluator_tmp_pool_alloc(evaluator, len);
-  _mud_expr_evaluator_sprintf(evaluator, i, ret, fmt);
+  _mud_object_try_cast_sprintf(arg, ret, fmt);
   return ret;
 }
 

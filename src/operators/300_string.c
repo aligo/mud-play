@@ -132,12 +132,13 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
   for ( size_t i = 0; i < (fmt_len + 1); i++ ) {
     if ( '%' == fmt[i] || i == fmt_len ) {
       if ( i > 0 ) {
+        mud_object_t * arg = _mud_expr_evaluator_get(evaluator, partial_fmt_arg);
         partial_fmt_len = i - s;
         partial_fmt = _mud_string_substr(fmt, s, partial_fmt_len);
-        partial_res_size = _mud_expr_evaluator_snprintf(evaluator, partial_fmt_arg, NULL, 0, partial_fmt);
+        partial_res_size = _mud_object_try_cast_snprintf(arg, NULL, 0, partial_fmt);
         ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
         ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size);
-        _mud_expr_evaluator_sprintf(evaluator, partial_fmt_arg, (char *)(ret->ptr + ret_old_size), partial_fmt);
+        _mud_object_try_cast_sprintf(arg, (char *)(ret->ptr + ret_old_size), partial_fmt);
         free(partial_fmt);
         partial_fmt = NULL;
       }

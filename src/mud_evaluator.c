@@ -1,4 +1,5 @@
 #import "mud_evaluator.h"
+#import "evaluators/casting.c"
 #import "evaluators/expr.c"
 
 mud_object_t * mud_evaluate(mud_object_t * object) {
