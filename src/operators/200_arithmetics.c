@@ -28,20 +28,20 @@ mud_object_type_e mud_expr_evaluator_get_arithmetic_type(mud_expr_evaluator_t * 
 mud_arithmetic_t * _mud_arithmetic_init(mud_expr_evaluator_t * evaluator) {
   mud_arithmetic_t * arithmetic = malloc(sizeof(mud_arithmetic_t));
   arithmetic->type              = MUD_OBJ_TYPE_INT;
-  arithmetic->ints              = malloc(evaluator->argc * sizeof(mud_int_t));
-  arithmetic->floats            = malloc(evaluator->argc * sizeof(mud_float_t));
+  arithmetic->ints              = malloc(ME_ARGC * sizeof(mud_int_t));
+  arithmetic->floats            = malloc(ME_ARGC * sizeof(mud_float_t));
   arithmetic->int_res           = 0;
   arithmetic->float_res         = 0;
-  for (unsigned i = 0; i < evaluator->argc; i++) {
+  for (unsigned i = 0; i < ME_ARGC; i++) {
     switch ( arithmetic->type ) {
       case MUD_OBJ_TYPE_INT:
         arithmetic->type = mud_expr_evaluator_get_arithmetic_type(evaluator, i);
         if ( arithmetic->type == MUD_OBJ_TYPE_INT ) {
-          arithmetic->ints[i] = M_ARG_INT(i);
+          arithmetic->ints[i] = ME_ARG_INT(i);
         }
       case MUD_OBJ_TYPE_FLOAT:
       default:
-        arithmetic->floats[i] = M_ARG_FLOAT(i);
+        arithmetic->floats[i] = ME_ARG_FLOAT(i);
     }
   }
   return arithmetic;
@@ -76,13 +76,13 @@ mud_object_t * _mud_op_arithmetic_adding_evaluate(mud_expr_evaluator_t * evaluat
   mud_arithmetic_t * arithmetic = _mud_arithmetic_init(evaluator);
   switch ( arithmetic->type ) {
     case MUD_OBJ_TYPE_INT:
-      for (unsigned i = 0; i < evaluator->argc; i++) {
+      for (unsigned i = 0; i < ME_ARGC; i++) {
         arithmetic->int_res += arithmetic->ints[i];
       }
       break;
     case MUD_OBJ_TYPE_FLOAT:
     default:
-      for (unsigned i = 0; i < evaluator->argc; i++) {
+      for (unsigned i = 0; i < ME_ARGC; i++) {
         arithmetic->float_res += arithmetic->floats[i];
       }
       break;
@@ -95,9 +95,9 @@ mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * ev
   mud_arithmetic_t * arithmetic = _mud_arithmetic_init(evaluator);
   switch ( arithmetic->type ) {
     case MUD_OBJ_TYPE_INT:
-      if ( evaluator->argc > 1 ) { 
+      if ( ME_ARGC > 1 ) { 
         arithmetic->int_res = arithmetic->ints[0];
-        for (unsigned i = 1; i < evaluator->argc; i++) {
+        for (unsigned i = 1; i < ME_ARGC; i++) {
           arithmetic->int_res -= arithmetic->ints[i];
         }
       } else {
@@ -106,9 +106,9 @@ mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * ev
       break;
     case MUD_OBJ_TYPE_FLOAT:
     default:
-      if ( evaluator->argc > 1 ) { 
+      if ( ME_ARGC > 1 ) { 
         arithmetic->float_res = arithmetic->floats[0];
-        for (unsigned i = 1; i < evaluator->argc; i++) {
+        for (unsigned i = 1; i < ME_ARGC; i++) {
           arithmetic->float_res -= arithmetic->floats[i];
         }
       } else {
@@ -125,14 +125,14 @@ mud_object_t * _mud_op_arithmetic_multiplying_evaluate(mud_expr_evaluator_t * ev
   switch ( arithmetic->type ) {
     case MUD_OBJ_TYPE_INT:
       arithmetic->int_res = 1;
-      for (unsigned i = 0; i < evaluator->argc; i++) {
+      for (unsigned i = 0; i < ME_ARGC; i++) {
         arithmetic->int_res *= arithmetic->ints[i];
       }
       break;
     case MUD_OBJ_TYPE_FLOAT:
     default:
       arithmetic->float_res = 1;
-      for (unsigned i = 0; i < evaluator->argc; i++) {
+      for (unsigned i = 0; i < ME_ARGC; i++) {
         arithmetic->float_res *= arithmetic->floats[i];
       }
       break;
@@ -146,7 +146,7 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
   switch ( arithmetic->type ) {
     case MUD_OBJ_TYPE_INT:
       arithmetic->int_res = arithmetic->ints[0];
-      for (unsigned i = 1; i < evaluator->argc; i++) {
+      for (unsigned i = 1; i < ME_ARGC; i++) {
         if ( arithmetic->ints[i] == 0 ) {
           mud_error("dividing by zero, ignored.");
         } else {
@@ -157,7 +157,7 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
     case MUD_OBJ_TYPE_FLOAT:
     default:
       arithmetic->float_res = arithmetic->floats[0];
-      for (unsigned i = 1; i < evaluator->argc; i++) {
+      for (unsigned i = 1; i < ME_ARGC; i++) {
         if ( arithmetic->floats[i] == 0 ) {
           mud_error("dividing by zero, ignored.");
         } else {
