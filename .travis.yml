@@ -8,6 +8,7 @@ script:
   - make test TEST=eval02
   - make test TEST=boolean
   - make test TEST=float
+  - make test TEST=compare
   - make test TEST=test01
   - make test TEST=test02
   - make test TEST=test03

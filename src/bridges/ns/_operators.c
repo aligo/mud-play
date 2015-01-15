@@ -4,6 +4,7 @@
 #import "../../operators/200_arithmetics.c"
 #import "../../operators/210_int.c"
 #import "../../operators/220_float.c"
+#import "../../operators/290_compare.c"
 #import "../../operators/300_string.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
@@ -95,6 +96,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
       break;
     case MUD_OP_ARITHMETIC_LOG2:
       ret = _mud_op_arithmetic_log2_evaluate(evaluator);
+      break;
+    case MUD_OP_COMPARE_EQ_TO:
+      ret = _mud_op_compare_eq_to_evaluate(evaluator);
       break;
     case MUD_OP_STRING_CONCAT:
       ret = _mud_op_string_concat_evaluate(evaluator);
