@@ -37,11 +37,11 @@ mud_arithmetic_t * _mud_arithmetic_init(mud_expr_evaluator_t * evaluator) {
       case MUD_OBJ_TYPE_INT:
         arithmetic->type = mud_expr_evaluator_get_arithmetic_type(evaluator, i);
         if ( arithmetic->type == MUD_OBJ_TYPE_INT ) {
-          arithmetic->ints[i] = mud_expr_evaluator_get_int(evaluator, i);
+          arithmetic->ints[i] = M_ARG_INT(i);
         }
       case MUD_OBJ_TYPE_FLOAT:
       default:
-        arithmetic->floats[i] = mud_expr_evaluator_get_float(evaluator, i);
+        arithmetic->floats[i] = M_ARG_FLOAT(i);
     }
   }
   return arithmetic;
