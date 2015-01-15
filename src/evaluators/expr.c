@@ -7,37 +7,17 @@ mud_expr_evaluator_t * mud_expr_evaluator_init(mud_expr_t * expr) {
   }
   evaluator->argc = expr->argc;
 
-  evaluator->tmp_pool_count = 0;
-  evaluator->tmp_pool_size = MUD_EXPR_EVALUATOR_TMP_POOL_ALLOC_SIZE;
-  evaluator->tmp_pool = (void **)malloc(evaluator->tmp_pool_size * sizeof(void *));
-
+  evaluator->pool = mud_object_casting_pool_init();
   return evaluator;
 }
 
 void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
   free(evaluator->args);
-  for ( unsigned int i = 0; i < evaluator->tmp_pool_count; i++ ) {
-    if ( evaluator->tmp_pool[i] ) {
-      free(evaluator->tmp_pool[i]);
-    }
-  }
-  free(evaluator->tmp_pool);
-
   evaluator->args = NULL;
-  evaluator->tmp_pool = NULL;
-
-  evaluator->argc = evaluator->tmp_pool_count = evaluator->tmp_pool_size = 0;
+  mud_object_casting_pool_free(evaluator->pool);
+  evaluator->pool = NULL;
+  evaluator->argc = 0;
   free(evaluator);
-}
-
-void * _mud_expr_evaluator_tmp_pool_alloc(mud_expr_evaluator_t * evaluator, size_t size) {
-  void * ptr = malloc(size);
-  if (evaluator->tmp_pool_count == evaluator->tmp_pool_size) {
-    evaluator->tmp_pool_size *= 2;
-    evaluator->tmp_pool = (void **)realloc(evaluator->tmp_pool, evaluator->tmp_pool_size * sizeof(void *));
-  }
-  evaluator->tmp_pool[evaluator->tmp_pool_count++] = ptr;
-  return ptr;
 }
 
 mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigned i) {
@@ -51,7 +31,7 @@ mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigne
 const char * mud_expr_evaluator_get_str_format(mud_expr_evaluator_t * evaluator, unsigned i, const char * fmt) {
   mud_object_t * arg = _mud_expr_evaluator_get(evaluator, i);
   size_t len = _mud_object_try_cast_snprintf(arg, NULL, 0, fmt);
-  char * ret = (char *)_mud_expr_evaluator_tmp_pool_alloc(evaluator, len);
+  char * ret = (char *)_mud_object_casting_pool_malloc(evaluator->pool, (len + 1) * sizeof(char));
   _mud_object_try_cast_sprintf(arg, ret, fmt);
   return ret;
 }

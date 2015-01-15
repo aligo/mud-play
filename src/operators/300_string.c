@@ -119,14 +119,13 @@ mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) 
 mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 301
   mud_object_t * ret = mud_string_init("");
-  
   char * fmt = (char *)mud_expr_evaluator_get_str(evaluator, 0);
   size_t fmt_len = strlen(fmt);
 
   size_t s = 0;
   unsigned partial_fmt_arg = 0;
   size_t partial_fmt_len = 0;
-  char * partial_fmt;
+  char * partial_fmt = NULL;
   size_t partial_res_size = 0;
   size_t ret_old_size = 0;
   for ( size_t i = 0; i < (fmt_len + 1); i++ ) {
@@ -135,9 +134,9 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
         mud_object_t * arg = _mud_expr_evaluator_get(evaluator, partial_fmt_arg);
         partial_fmt_len = i - s;
         partial_fmt = _mud_string_substr(fmt, s, partial_fmt_len);
-        partial_res_size = _mud_object_try_cast_snprintf(arg, NULL, 0, partial_fmt);
+        partial_res_size = ( _mud_object_try_cast_snprintf(arg, NULL, 0, partial_fmt) + 1 ) * sizeof(char);
         ret_old_size = strlen((char *)ret->ptr) * sizeof(char);
-        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size);
+        ret->ptr = (char *)realloc( ret->ptr, ret_old_size + partial_res_size );
         _mud_object_try_cast_sprintf(arg, (char *)(ret->ptr + ret_old_size), partial_fmt);
         free(partial_fmt);
         partial_fmt = NULL;
@@ -146,7 +145,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
       s = i;
     }
   }
-  *(char *)(ret->ptr + ret_old_size + partial_res_size - 1) = '\0';
+  // *(char *)(ret->ptr + ret_old_size + partial_res_size ) = '\0';
   return ret;
 }
 
