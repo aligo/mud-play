@@ -1,4 +1,5 @@
 // auto-generated: operators import - begin
+#import "../../operators/190_boolean.c"
 #import "../../operators/200_arithmetics.c"
 #import "../../operators/210_int.c"
 #import "../../operators/220_float.c"
@@ -13,6 +14,15 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
   // mud_object_t ** args = expr->args;
   switch (expr->oper) {
 // auto-generated: operators switch - begin
+    case MUD_OP_BOOLEAN_NOT:
+      ret = _mud_op_boolean_not_evaluate(evaluator);
+      break;
+    case MUD_OP_BOOLEAN_AND:
+      ret = _mud_op_boolean_and_evaluate(evaluator);
+      break;
+    case MUD_OP_BOOLEAN_OR:
+      ret = _mud_op_boolean_or_evaluate(evaluator);
+      break;
     case MUD_OP_ARITHMETIC_ADDING:
       ret = _mud_op_arithmetic_adding_evaluate(evaluator);
       break;

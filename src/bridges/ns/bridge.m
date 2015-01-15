@@ -58,6 +58,9 @@ NSObject * nsWithMudObject(mud_object_t * object) {
     case MUD_OBJ_TYPE_NIL:
       ret = [NSNull null];
       break;
+    case MUD_OBJ_TYPE_BOOLEAN:
+      ret = *(mud_boolean_t *)object->ptr ? @YES : @NO;
+      break;
     case MUD_OBJ_TYPE_INT:
       ret = [NSNumber numberWithLong: *(mud_int_t *)object->ptr];
       break;
