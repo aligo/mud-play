@@ -17,7 +17,7 @@ struct mud_arithmetic_s {
 };
 
 mud_object_type_e mud_expr_evaluator_get_arithmetic_type(mud_expr_evaluator_t * evaluator, unsigned i) {
-  mud_object_t * arg = evaluator->args[i];
+  mud_object_t * arg = ME_ARG(i);
   switch ( arg->type ) {
     case MUD_OBJ_TYPE_STRING:
       return ( strchr( (char *)arg->ptr, '.') ? MUD_OBJ_TYPE_FLOAT : MUD_OBJ_TYPE_INT );
