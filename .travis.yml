@@ -6,6 +6,7 @@ script:
   - make test TEST=ns_bridge01
   - make test TEST=eval01
   - make test TEST=eval02
+  - make test TEST=cond
   - make test TEST=boolean
   - make test TEST=float
   - make test TEST=compare

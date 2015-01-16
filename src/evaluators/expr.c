@@ -5,9 +5,6 @@ mud_expr_evaluator_t * mud_expr_evaluator_init(mud_expr_t * expr) {
   evaluator->args = (mud_object_t **)malloc(args_size);
   memset(evaluator->args, 0, args_size);
   evaluator->orgs = expr->args;
-  // for (unsigned i = 0; i < expr->argc; i++) {
-  //   evaluator->args[i] = mud_evaluate(expr->args[i]);
-  // }
   evaluator->argc = expr->argc;
 
   evaluator->pool = mud_object_casting_pool_init();
@@ -26,7 +23,6 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
 
 mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigned i) {
   if ( evaluator->argc > i ) {
-    // return evaluator->args[i];
     if ( !evaluator->args[i] ) {
       evaluator->args[i] = mud_evaluate(evaluator->orgs[i]);
     }
