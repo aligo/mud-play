@@ -14,11 +14,13 @@ int main() {
   while ( t <= ( 1024 * ft ) ) {
     NSLog(@"%d units", t);
     reportMemory();
+    mud_scope_t * scope = mud_scope_init();
     for (int i = 0; i < t; i++ ) {
       mud_gc_stack_start();
-      mud_evaluate(mud_exprs);
+      mud_evaluate(mud_exprs, scope);
       mud_gc_stack_finish();
     }
+    mud_scope_free(scope);
     reportMemory();
     t *= 2;
   }
