@@ -77,11 +77,11 @@ const char * mud_object_try_cast_str(mud_object_casting_pool_t * pool, mud_objec
 mud_boolean_t mud_object_try_cast_boolean(mud_object_casting_pool_t * pool, mud_object_t * object) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_STRING:
-      if ( strcmp("false", (char *)object->ptr) == 0 ) {
+      // if ( strcmp("false", (char *)object->ptr) == 0 ) {
+      //   return 0;
+      // } else {
         return 1;
-      } else {
-        return 0;
-      }
+      // }
     case MUD_OBJ_TYPE_INT:
       return ( (*(mud_int_t *)object->ptr) != 0 );
     case MUD_OBJ_TYPE_FLOAT:
