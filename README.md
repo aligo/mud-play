@@ -12,7 +12,7 @@
 ### Conditional
 
   * 111:  `if, cond, (then statement exprs), (else statement exprs)`
-  * 112:  alias for `if`
+  * 112:  `when`, alias for `if`
   * 113:  `unless, cond, (then statement exprs), (else statement exprs)`
 
 ### Boolean
