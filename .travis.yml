@@ -2,9 +2,10 @@ language: objective-c
 compiler:
   - clang
   - gcc
-script:
+before_install:
   - brew install clib
   - clib install
+script:
   - make test TEST=ns_bridge01
   - make test TEST=eval01
   - make test TEST=eval02
