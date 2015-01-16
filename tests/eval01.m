@@ -1,4 +1,4 @@
-#import "support.m"
+#import "support.h"
 
 int main() {
   NSArray * ns_expr = @[@300, @"He", @"llo", @" ", @"World", @"! ", @2014, @"-", @3.1415926535, @" ", @"你好世界"];

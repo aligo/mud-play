@@ -1,7 +1,7 @@
 #define MUD_MUTE_ERROR    1
 #define MUD_MUTE_WARNING  1
 
-#import "support.m"
+#import "support.h"
 
 int main() {
   NSMutableArray * _code = [[NSMutableArray alloc] init];

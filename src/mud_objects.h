@@ -1,3 +1,4 @@
+#import "../deps/uthash/uthash.h"
 
 typedef enum {
   MUD_OBJ_TYPE_EXPR       = 10,

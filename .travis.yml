@@ -3,6 +3,7 @@ compiler:
   - clang
   - gcc
 script:
+  - git clone git@github.com:troydhanson/uthash.git --branch v1.9.9 --depth 1 ./deps/uthash
   - make test TEST=ns_bridge01
   - make test TEST=eval01
   - make test TEST=eval02

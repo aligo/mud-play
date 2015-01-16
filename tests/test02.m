@@ -1,4 +1,4 @@
-#import "support.m"
+#import "support.h"
 
 int main() {
 
