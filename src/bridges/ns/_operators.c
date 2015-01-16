@@ -100,6 +100,21 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr) {
     case MUD_OP_COMPARE_EQ_TO:
       ret = _mud_op_compare_eq_to_evaluate(evaluator);
       break;
+    case MUD_OP_COMPARE_NOT_EQ_TO:
+      ret = _mud_op_compare_not_eq_to_evaluate(evaluator);
+      break;
+    case MUD_OP_COMPARE_GT:
+      ret = _mud_op_compare_gt_evaluate(evaluator);
+      break;
+    case MUD_OP_COMPARE_LT:
+      ret = _mud_op_compare_lt_evaluate(evaluator);
+      break;
+    case MUD_OP_COMPARE_GT_OR_EQ:
+      ret = _mud_op_compare_gt_or_eq_evaluate(evaluator);
+      break;
+    case MUD_OP_COMPARE_LT_OR_EQ:
+      ret = _mud_op_compare_lt_or_eq_evaluate(evaluator);
+      break;
     case MUD_OP_STRING_CONCAT:
       ret = _mud_op_string_concat_evaluate(evaluator);
       break;
