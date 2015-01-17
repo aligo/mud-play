@@ -1,6 +1,7 @@
 // auto-generated: operators import - begin
 #import "../../operators/100_base.c"
 #import "../../operators/110_cond.c"
+#import "../../operators/120_scope.c"
 #import "../../operators/190_boolean.c"
 #import "../../operators/200_arithmetics.c"
 #import "../../operators/210_int.c"
@@ -31,6 +32,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
       break;
     case MUD_OP_COND_UNLESS:
       ret = _mud_op_cond_unless_evaluate(evaluator);
+      break;
+    case MUD_OP_SCOPE_GET:
+      ret = _mud_op_scope_get_evaluate(evaluator);
+      break;
+    case MUD_OP_SCOPE_SET:
+      ret = _mud_op_scope_set_evaluate(evaluator);
       break;
     case MUD_OP_BOOLEAN_NOT:
       ret = _mud_op_boolean_not_evaluate(evaluator);
