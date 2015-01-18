@@ -9,7 +9,13 @@ int main() {
   NSLog(@"tu should be: null ==  %@", nsMudTestEvaluate([json objectForKey: @"unknown"]));
 
   // [!, [and, false, [ or, true, false]]]
-  NSLog(@"t01e should: 1 == %@", nsMudTestEvaluate([json objectForKey: @"01"]));
+  NSLog(@"t01e should be: 1 == %@", nsMudTestEvaluate([json objectForKey: @"01"]));
+
+  // [if, true, "ok", "fail"]
+  NSLog(@"t02e should be: ok == %@", nsMudTestEvaluate([json objectForKey: @"02"]));
+
+  // [[sset, "ok", "ok"], [sget, "ok"]]
+  NSLog(@"t03e should be: ok == %@", nsMudTestEvaluate([json objectForKey: @"02"]));
 
 
   NSLog(@"ok");

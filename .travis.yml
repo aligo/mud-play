@@ -10,6 +10,7 @@ script:
   - make test TEST=eval01
   - make test TEST=eval02
   - make test TEST=cond
+  - make test TEST=scope
   - make test TEST=boolean
   - make test TEST=float
   - make test TEST=compare
