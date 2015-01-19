@@ -5,24 +5,24 @@
 ## Operators
 
 ### Base
-
   * 100:  `quote, ...`
   * 101:  `eval, (expr)`
 
 ### Conditional
-
   * 111:  `if, cond, (then statement exprs), (else statement exprs)`
   * 112:  `when`, alias for `if`
   * 113:  `unless, cond, (then statement exprs), (else statement exprs)`
 
-### Boolean
+### Scope
+  * 120: `sget, name`
+  * 121: `sset, name, value`
 
+### Boolean
   * 190:  `!, expr`
   * 191:  `&&, expr1, expr2`
   * 192:  `||, expr1, expr2`
 
 ### Arithmetic
-
   * 200:  `+, a, b, ...`
   * 201:  `-, a, b, ...`
   * 202:  `*, a, b, ...`
@@ -38,7 +38,6 @@
   * 206:   `**, 2, 10`
   * 207:   `abs, -1`
   * 208:   `exp, 1`
-
   * 220-229: cos, sin, tan, acos, asin, atan, atan2, log10, log1p, log2
 
 ### Compare

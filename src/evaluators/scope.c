@@ -9,8 +9,10 @@ void mud_scope_free(mud_scope_t * scope) {
   mud_scope_vars_t * tmp, * var = NULL;
   HASH_ITER(hh, scope->vars, var, tmp) {
     HASH_DEL(scope->vars, var);
-    free((void *)var->name);
-    free(var);
+    if ( var->belongs_to == scope ) {
+      free((void *)var->name);
+      free(var);
+    }
   }
   free(scope);
 }
@@ -41,6 +43,7 @@ void mud_scope_set(mud_scope_t * scope, const char * name, mud_object_t * value)
   if ( var == NULL ) {
     var = (mud_scope_vars_t *)malloc(sizeof(mud_scope_vars_t));
     var->name = strdup(name);
+    var->belongs_to = scope;
     HASH_ADD_KEYPTR(hh, scope->vars, var->name, strlen(var->name), var);
   }
   var->value = value;
