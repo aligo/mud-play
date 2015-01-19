@@ -8,6 +8,7 @@
 #import "../../operators/220_float.c"
 #import "../../operators/290_compare.c"
 #import "../../operators/300_string.c"
+#import "../../operators/500_list.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
 
@@ -158,6 +159,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
       break;
     case MUD_OP_STRING_STRREP:
       ret = _mud_op_string_strrep_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_LIST:
+      ret = _mud_op_list_list_evaluate(evaluator);
       break;
 // auto-generated: operators switch - end
     default:

@@ -70,12 +70,23 @@ NSObject * nsWithMudObject(mud_object_t * object) {
     case MUD_OBJ_TYPE_STRING:
       ret = [NSString stringWithUTF8String: (char *)object->ptr];
       break;
+    case MUD_OBJ_TYPE_LIST:
+      ret = nsArrayWithMudList((mud_list_t *)object->ptr);
+      break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
       ret = [NSNull null];
       break;
   }
   return ret;
+}
+
+NSArray * nsArrayWithMudList(mud_list_t * list) {
+  NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: list->count];
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    [ns_arr insertObject: nsWithMudObject(list->objects[i]) atIndex: i];
+  }
+  return ns_arr;
 }
 
 mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {

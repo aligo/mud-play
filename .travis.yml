@@ -14,6 +14,7 @@ script:
   - make test TEST=boolean
   - make test TEST=float
   - make test TEST=compare
+  - make test TEST=list
   - make test TEST=test01
   - make test TEST=test02
   - make test TEST=test03

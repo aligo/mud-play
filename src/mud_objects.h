@@ -8,8 +8,8 @@ typedef enum {
   MUD_OBJ_TYPE_INT        = 120,
   MUD_OBJ_TYPE_FLOAT      = 121,
   MUD_OBJ_TYPE_STRING     = 130,
-  MUD_OBJ_TYPE_ARRAY      = 140,
-  MUD_OBJ_TYPE_HASH       = 150,
+  MUD_OBJ_TYPE_LIST       = 150,
+  MUD_OBJ_TYPE_HASH       = 160,
   MUD_OBJ_TYPE_BRIDGE     = 300
 } mud_object_type_e;
 
@@ -48,3 +48,5 @@ mud_object_t * mud_string_init(const char * value);
 
 mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc);
 mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count);
+
+#import "objects/list.h"

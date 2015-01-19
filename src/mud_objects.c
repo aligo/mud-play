@@ -1,5 +1,6 @@
 #import "mud_objects.h"
 #import "mud_gc.h"
+#import "objects/list.c"
 
 mud_object_t * mud_object_alloc(mud_object_type_e type) {
   mud_object_t * object = (mud_object_t *)malloc(sizeof(mud_object_t));
@@ -21,7 +22,9 @@ void mud_object_free(mud_object_t * object) {
     free(exprs->exprs);
     exprs->exprs = NULL;
     exprs->count = 0;
-  } else if ( object-> type >= MUD_OBJ_TYPE_BRIDGE ) {
+  } else if ( object->type == MUD_OBJ_TYPE_LIST ) {
+    mud_list_free(object->ptr);
+  } else if ( object->type >= MUD_OBJ_TYPE_BRIDGE ) {
     mud_object_bridge_free(object);
   }
   free(object->ptr);
