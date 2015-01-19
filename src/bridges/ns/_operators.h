@@ -47,6 +47,7 @@ typedef enum {
   MUD_OP_STRING_STRSTR = 306,
   MUD_OP_STRING_SUBSTR = 307,
   MUD_OP_STRING_STRREP = 308,
-  MUD_OP_LIST_LIST = 500
+  MUD_OP_LIST_LIST = 500,
+  MUD_OP_LIST_COUNT = 501
 // auto-generated: operators enum - end
 } mud_operator_e;

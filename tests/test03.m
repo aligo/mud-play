@@ -52,8 +52,8 @@ int main() {
   // [subrep, "你好世界！", "世界", " aligo"]
   NSLog(@"t16e should: 你好 aligo！ = %@", nsMudTestEvaluate([json objectForKey: @"16"]));
 
-  // [subrep, "你好世界！", "世界", " aligo"]
-  NSLog(@"t17e should: 你好 aligo！ = %@", nsMudTestEvaluate([json objectForKey: @"17"]));
+  // [subrep, "a1 a2 a3 a4", "a", "aligo", true]
+  NSLog(@"t17e should: aligo1 aligo2 aligo3 aligo4 = %@", nsMudTestEvaluate([json objectForKey: @"17"]));
 
   NSLog(@"ok");
 }
