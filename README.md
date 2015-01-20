@@ -7,6 +7,7 @@
 ### Base
   * 100:  `quote, ...`
   * 101:  `eval, (expr)`
+  * 102:  `expr, operator, ..., quote, (list, ...), ...`
 
 ### Conditional
   * 111:  `if, cond, (then statement exprs), (else statement exprs)`
@@ -58,3 +59,8 @@
   * 306:   `strstr, "abc", "a"`
   * 307:   `substr, "abc", 0, 1`
   * 308:   `strrep, "abc", "a", "d", all`
+
+### List
+  * 500:   `list, a, b, ...`
+  * 501:   `lcount (list)`
+  * 502:   `lnth, (list), 0`

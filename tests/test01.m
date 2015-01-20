@@ -18,7 +18,10 @@ int main() {
   NSLog(@"t03e should be: ok == %@", nsMudTestEvaluate([json objectForKey: @"03"]));
 
   // [expr, concat, quote, [list, 'Hello ', 'world'], '!' ]
-  NSLog(@"t04 should be: Hello world! == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
+  NSLog(@"t04e should be: Hello world! == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
+
+  // [expr, +, quote, [list, 1, 2], quote, 3]
+  NSLog(@"t05e should be: 6 == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
 
   NSLog(@"ok");
 }

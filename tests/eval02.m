@@ -12,4 +12,6 @@ int main() {
   NSLog(@"(expr, +, quote, (list, 1, 1), 1 ) should be: 3 == %@", nsMudTestEvaluate(@[@102, @200, @100, @[@500, @1, @1], @1]));
 
   NSLog(@"(expr, concat, quote, (list, 'Hello ', 'world'), '!' ) should be: Hello world! == %@", nsMudTestEvaluate(@[@102, @300, @100, @[@500, @"Hello ", @"world"], @"!"]));
+
+  NSLog(@"(expr, +, quote, (list, 2, 2), quote, 2 ) should be: 6 == %@", nsMudTestEvaluate(@[@102, @200, @100, @[@500, @2, @2], @100, @2]));
 }

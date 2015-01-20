@@ -33,6 +33,8 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
         for (unsigned j = 0; j < list->count; j++) {
           args[argc++] = list->objects[j];
         }
+      } else {
+        args[argc++] = _ME_ORG(i);
       }
     } else {
       args[argc++] = org;
