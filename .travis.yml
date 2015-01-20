@@ -18,3 +18,4 @@ script:
   - make test TEST=test01
   - make test TEST=test02
   - make test TEST=test03
+  - make test TEST=test04
