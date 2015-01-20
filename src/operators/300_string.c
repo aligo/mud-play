@@ -9,6 +9,7 @@
     - strstr: 306
     - substr: 307
     - strrep: 308
+    - join:   309
 */
 
 char * _mud_string_substr(const char * src, size_t start, size_t length) {
@@ -95,22 +96,26 @@ char * _mud_string_strrep(const char * str, const char * search, const char * re
 
 mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 300
+  size_t * _strs_len = (size_t *)malloc(ME_ARGC * sizeof(size_t));
   char ** _strs = (char **)malloc(ME_ARGC * sizeof(char *));
   size_t length = 0;
   for ( unsigned i = 0; i < ME_ARGC; i++ ) {
     _strs[i] = (char *)ME_ARG_STR(i);
-    length += strlen(_strs[i]);
+    _strs_len[i] = strlen(_strs[i]);
+    length += _strs_len[i];
   }
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
   ret->ptr = (char *)malloc((length + 1) * sizeof(char));
   size_t cpy_len = 0;
   length = 0;
   for ( unsigned i = 0; i < ME_ARGC; i++ ) {
-    cpy_len = strlen(_strs[i]) * sizeof(char);
+    cpy_len = _strs_len[i] * sizeof(char);
     memcpy(ret->ptr + length, _strs[i], cpy_len);
     length += cpy_len;
   }
   free(_strs);
+  free(_strs_len);
+  _strs_len = NULL; 
   _strs = NULL;
   *(char *)(ret->ptr + length) = '\0';
   return ret;
@@ -199,5 +204,38 @@ mud_object_t * _mud_op_string_strrep_evaluate(mud_expr_evaluator_t * evaluator) 
 // Enum: 308
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
   ret->ptr = _mud_string_strrep((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1), (char *)ME_ARG_STR(2), ME_ARG_BOOLEAN(3));
+  return ret;
+}
+
+mud_object_t * _mud_op_string_join_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 309
+  size_t * _strs_len = (size_t *)malloc(ME_ARGC * sizeof(size_t));
+  char ** _strs = (char **)malloc(ME_ARGC * sizeof(char *));
+  size_t length = 0;
+  for ( unsigned i = 0; i < ME_ARGC; i++ ) {
+    _strs[i] = (char *)ME_ARG_STR(i);
+    _strs_len[i] = strlen(_strs[i]);
+    length += _strs_len[i];
+  }
+  length += _strs_len[0] * (ME_ARGC - 3);
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  ret->ptr = (char *)malloc((length + 1) * sizeof(char));
+  size_t cpy_len = 0;
+  length = 0;
+  for ( unsigned i = 1; i < ME_ARGC; i++ ) {
+    cpy_len = _strs_len[i] * sizeof(char);
+    memcpy(ret->ptr + length, _strs[i], cpy_len);
+    length += cpy_len;
+    if ( i < (ME_ARGC - 1) ) {
+      cpy_len = _strs_len[0] * sizeof(char);
+      memcpy(ret->ptr + length, _strs[0], cpy_len);
+      length += cpy_len;
+    }
+  }
+  free(_strs);
+  free(_strs_len);
+  _strs_len = NULL; 
+  _strs = NULL;
+  *(char *)(ret->ptr + length) = '\0';
   return ret;
 }

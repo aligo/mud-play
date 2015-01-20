@@ -55,5 +55,8 @@ int main() {
   // [subrep, "a1 a2 a3 a4", "a", "aligo", true]
   NSLog(@"t17e should: aligo1 aligo2 aligo3 aligo4 = %@", nsMudTestEvaluate([json objectForKey: @"17"]));
 
+  // [join, ".", "a", "b", "c", "d", 2014]
+  NSLog(@"t18e should be: a.b.c.d.2014 = %@", nsMudTestEvaluate([json objectForKey: @"18"]));
+
   NSLog(@"ok");
 }

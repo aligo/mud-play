@@ -59,6 +59,7 @@
   * 306:   `strstr, "abc", "a"`
   * 307:   `substr, "abc", 0, 1`
   * 308:   `strrep, "abc", "a", "d", all`
+  * 309:   `join, ",", a, b, ...`
 
 ### List
   * 500:   `list, a, b, ...`

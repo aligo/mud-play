@@ -163,6 +163,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_STRING_STRREP:
       ret = _mud_op_string_strrep_evaluate(evaluator);
       break;
+    case MUD_OP_STRING_JOIN:
+      ret = _mud_op_string_join_evaluate(evaluator);
+      break;
     case MUD_OP_LIST_LIST:
       ret = _mud_op_list_list_evaluate(evaluator);
       break;
