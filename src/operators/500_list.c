@@ -2,6 +2,7 @@
   list
     - list:   500
     - lcount: 501
+    - lnth:   502
 */
 
 mud_boolean_t _mud_list_check(mud_object_t * object) {
@@ -30,3 +31,10 @@ mud_object_t * _mud_op_list_count_evaluate(mud_expr_evaluator_t * evaluator) {
     return mud_int_init(0);
   }
 }
+
+mud_object_t * _mud_op_list_nth_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 502
+  mud_object_t * list = ME_ARG(0);
+  return ( ( mud_list_t * ) list->ptr)->objects[ME_ARG_INT(1)];
+}
+
