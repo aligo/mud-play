@@ -2,6 +2,7 @@ typedef enum {
 // auto-generated: operators enum - begin
   MUD_OP_BASE_QUOTE = 100,
   MUD_OP_BASE_EVAL = 101,
+  MUD_OP_BASE_EXPR = 102,
   MUD_OP_COND_IF = 111,
   MUD_OP_COND_WHEN = 112,
   MUD_OP_COND_UNLESS = 113,
