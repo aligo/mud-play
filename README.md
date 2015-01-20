@@ -39,7 +39,7 @@
   * 206:   `**, 2, 10`
   * 207:   `abs, -1`
   * 208:   `exp, 1`
-  * 220-229: cos, sin, tan, acos, asin, atan, atan2, log10, log1p, log2
+  * 220-229: `cos, n`, `sin, n`, `tan, n`, `acos, n`, `asin, n`, `atan, n`, `atan2, n, p`, `log10, n`, `log1p, n`, `log2, n`
 
 ### Compare
   * 290:   `==, 1, 1`
