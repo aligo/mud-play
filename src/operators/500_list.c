@@ -1,8 +1,10 @@
 /*
   list
-    - list:   500
-    - lcount: 501
-    - lnth:   502
+    - list:     500
+    - lcount:   501
+    - lnth:     502
+    - append:   503
+    - prepend:  504
 */
 
 mud_boolean_t _mud_list_check(mud_object_t * object) {
@@ -36,5 +38,29 @@ mud_object_t * _mud_op_list_nth_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 502
   mud_object_t * list = ME_ARG(0);
   return ( ( mud_list_t * ) list->ptr)->objects[ME_ARG_INT(1)];
+}
+
+mud_object_t * _mud_op_list_append_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 503
+  mud_object_t * list = ME_ARG(0);
+  for ( unsigned i = 1; i < ME_ARGC; i++ ) {
+    mud_object_t * arg = ME_ARG(i);
+    if ( arg->type != MUD_OBJ_TYPE_NIL ) {
+      mud_list_append((mud_list_t *)list->ptr, (mud_object_t *)ME_ARG(i));
+    }
+  }
+  return list;
+}
+
+mud_object_t * _mud_op_list_prepend_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 504
+  mud_object_t * list = ME_ARG(0);
+  for ( unsigned i = ME_ARGC; i > 0; i-- ) {
+    mud_object_t * arg = ME_ARG(i);
+    if ( arg->type != MUD_OBJ_TYPE_NIL ) {
+      mud_list_prepend((mud_list_t *)list->ptr, (mud_object_t *)ME_ARG(i));
+    }
+  }
+  return list;
 }
 

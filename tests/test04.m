@@ -10,8 +10,11 @@ int main() {
   // [sset, "list", [list, 1, 2, 3] ], [ +, [lcount, [sget, "list"]], [lnth, [sget, "list"], 1]
   NSLog(@"t02e should be: 4 == %@", nsMudTestEvaluate([json objectForKey: @"02"]));
 
-  // [join, ",", quote, [list, "a", "b", "c", "d"]]
+  // [join, ",", [eargs, [list, "a", "b", "c", "d"]]]
   NSLog(@"t03e should be: a,b,c,d == %@", nsMudTestEvaluate([json objectForKey: @"03"]));
+
+  // [prepend, [append, [list, 2, 3], 4], 1]
+  NSLog(@"t04e should be: (1,2,3,4) == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
 
   NSLog(@"ok");
 }

@@ -66,3 +66,5 @@
   * 500:   `list, a, b, ...`
   * 501:   `lcount (list)`
   * 502:   `lnth, (list), 0`
+  * 503:   `append, (list), ...`
+  * 504:   `prepend, (list), ...`

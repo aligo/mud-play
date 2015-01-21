@@ -9,5 +9,9 @@ int main() {
   NSLog(@"(lnth, (list, 1, 2, 3), 0) should be: 1 == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @0]));
   NSLog(@"(lnth, (list, 1, 2, 3), 1) should be: 2 == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @1]));
 
+  NSLog(@"(append, (list, 1, 2, 3), 4, nil, 5, 6) should be: (1, 2, 3, 4, 5, 6) == %@", nsMudTestEvaluate(@[@503, @[@500, @1, @2, @3], @4, @[@120, @"ud"], @5, @6]));
+
+  NSLog(@"(prepend, (list, 4, 5, 6), 1, nil, 2, 3) should be: (1, 2, 3, 4, 5, 6) == %@", nsMudTestEvaluate(@[@504, @[@500, @4, @5, @6], @1, @[@120, @"ud"], @2, @3]));
+
   NSLog(@"ok");
 }
