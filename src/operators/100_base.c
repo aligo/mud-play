@@ -25,16 +25,16 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
     org = _ME_ORG(i);
     if ( ( org->type == MUD_OBJ_TYPE_INT ) && ( *(mud_int_t *)org->ptr == 100 ) ) {
       i++;
-      mud_object_t * n_org = ME_ARG(i);
-      if ( n_org->type == MUD_OBJ_TYPE_LIST ) {
-        mud_list_t * list = (mud_list_t *)n_org->ptr;
+      mud_object_t * n_arg = ME_ARG(i);
+      if ( n_arg->type == MUD_OBJ_TYPE_LIST ) {
+        mud_list_t * list = (mud_list_t *)n_arg->ptr;
         args_size += -2 + list->count;
         args = (mud_object_t ** )realloc(args, args_size * sizeof(mud_object_t *));
         for (unsigned j = 0; j < list->count; j++) {
           args[argc++] = list->objects[j];
         }
       } else {
-        args[argc++] = _ME_ORG(i);
+        args[argc++] = n_arg;
       }
     } else {
       args[argc++] = org;
