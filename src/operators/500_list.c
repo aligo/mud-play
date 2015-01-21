@@ -5,6 +5,7 @@
     - lnth:     502
     - append:   503
     - prepend:  504
+    - push:     505
 */
 
 mud_boolean_t _mud_list_check(mud_object_t * object) {
@@ -61,6 +62,17 @@ mud_object_t * _mud_op_list_prepend_evaluate(mud_expr_evaluator_t * evaluator) {
       mud_list_prepend((mud_list_t *)list->ptr, (mud_object_t *)ME_ARG(i));
     }
   }
+  return list;
+}
+
+mud_object_t * _mud_op_list_push_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 505
+  mud_object_t * list = ME_ARG(0);
+  mud_int_t pos = ((mud_list_t *)list->ptr)->count;
+  if ( ME_ARGC > 2 ) {
+    pos = ME_ARG_INT(2);
+  }
+  mud_list_push((mud_list_t *)list->ptr, (mud_object_t *)ME_ARG(1), pos);
   return list;
 }
 

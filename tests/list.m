@@ -13,5 +13,11 @@ int main() {
 
   NSLog(@"(prepend, (list, 4, 5, 6), 1, nil, 2, 3) should be: (1, 2, 3, 4, 5, 6) == %@", nsMudTestEvaluate(@[@504, @[@500, @4, @5, @6], @1, @[@120, @"ud"], @2, @3]));
 
+  NSLog(@"(push, (list, 1, 2, 3), 4) should be: (1, 2, 3, 4) == %@", nsMudTestEvaluate(@[@505, @[@500, @1, @2, @3], @4]));
+
+  NSLog(@"(push, (list, 1, 2, 3), 1.5, 1) should be: (1, 1.5, 2, 3) == %@", nsMudTestEvaluate(@[@505, @[@500, @1, @2, @3], @1.5, @1]));
+
+  NSLog(@"(push, (list, 1, 2, 3), 0, 0) should be: (0, 1, 2, 3) == %@", nsMudTestEvaluate(@[@505, @[@500, @1, @2, @3], @0, @0]));
+
   NSLog(@"ok");
 }

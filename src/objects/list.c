@@ -26,6 +26,16 @@ void mud_list_prepend(mud_list_t * list, mud_object_t * item) {
   list->count++;
 }
 
+void mud_list_push(mud_list_t * list, mud_object_t * item, mud_int_t pos) {
+  if (list->count == list->size) {
+    list->size *= 2;
+    list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
+  }
+  memcpy(&list->objects[pos + 1], &list->objects[pos], (list->count - pos) * sizeof(mud_object_t *));
+  list->objects[pos] = item;
+  list->count++;
+}
+
 void mud_list_free(mud_list_t * list) {
   free(list->objects);
   list->objects = NULL;
