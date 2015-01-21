@@ -7,7 +7,8 @@
 ### Base
   * 100:  `quote, ...`
   * 101:  `eval, (expr)`
-  * 102:  `expr, operator, ..., quote, (list, ...), ...`
+  * 102:  `expr, operator, ..., (eargs, (list, ...), arg2), ...`
+  * 103:  `eargs, arg1, arg2, arg3 ...`
 
 ### Conditional
   * 111:  `if, cond, (then statement exprs), (else statement exprs)`

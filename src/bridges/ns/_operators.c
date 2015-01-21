@@ -28,6 +28,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_BASE_EXPR:
       ret = _mud_op_base_expr_evaluate(evaluator);
       break;
+    case MUD_OP_BASE_EARGS:
+      ret = _mud_op_base_eargs_evaluate(evaluator);
+      break;
     case MUD_OP_COND_IF:
       ret = _mud_op_cond_if_evaluate(evaluator);
       break;

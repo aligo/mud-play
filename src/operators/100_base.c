@@ -1,8 +1,9 @@
 /*
   base
-    - quote: 100
-    - eval: 101
-    - expr: 102
+    - quote:  100
+    - eval:   101
+    - expr:   102
+    - eargs:  103
 */
 
 mud_object_t * _mud_op_base_quote_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -23,18 +24,26 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * org;
   for (unsigned i = 1; i < ME_ARGC; i++) {
     org = _ME_ORG(i);
-    if ( ( org->type == MUD_OBJ_TYPE_INT ) && ( *(mud_int_t *)org->ptr == 100 ) ) {
-      i++;
-      mud_object_t * n_arg = ME_ARG(i);
-      if ( n_arg->type == MUD_OBJ_TYPE_LIST ) {
-        mud_list_t * list = (mud_list_t *)n_arg->ptr;
-        args_size += -2 + list->count;
+    if ( org->type == MUD_OBJ_TYPE_EXPR ) {
+      mud_expr_t * expr = (mud_expr_t *)org->ptr;
+      if ( expr->oper == MUD_OP_BASE_EARGS ) {
+        args_size += expr->argc - 1;
         args = (mud_object_t ** )realloc(args, args_size * sizeof(mud_object_t *));
-        for (unsigned j = 0; j < list->count; j++) {
-          args[argc++] = list->objects[j];
+        for (unsigned j = 0; j < expr->argc; j++) {
+          mud_object_t * earg = mud_evaluate(expr->args[j], evaluator->scope);
+          if ( earg->type == MUD_OBJ_TYPE_LIST ) {
+            mud_list_t * list = (mud_list_t *)earg->ptr;
+            args_size += list->count - 1;
+            args = (mud_object_t ** )realloc(args, args_size * sizeof(mud_object_t *));
+            for (unsigned k = 0; k < list->count; k++) {
+              args[argc++] = list->objects[k];
+            }
+          } else {
+            args[argc++] = earg;
+          }
         }
       } else {
-        args[argc++] = n_arg;
+        args[argc++] = org;
       }
     } else {
       args[argc++] = org;
@@ -42,4 +51,9 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
   }
   mud_object_t * expr = mud_expr_init(ME_ARG_INT(0), args, argc);
   return mud_evaluate(expr, evaluator->scope);
+}
+
+mud_object_t * _mud_op_base_eargs_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 103
+  return _ME_ORG(0);
 }
