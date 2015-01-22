@@ -46,5 +46,7 @@ int main() {
           @"b", @"c"
         ]));
 
+  NSLog(@"(apply, (+, 1, 1), 1, 2, 3) should be: 2 == %@", nsMudTestEvaluate(@[@131, @[@200, @1, @1], @1, @2, @3]));
+
   NSLog(@"ok");
 }
