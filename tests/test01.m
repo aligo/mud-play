@@ -26,6 +26,9 @@ int main() {
   // [apply, [lambda, [[+, 1, 1], [+, 2, 2]]]]
   NSLog(@"t06e should be: 4 == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
 
+  // [apply, [lambda, [list, "arg"], [+, 1, 1]]
+  NSLog(@"t07e should be: 2 == %@", nsMudTestEvaluate([json objectForKey: @"07"]));
+
 
   NSLog(@"ok");
 }
