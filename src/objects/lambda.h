@@ -8,3 +8,5 @@ struct mud_lambda_s {
 
 mud_lambda_t * mud_lambda_alloc();
 void mud_lambda_free(mud_lambda_t * lambda);
+
+mud_object_t * mud_lambda_apply(mud_lambda_t * lambda, mud_scope_t * scope);

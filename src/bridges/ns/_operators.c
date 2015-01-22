@@ -51,6 +51,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LAMBDA_LAMBDA:
       ret = _mud_op_lambda_lambda_evaluate(evaluator);
       break;
+    case MUD_OP_LAMBDA_APPLY:
+      ret = _mud_op_lambda_apply_evaluate(evaluator);
+      break;
     case MUD_OP_BOOLEAN_NOT:
       ret = _mud_op_boolean_not_evaluate(evaluator);
       break;
