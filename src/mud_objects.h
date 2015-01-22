@@ -3,6 +3,7 @@
 typedef enum {
   MUD_OBJ_TYPE_EXPR       = 10,
   MUD_OBJ_TYPE_EXPRS      = 20,
+  MUD_OBJ_TYPE_LAMBDA     = 30,
   MUD_OBJ_TYPE_NIL        = 100,
   MUD_OBJ_TYPE_BOOLEAN    = 110,
   MUD_OBJ_TYPE_INT        = 120,
@@ -48,5 +49,7 @@ mud_object_t * mud_string_init(const char * value);
 
 mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc);
 mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count);
+mud_object_t * mud_lambda_init();
 
 #import "objects/list.h"
+#import "objects/lambda.h"
