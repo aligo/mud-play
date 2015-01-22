@@ -14,6 +14,9 @@ void mud_list_free(mud_list_t * list) {
   list->count = list->size = 0;
 }
 
+mud_boolean_t _mud_list_check(mud_object_t * object) {
+  return object->type == MUD_OBJ_TYPE_LIST;
+}
 
 void mud_list_append(mud_list_t * list, mud_object_t * item) {
   if (list->count == list->size) {

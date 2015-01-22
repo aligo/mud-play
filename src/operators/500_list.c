@@ -10,10 +10,6 @@
     - lremove:   507
 */
 
-mud_boolean_t _mud_list_check(mud_object_t * object) {
-  return object->type == MUD_OBJ_TYPE_LIST;
-}
-
 mud_object_t * _mud_op_list_list_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 500
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
