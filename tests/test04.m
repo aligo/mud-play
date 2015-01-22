@@ -16,5 +16,8 @@ int main() {
   // [prepend, [append, [list, 2, 3], 4], 1]
   NSLog(@"t04e should be: (1,2,3,4) == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
 
+  // [reverse, [push, [list, 4, 2, 1], 3, 1]]
+  NSLog(@"t05e should be: (1,2,3,4) == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+
   NSLog(@"ok");
 }

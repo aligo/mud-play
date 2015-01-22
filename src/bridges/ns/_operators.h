@@ -55,6 +55,7 @@ typedef enum {
   MUD_OP_LIST_NTH = 502,
   MUD_OP_LIST_APPEND = 503,
   MUD_OP_LIST_PREPEND = 504,
-  MUD_OP_LIST_PUSH = 505
+  MUD_OP_LIST_PUSH = 505,
+  MUD_OP_LIST_REVERSE = 510
 // auto-generated: operators enum - end
 } mud_operator_e;

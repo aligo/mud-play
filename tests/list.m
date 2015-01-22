@@ -19,5 +19,7 @@ int main() {
 
   NSLog(@"(push, (list, 1, 2, 3), 0, 0) should be: (0, 1, 2, 3) == %@", nsMudTestEvaluate(@[@505, @[@500, @1, @2, @3], @0, @0]));
 
+  NSLog(@"(reverse, (list, 1, 2, 3)) should be: (3, 2, 1) == %@", nsMudTestEvaluate(@[@510, @[@500, @1, @2, @3]]));
+
   NSLog(@"ok");
 }
