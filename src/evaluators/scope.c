@@ -10,7 +10,7 @@ void mud_scope_free(mud_scope_t * scope) {
   HASH_ITER(hh, scope->vars, var, tmp) {
     HASH_DEL(scope->vars, var);
     if ( var->belongs_to == scope ) {
-      free((void *)var->name);
+      free((char *)var->name);
       free(var);
     }
   }
@@ -22,7 +22,7 @@ mud_scope_t * mud_scope_push(mud_scope_t * scope) {
   mud_scope_t * new_scope = (mud_scope_t *)malloc(sizeof(mud_scope_t));
   new_scope->vars = NULL;
   HASH_ITER(hh, scope->vars, var, tmp) {
-    HASH_ADD_KEYPTR(hh, new_scope->vars, var->name, strlen(var->name), var);
+    mud_scope_set(new_scope, var->name, mud_scope_get(scope, var->name));
   }
   return new_scope;
 }
