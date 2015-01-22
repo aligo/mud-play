@@ -9,7 +9,11 @@ struct mud_list_s {
 
 
 mud_list_t * mud_list_init();
+void mud_list_free(mud_list_t * list);
+
+
 void mud_list_append(mud_list_t * list, mud_object_t * item);
 void mud_list_prepend(mud_list_t * list, mud_object_t * item);
 void mud_list_push(mud_list_t * list, mud_object_t * item, mud_int_t pos);
-void mud_list_free(mud_list_t * list);
+void mud_list_replace(mud_list_t * list, mud_object_t * item, mud_int_t pos);
+void mud_list_remove(mud_list_t * list, mud_int_t pos);

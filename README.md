@@ -66,5 +66,10 @@
   * 500:   `list, a, b, ...`
   * 501:   `lcount (list)`
   * 502:   `lnth, (list), 0`
-  * 503:   `append, (list), ...`
-  * 504:   `prepend, (list), ...`
+  * 503:   `lappend, (list), ...`
+  * 504:   `lprepend, (list), ...`
+  * 505:   `lpush, (list), item, 1`
+  * 506:   `lreplace, (list), item, 1`
+  * 507:   `lremove, (list), 1, ...`
+  * 510:   `lreverse, (list)`
+

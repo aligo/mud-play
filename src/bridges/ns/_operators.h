@@ -56,6 +56,8 @@ typedef enum {
   MUD_OP_LIST_APPEND = 503,
   MUD_OP_LIST_PREPEND = 504,
   MUD_OP_LIST_PUSH = 505,
+  MUD_OP_LIST_REPLACE = 506,
+  MUD_OP_LIST_REMOVE = 507,
   MUD_OP_LIST_REVERSE = 510
 // auto-generated: operators enum - end
 } mud_operator_e;

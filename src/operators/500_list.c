@@ -1,12 +1,13 @@
 /*
   list
-    - list:     500
-    - lcount:   501
-    - lnth:     502
-    - append:   503
-    - prepend:  504
-    - push:     505
-    - reverse:  510
+    - list:      500
+    - lcount:    501
+    - lnth:      502
+    - lappend:   503
+    - lprepend:  504
+    - lpush:     505
+    - lreplace:  506
+    - lremove:   507
 */
 
 mud_boolean_t _mud_list_check(mud_object_t * object) {
@@ -77,16 +78,24 @@ mud_object_t * _mud_op_list_push_evaluate(mud_expr_evaluator_t * evaluator) {
   return list;
 }
 
-mud_object_t * _mud_op_list_reverse_evaluate(mud_expr_evaluator_t * evaluator) {
-// Enum: 510
+mud_object_t * _mud_op_list_replace_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 506
   mud_object_t * ret = ME_ARG(0);
-  mud_list_t * old_list = (mud_list_t *)ret->ptr;
-  mud_list_t * new_list = mud_list_init();
-  for ( unsigned i = old_list->count; i > 0; ) {
-    mud_list_append(new_list, old_list->objects[--i]);
+  mud_list_t * list = (mud_list_t *)ret->ptr;
+  if ( ME_ARGC > 2 ) {
+    mud_list_replace(list, (mud_object_t *)ME_ARG(1), ME_ARG_INT(2));
+  } else {
+    for ( unsigned i = 0; i < list->count; i++ ) {
+      mud_list_replace(list, (mud_object_t *)ME_ARG(1), i);
+    }
   }
-  mud_list_free(old_list);
-  ret->ptr = new_list;
   return ret;
 }
 
+mud_object_t * _mud_op_list_remove_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 507
+  mud_object_t * ret = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)ret->ptr;
+  mud_list_remove(list, ME_ARG_INT(1));
+  return ret;
+}

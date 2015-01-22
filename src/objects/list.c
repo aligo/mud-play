@@ -8,6 +8,13 @@ mud_list_t * mud_list_init() {
   return list;
 }
 
+void mud_list_free(mud_list_t * list) {
+  free(list->objects);
+  list->objects = NULL;
+  list->count = list->size = 0;
+}
+
+
 void mud_list_append(mud_list_t * list, mud_object_t * item) {
   if (list->count == list->size) {
     list->size *= 2;
@@ -36,8 +43,13 @@ void mud_list_push(mud_list_t * list, mud_object_t * item, mud_int_t pos) {
   list->count++;
 }
 
-void mud_list_free(mud_list_t * list) {
-  free(list->objects);
-  list->objects = NULL;
-  list->count = list->size = 0;
+
+void mud_list_replace(mud_list_t * list, mud_object_t * item, mud_int_t pos) {
+  list->objects[pos] = item;
+}
+
+void mud_list_remove(mud_list_t * list, mud_int_t pos) {
+  list->count--;
+  memcpy(&list->objects[pos], &list->objects[pos + 1], (list->count - pos) * sizeof(mud_object_t *));
+
 }

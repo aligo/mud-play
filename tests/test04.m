@@ -13,11 +13,14 @@ int main() {
   // [join, ",", [eargs, [list, "a", "b", "c", "d"]]]
   NSLog(@"t03e should be: a,b,c,d == %@", nsMudTestEvaluate([json objectForKey: @"03"]));
 
-  // [prepend, [append, [list, 2, 3], 4], 1]
+  // [lprepend, [lappend, [list, 2, 3], 4], 1]
   NSLog(@"t04e should be: (1,2,3,4) == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
 
-  // [reverse, [push, [list, 4, 2, 1], 3, 1]]
+  // [lreverse, [lpush, [list, 4, 2, 1], 3, 1]]
   NSLog(@"t05e should be: (1,2,3,4) == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+
+  // [lremove, [lreplace, [list, 4, 2, 1], 3, 1], 2]
+  NSLog(@"t06e should be: (3, 2) == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
 
   NSLog(@"ok");
 }
