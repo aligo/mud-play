@@ -19,6 +19,10 @@
   * 120: `sget, name`
   * 121: `sset, name, value`
 
+### Lambda
+  * 130: `lambda, (list, arg1, arg2, ...), (exprs)`, `lambda, (exprs)`
+  * 131: `apply, (lambda), arg1, arg2, ...`
+
 ### Boolean
   * 190:  `!, expr`
   * 191:  `&&, expr1, expr2`

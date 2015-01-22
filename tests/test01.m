@@ -29,6 +29,12 @@ int main() {
   // [apply, [lambda, [list, "arg"], [+, 1, 1]]
   NSLog(@"t07e should be: 2 == %@", nsMudTestEvaluate([json objectForKey: @"07"]));
 
+  // [apply, [lambda, [list, "arg"], [+, 1, 1, [sget, "arg"]], 1]
+  NSLog(@"t08e should be: 3 == %@", nsMudTestEvaluate([json objectForKey: @"08"]));
+
+  // [sset, "fn", [lambda, [list, "a", "b"], [concat, "pre-", [sget, "a"], "-", [sget, "b"]]]],
+  // [apply, [sget, "fn"], "t1", [apply, [sget, "fn"], "t2", "e2"]]
+  NSLog(@"t09e should be: pre-t1-pre-t2-e2 == %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
   NSLog(@"ok");
 }
