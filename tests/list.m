@@ -27,5 +27,27 @@ int main() {
 
   NSLog(@"(lreverse, (list, 1, 2, 3)) should be: (3, 2, 1) == %@", nsMudTestEvaluate(@[@510, @[@500, @1, @2, @3]]));
 
+  NSLog(@"("
+    " (sset, 'ret', ''), "
+    " (leach, (list, 1, 2, 3), "
+      " (lambda, (list, 'el', 'i'), ( "
+        " (sset, 'ret', (concat, (sget, 'ret'), (sget, 'i'), ':', (sget, 'el'), '. ' )) "
+      " )) "
+    " ), "
+    " (sget, 'ret') "
+  ") should be:  0:a. 1:b. 2:c. == %@", nsMudTestEvaluate(@[
+    @[@121, @"ret", @""],
+    @[@520, @[@500, @"a", @"b", @"c"],
+      @[@130, @[@500, @"el", @"i"], @[@121, @"ret", @[@300, @[@120, @"ret"], @[@120, @"i"], @":", @[@120, @"el"], @". "]]]
+    ],
+    @[@120, @"ret"]
+  ]));
+
+  NSLog(@"(lmap, (list, 1, 2, 3), (lambda, (list, 'el'), (*, (sget, 'el'), 2))) should be: (2, 4, 6) == %@", nsMudTestEvaluate(
+    @[@521, @[@500, @1, @2, @3],
+      @[@130, @[@500, @"el"], @[@202, @[@120, @"el"], @2]]
+    ]
+  ));
+
   NSLog(@"ok");
 }

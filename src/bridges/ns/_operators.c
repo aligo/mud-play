@@ -11,6 +11,7 @@
 #import "../../operators/300_string.c"
 #import "../../operators/500_list.c"
 #import "../../operators/510_list.c"
+#import "../../operators/520_list.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
 
@@ -203,6 +204,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
       break;
     case MUD_OP_LIST_REVERSE:
       ret = _mud_op_list_reverse_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_EACH:
+      ret = _mud_op_list_each_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_MAP:
+      ret = _mud_op_list_map_evaluate(evaluator);
       break;
 // auto-generated: operators switch - end
     default:

@@ -1,5 +1,6 @@
 typedef struct mud_scope_s mud_scope_t;
 typedef struct mud_scope_vars_s mud_scope_vars_t;
+typedef struct mud_scope_slot_s mud_scope_slot_t;
 
 struct mud_scope_s {
   mud_scope_t *         prev;
@@ -7,12 +8,15 @@ struct mud_scope_s {
 };
 
 struct mud_scope_vars_s {
-    const char *    name;
-    mud_object_t *  value;
-    mud_scope_t *   belongs_to;
-    UT_hash_handle  hh;
+    const char *        name;
+    mud_scope_slot_t *  slot;
+    UT_hash_handle      hh;
 };
 
+struct mud_scope_slot_s {
+  mud_object_t *        value;
+  mud_scope_t *         belongs_to;
+};
 
 
 mud_scope_t * mud_scope_init();

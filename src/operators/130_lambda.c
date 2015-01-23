@@ -4,6 +4,17 @@
     - apply:  131
 */
 
+mud_object_t * _mud_lambda_object_apply(mud_object_t * obj, mud_scope_t * scope, mud_object_t ** args, size_t argc) {
+  mud_object_t * ret;
+  if ( obj->type == MUD_OBJ_TYPE_LAMBDA ) {
+    mud_lambda_t * lambda = (mud_lambda_t *)obj->ptr;
+    ret = mud_lambda_apply(lambda, scope, args, argc);
+  } else {
+    ret = mud_evaluate(obj, scope);
+  }
+  return ret;
+}    
+
 mud_object_t * _mud_op_lambda_lambda_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 130
   mud_object_t * ret = mud_lambda_init();
@@ -29,21 +40,14 @@ mud_object_t * _mud_op_lambda_lambda_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_lambda_apply_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 131
-  mud_object_t * ret;
   size_t argc = ME_ARGC - 1;
   mud_object_t ** args = (mud_object_t **)malloc(argc * sizeof(mud_object_t *));
   for ( unsigned i = 0; i < argc; i++ ) {
     args[i] = ME_ARG(i + 1);
   }
-  mud_object_t * obj = ME_ARG(0);
-  if ( obj->type == MUD_OBJ_TYPE_LAMBDA ) {
-    mud_lambda_t * lambda = (mud_lambda_t *)obj->ptr;
-    mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
-    ret = mud_lambda_apply(lambda, new_scope, args, argc);
-    mud_scope_free(new_scope);
-    free(args);
-  } else {
-    ret = mud_evaluate(obj, evaluator->scope);
-  }
+  mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
+  mud_object_t * ret = _mud_lambda_object_apply(ME_ARG(0), new_scope, args, argc);
+  mud_scope_free(new_scope);
+  free(args);
   return ret;
 }
