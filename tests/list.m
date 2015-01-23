@@ -76,5 +76,9 @@ int main() {
 
   NSLog(@"(ldifference, (list, 1, 2), (list, 2, 3)) should be: (1, 3) == %@", nsMudTestEvaluate(@[@514, @[@500, @1, @2], @[@500, @2, @3]]));
 
+  NSLog(@"(lconcat, (list, 1, 2), (list, 2, 3)) should be: (1, 2, 2, 3) == %@", nsMudTestEvaluate(@[@515, @[@500, @1, @2], @[@500, @2, @3]]));
+
+  NSLog(@"(lunion, (list, 1, 2), (list, 2, 3)) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@516, @[@500, @1, @2], @[@500, @2, @3]]));
+
   NSLog(@"ok");
 }

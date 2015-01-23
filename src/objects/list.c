@@ -115,3 +115,30 @@ mud_list_t * mud_list_alloc_difference(mud_list_t * a_list, mud_list_t * b_list,
   return new_list;
 }
 
+mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+  mud_list_t * new_list = mud_list_alloc();
+  for ( unsigned i = 0; i < a_list->count; i++ ) {
+    mud_list_append(new_list, a_list->objects[i]);
+  }
+  for ( unsigned i = 0; i < b_list->count; i++ ) {
+    mud_list_append(new_list, b_list->objects[i]);
+  }
+  return new_list;
+}
+
+mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+  mud_list_t * new_list = mud_list_alloc();
+  for ( unsigned i = 0; i < a_list->count; i++ ) {
+    mud_object_t * obj = a_list->objects[i];
+    if ( mud_list_find(new_list, pool, obj) == -1 ){
+      mud_list_append(new_list, obj);
+    }
+  }
+  for ( unsigned i = 0; i < b_list->count; i++ ) {
+    mud_object_t * obj = b_list->objects[i];
+    if ( mud_list_find(new_list, pool, obj) == -1 ){
+      mud_list_append(new_list, obj);
+    }
+  }
+  return new_list;
+}

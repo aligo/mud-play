@@ -27,3 +27,5 @@ mud_list_t * mud_list_alloc_uniq(mud_list_t * list, mud_object_casting_pool_t * 
 
 mud_list_t * mud_list_alloc_intersection(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
 mud_list_t * mud_list_alloc_difference(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
+mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
+mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
