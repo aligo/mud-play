@@ -34,5 +34,8 @@ int main() {
   // [lflatten, [list, "a", [list, "b", [list, "c", "d"]]], true]
   NSLog(@"t10e should be: ('a', 'b', 'c', 'd') == %@", nsMudTestEvaluate([json objectForKey: @"10"]));
 
+  // [lfind, [list, "a", "b", "c"], "b"]
+  NSLog(@"t11e should be: 1 == %@", nsMudTestEvaluate([json objectForKey: @"11"]));
+
   NSLog(@"ok");
 }

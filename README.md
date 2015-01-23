@@ -75,6 +75,7 @@
   * 505:   `lpush, (list), item, 1`
   * 506:   `lreplace, (list), item, 1`
   * 507:   `lremove, (list), 1, ...`
+  * 508:   `lfind, (list), item`
   * 510:   `lreverse, (list)`
   * 511:   `lflatten, (list)`, `lflatten, (list), [shallow]`
   * 520:   `leach, (list), (lambda, (list, 'el', 'i'), ...)`
