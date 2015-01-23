@@ -49,5 +49,12 @@ int main() {
     ]
   ));
 
+  NSLog(@"(lreduce, (list, 1, 2, 3), 0, (lambda, (list, 'sum', 'el'), (+, (sget, 'sum'), (sget, 'el')))) should be: 6 == %@", nsMudTestEvaluate(@[
+    @522,
+    @[@500, @1, @2, @3],
+    @0,
+    @[@130, @[@500, @"sum", @"el"], @[@200, @[@120, @"sum"], @[@120, @"el"]]]
+  ]));
+
   NSLog(@"ok");
 }
