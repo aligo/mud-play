@@ -25,5 +25,8 @@ int main() {
   // [lmap, [list, 0, 1, 2, 3], [lambda, [list, 'el', 'i'], [*, [sget, 'el'], [sget, 'i']]]]
   NSLog(@"t07e should be: (0, 1, 4, 9) == %@", nsMudTestEvaluate([json objectForKey: @"07"]));
 
+  // [lreduce, [list, 1, 2, 3, 4], 1, [lambda, [list, 'res', 'el'], [*, [sget, 'res'], [sget, 'el']]]]
+  NSLog(@"t08e should be: 24 == %@", nsMudTestEvaluate([json objectForKey: @"08"]));
+
   NSLog(@"ok");
 }
