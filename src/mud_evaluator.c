@@ -1,5 +1,6 @@
 #import "mud_evaluator.h"
 #import "evaluators/casting.c"
+#import "evaluators/compare.c"
 #import "evaluators/expr.c"
 #import "evaluators/scope.c"
 

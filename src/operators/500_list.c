@@ -8,6 +8,7 @@
     - lpush:     505
     - lreplace:  506
     - lremove:   507
+    - lfind:     508
 */
 
 mud_object_t * _mud_op_list_list_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -95,3 +96,11 @@ mud_object_t * _mud_op_list_remove_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_list_remove(list, ME_ARG_INT(1));
   return ret;
 }
+
+mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 508
+  mud_object_t * obj = ME_ARG(0);
+  // mud_list_t * list = (mud_list_t *)obj->ptr;
+  return obj;
+}
+

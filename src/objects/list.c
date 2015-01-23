@@ -54,5 +54,5 @@ void mud_list_replace(mud_list_t * list, mud_object_t * item, mud_int_t pos) {
 void mud_list_remove(mud_list_t * list, mud_int_t pos) {
   list->count--;
   memcpy(&list->objects[pos], &list->objects[pos + 1], (list->count - pos) * sizeof(mud_object_t *));
-
 }
+

@@ -18,12 +18,17 @@ int main() {
 
   NSLog(@"(<, 3.2, 1) should be: 0 == %@", nsMudTestEvaluate(@[@293, @3.2, @1]));
   NSLog(@"(<, 0, 3) should be: 1 == %@", nsMudTestEvaluate(@[@293, @0, @3]));
+  NSLog(@"(<, 2.7, 2.9) should be: 1 == %@", nsMudTestEvaluate(@[@293, @2.7, @2.9]));
 
   NSLog(@"(>=, 20, 20) should be: 1 == %@", nsMudTestEvaluate(@[@294, @20, @20]));
   NSLog(@"(>=, 3.0, 2.9) should be: 1 == %@", nsMudTestEvaluate(@[@294, @3.0, @2.9]));
 
   NSLog(@"(<=, 20, 20) should be: 1 == %@", nsMudTestEvaluate(@[@295, @20, @20]));
   NSLog(@"(<=, 3.0, 2.9) should be: 0 == %@", nsMudTestEvaluate(@[@295, @3.0, @2.9]));
+
+  NSLog(@"(==, (list, 1, 2), (list, 1, 2)) should be: 1 == %@", nsMudTestEvaluate(@[@290, @[@500, @1, @2], @[@500, @1, @2]]));
+  NSLog(@"(==, (list, 1, 2), (list, 1, 3)) should be: 0 == %@", nsMudTestEvaluate(@[@290, @[@500, @1, @2], @[@500, @1, @3]]));
+  NSLog(@"(==, (list, 1, 2), (list, 1, 2, 3)) should be: 0 == %@", nsMudTestEvaluate(@[@290, @[@500, @1, @2], @[@500, @1, @2, @3]]));
 
   NSLog(@"ok");
 }

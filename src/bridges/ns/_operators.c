@@ -202,6 +202,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_REMOVE:
       ret = _mud_op_list_remove_evaluate(evaluator);
       break;
+    case MUD_OP_LIST_FIND:
+      ret = _mud_op_list_find_evaluate(evaluator);
+      break;
     case MUD_OP_LIST_REVERSE:
       ret = _mud_op_list_reverse_evaluate(evaluator);
       break;
