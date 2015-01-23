@@ -211,6 +211,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_FLATTEN:
       ret = _mud_op_list_flatten_evaluate(evaluator);
       break;
+    case MUD_OP_LIST_UNIQ:
+      ret = _mud_op_list_uniq_evaluate(evaluator);
+      break;
     case MUD_OP_LIST_EACH:
       ret = _mud_op_list_each_evaluate(evaluator);
       break;

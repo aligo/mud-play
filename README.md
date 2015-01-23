@@ -78,6 +78,7 @@
   * 508:   `lfind, (list), item`
   * 510:   `lreverse, (list)`
   * 511:   `lflatten, (list)`, `lflatten, (list), [shallow]`
+  * 512:   `luniq, (list)`
   * 520:   `leach, (list), (lambda, (list, 'el', 'i'), ...)`
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`

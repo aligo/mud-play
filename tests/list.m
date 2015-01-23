@@ -70,5 +70,7 @@ int main() {
 
   NSLog(@"(lflatten, (list, 1, (list 2, (list, 3, 4))), true) should be: (1, 2, 3, 4) == %@", nsMudTestEvaluate(@[@511, @[@500, @1, @[@500, @2, @[@500, @3, @4]]], @YES]));
 
+  NSLog(@"(luniq, (list, 1, 1, 2, 2, 3, 2, 0, 3) should be: (1, 2, 3, 0) == %@", nsMudTestEvaluate(@[@512, @[@500, @1, @1, @2, @2, @3, @2, @0, @3]]));
+
   NSLog(@"ok");
 }

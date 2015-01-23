@@ -28,7 +28,7 @@ size_t _mud_string_strlen_utf8(const char * s) {
   return j;
 }
 
-size_t _mud_string_strstr_utf8(const char * str, const char * search) {
+mud_int_t _mud_string_strstr_utf8(const char * str, const char * search) {
   char * ptr = strstr(str, search);
   if ( ptr ) {
     char * part = _mud_string_substr(str, 0, ptr - str);
@@ -188,7 +188,7 @@ mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 306
-  size_t pos = _mud_string_strstr_utf8((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1));
+  mud_int_t pos = _mud_string_strstr_utf8((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1));
   if ( pos == -1 ) {
     return mud_nil_init();
   } else {

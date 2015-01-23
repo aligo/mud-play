@@ -1,7 +1,8 @@
 /*
   list
-    - lreverse:  510
-    - lflatten:  511
+    - lreverse:     510
+    - lflatten:     511
+    - luniq:        512
 */
 
 void _mud_list_object_flatten(mud_list_t * new_list, mud_list_t * cur_list, mud_boolean_t shallow, mud_boolean_t first_level) {
@@ -36,6 +37,22 @@ mud_object_t * _mud_op_list_flatten_evaluate(mud_expr_evaluator_t * evaluator) {
   _mud_list_object_flatten(new_list, (mud_list_t *)ret->ptr, ME_ARG_BOOLEAN(1), true);
   mud_list_free((mud_list_t *)ret->ptr);
   free((mud_list_t *)ret->ptr);
+  ret->ptr = new_list;
+  return ret;
+}
+
+mud_object_t * _mud_op_list_uniq_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 512
+  mud_object_t * list_obj = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)list_obj->ptr;
+  mud_list_t * new_list = mud_list_alloc();
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    mud_object_t * obj = list->objects[i];
+    if ( mud_list_find(new_list, evaluator->pool, obj) == -1 ){
+      mud_list_append(new_list, obj);
+    }
+  }
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
   ret->ptr = new_list;
   return ret;
 }

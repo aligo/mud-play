@@ -101,13 +101,11 @@ mud_object_t * _mud_op_list_remove_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 508
   mud_object_t * obj = ME_ARG(0);
-  mud_object_t * to_find = ME_ARG(1);
-  mud_list_t * list = (mud_list_t *)obj->ptr;
-  for ( unsigned i = 0; i < list->count; i++ ) {
-    if ( mud_object_compare(evaluator->pool, to_find, list->objects[i]) == 0 ) {
-      return mud_int_init(i);
-    }
+  mud_int_t pos = mud_list_find((mud_list_t *)obj->ptr, evaluator->pool, ME_ARG(1));
+  if ( pos == -1 ) {
+    return mud_nil_init();
+  } else {
+    return mud_int_init(pos);
   }
-  return mud_nil_init();
 }
 
