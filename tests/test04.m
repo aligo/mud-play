@@ -28,5 +28,8 @@ int main() {
   // [lreduce, [list, 1, 2, 3, 4], 1, [lambda, [list, 'res', 'el'], [*, [sget, 'res'], [sget, 'el']]]]
   NSLog(@"t08e should be: 24 == %@", nsMudTestEvaluate([json objectForKey: @"08"]));
 
+  // [lfilter, [list, -1, 1, -2, 2], [lambda, [list, "el"], [>, [sget, "el"], 0]]]
+  NSLog(@"t09e should be: (1, 2) == %@", nsMudTestEvaluate([json objectForKey: @"09"]));
+
   NSLog(@"ok");
 }
