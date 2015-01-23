@@ -78,12 +78,13 @@ mud_object_t * _mud_op_list_push_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_replace_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 506
   mud_object_t * ret = ME_ARG(0);
+  mud_object_t * rep = ME_ARG(1);
   mud_list_t * list = (mud_list_t *)ret->ptr;
   if ( ME_ARGC > 2 ) {
-    mud_list_replace(list, (mud_object_t *)ME_ARG(1), ME_ARG_INT(2));
+    mud_list_replace(list, rep, ME_ARG_INT(2));
   } else {
     for ( unsigned i = 0; i < list->count; i++ ) {
-      mud_list_replace(list, (mud_object_t *)ME_ARG(1), i);
+      mud_list_replace(list, rep, i);
     }
   }
   return ret;
@@ -100,7 +101,13 @@ mud_object_t * _mud_op_list_remove_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 508
   mud_object_t * obj = ME_ARG(0);
-  // mud_list_t * list = (mud_list_t *)obj->ptr;
-  return obj;
+  mud_object_t * to_find = ME_ARG(1);
+  mud_list_t * list = (mud_list_t *)obj->ptr;
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    if ( mud_object_compare(evaluator->pool, to_find, list->objects[i]) == 0 ) {
+      return mud_int_init(i);
+    }
+  }
+  return mud_nil_init();
 }
 

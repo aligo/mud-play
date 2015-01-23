@@ -25,6 +25,8 @@ int main() {
 
   NSLog(@"(lremove, (list, 1, 1, 2, 3), 0) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@507, @[@500, @1, @1, @2, @3], @0]));
 
+  NSLog(@"(lfind, (list, 1, 2, 3), 2) should be: 1 == %@", nsMudTestEvaluate(@[@508, @[@500, @1, @2, @3], @2]));
+
   NSLog(@"(lreverse, (list, 1, 2, 3)) should be: (3, 2, 1) == %@", nsMudTestEvaluate(@[@510, @[@500, @1, @2, @3]]));
 
   NSLog(@"("

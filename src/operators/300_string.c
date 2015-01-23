@@ -168,7 +168,7 @@ mud_object_t * _mud_op_string_strstr_byte_evaluate(mud_expr_evaluator_t * evalua
   if ( ptr ) {
     return mud_int_init(ptr - str);
   } else {
-    return mud_int_init(-1);
+    return mud_nil_init();
   }
 }
 
@@ -188,9 +188,12 @@ mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 306
-  return mud_int_init(
-    _mud_string_strstr_utf8((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1))
-  );
+  size_t pos = _mud_string_strstr_utf8((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1));
+  if ( pos == -1 ) {
+    return mud_nil_init();
+  } else {
+    return mud_int_init(pos);
+  }
 }
 
 mud_object_t * _mud_op_string_substr_evaluate(mud_expr_evaluator_t * evaluator) {

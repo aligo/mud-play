@@ -29,7 +29,7 @@ int main() {
   NSLog(@"t08e should: 19 = %@", nsMudTestEvaluate([json objectForKey: @"08"]));
 
   // [strstr_byte, "Hello world! 你好世界！", "404"]
-  NSLog(@"t09e should: -1 = %@", nsMudTestEvaluate([json objectForKey: @"09"]));
+  NSLog(@"t09e should: <null> = %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
   // [substr_byte, "Hello world! 你好世界！", 0, 5]
   NSLog(@"t10e should: Hello = %@", nsMudTestEvaluate([json objectForKey: @"10"]));
