@@ -22,5 +22,8 @@ int main() {
   // [lremove, [lreplace, [list, 4, 2, 1], 3, 1], 2]
   NSLog(@"t06e should be: (3, 2) == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
 
+  // [lmap, [list, 0, 1, 2, 3], [lambda, [list, 'el', 'i'], [*, [sget, 'el'], [sget, 'i']]]]
+  NSLog(@"t07e should be: (0, 1, 4, 9) == %@", nsMudTestEvaluate([json objectForKey: @"07"]));
+
   NSLog(@"ok");
 }
