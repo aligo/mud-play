@@ -31,5 +31,8 @@ int main() {
   // [lfilter, [list, -1, 1, -2, 2], [lambda, [list, "el"], [>, [sget, "el"], 0]]]
   NSLog(@"t09e should be: (1, 2) == %@", nsMudTestEvaluate([json objectForKey: @"09"]));
 
+  // [lflatten, [list, "a", [list, "b", [list, "c", "d"]]], true]
+  NSLog(@"t10e should be: ('a', 'b', 'c', 'd') == %@", nsMudTestEvaluate([json objectForKey: @"10"]));
+
   NSLog(@"ok");
 }

@@ -62,5 +62,11 @@ int main() {
     ]
   ));
 
+  NSLog(@"(lflatten, (list, 1, (list 2, 3))) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@511, @[@500, @1, @[@500, @2, @3]]]));
+
+  NSLog(@"(lflatten, (list, 1, (list 2, (list, 3, 4)))) should be: (1, 2, (3, 4)) == %@", nsMudTestEvaluate(@[@511, @[@500, @1, @[@500, @2, @[@500, @3, @4]]]]));
+
+  NSLog(@"(lflatten, (list, 1, (list 2, (list, 3, 4))), true) should be: (1, 2, 3, 4) == %@", nsMudTestEvaluate(@[@511, @[@500, @1, @[@500, @2, @[@500, @3, @4]]], @YES]));
+
   NSLog(@"ok");
 }
