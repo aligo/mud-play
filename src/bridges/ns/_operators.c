@@ -214,6 +214,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_UNIQ:
       ret = _mud_op_list_uniq_evaluate(evaluator);
       break;
+    case MUD_OP_LIST_INTERSECTION:
+      ret = _mud_op_list_intersection_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_DIFFERENCE:
+      ret = _mud_op_list_difference_evaluate(evaluator);
+      break;
     case MUD_OP_LIST_EACH:
       ret = _mud_op_list_each_evaluate(evaluator);
       break;

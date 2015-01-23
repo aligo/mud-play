@@ -52,6 +52,7 @@ mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count);
 mud_object_t * mud_lambda_init();
 
 #import "evaluators/scope.h"
+#import "evaluators/casting.h"
 
 #import "objects/list.h"
 #import "objects/lambda.h"

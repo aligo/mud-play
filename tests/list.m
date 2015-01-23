@@ -72,5 +72,9 @@ int main() {
 
   NSLog(@"(luniq, (list, 1, 1, 2, 2, 3, 2, 0, 3) should be: (1, 2, 3, 0) == %@", nsMudTestEvaluate(@[@512, @[@500, @1, @1, @2, @2, @3, @2, @0, @3]]));
 
+  NSLog(@"(lintersection, (list, 1, 2), (list, 2, 3)) should be: (2) == %@", nsMudTestEvaluate(@[@513, @[@500, @1, @2], @[@500, @2, @3]]));
+
+  NSLog(@"(ldifference, (list, 1, 2), (list, 2, 3)) should be: (1, 3) == %@", nsMudTestEvaluate(@[@514, @[@500, @1, @2], @[@500, @2, @3]]));
+
   NSLog(@"ok");
 }

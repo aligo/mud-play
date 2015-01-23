@@ -44,12 +44,3 @@ mud_int_t mud_list_compare(mud_object_casting_pool_t * pool, mud_list_t * a_list
     return diff;
   }
 }
-
-mud_int_t mud_list_find(mud_list_t * list, mud_object_casting_pool_t * pool, mud_object_t * to_find) {
-  for ( unsigned i = 0; i < list->count; i++ ) {
-    if ( mud_object_compare(pool, to_find, list->objects[i]) == 0 ) {
-      return i;
-    }
-  }
-  return -1;
-}
