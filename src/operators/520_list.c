@@ -4,6 +4,7 @@
     - lmap:     521
     - lreduce:  522
     - lfilter:  523
+    - lpluck:   524
 */
 
 mud_object_t * _mud_op_list_each_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -76,5 +77,24 @@ mud_object_t * _mud_op_list_filter_evaluate(mud_expr_evaluator_t * evaluator) {
   }
   mud_scope_free(new_scope);
   free(args);
+  return ret;
+}
+
+mud_object_t * _mud_op_list_pluck_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 524
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  unsigned argc = ME_ARGC - 1;
+  mud_object_t ** args = (mud_object_t **)malloc(argc * sizeof(mud_object_t *));
+  for ( unsigned i = 2; i < ME_ARGC; i++ ) {
+    args[i - 1] = ME_ARG(i);
+  }
+  mud_object_t * expr = mud_expr_init(ME_ARG_INT(1), args, argc);
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    args[0] = list->objects[i];
+    mud_list_append((mud_list_t *)ret->ptr, mud_evaluate(expr, evaluator->scope)); 
+  }
   return ret;
 }

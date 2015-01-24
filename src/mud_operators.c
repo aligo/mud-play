@@ -4,8 +4,7 @@
 mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
   mud_object_t * ret;
   mud_expr_evaluator_t * evaluator = mud_expr_evaluator_init(expr, scope);
-  // printf("%p\n", evaluator);
-  // mud_object_t ** args = expr->args;
+  
   switch (expr->oper) {
 // auto-generated: operators switch - begin
 
