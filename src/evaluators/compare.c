@@ -1,18 +1,23 @@
+
+int _mud_float_compare(mud_float_t a, mud_float_t b) {
+  mud_float_t float_diff =  a - b;
+  if ( float_diff == 0 ) {
+    return 0;
+  } else if ( float_diff > 0 ) {
+    return ceil(float_diff);
+  } else {
+    return ceil(float_diff) - 1;
+  }
+}
+
+
 mud_int_t mud_object_compare(mud_object_casting_pool_t * pool, mud_object_t * a, mud_object_t * b) {
   mud_int_t type_diff;
-  mud_float_t float_diff;
   switch ( a->type ) {
     case MUD_OBJ_TYPE_INT:
       return ( mud_object_try_cast_int(pool, a) - mud_object_try_cast_int(pool, b) );
     case MUD_OBJ_TYPE_FLOAT:
-      float_diff =  mud_object_try_cast_float(pool, a) - mud_object_try_cast_float(pool, b);
-      if ( float_diff == 0 ) {
-        return 0;
-      } else if ( float_diff > 0 ) {
-        return ceil(float_diff);
-      } else {
-        return ceil(float_diff) - 1;
-      }
+      return _mud_float_compare( mud_object_try_cast_float(pool, a), mud_object_try_cast_float(pool, b) );
     case MUD_OBJ_TYPE_STRING:
       return strcmp( mud_object_try_cast_str(pool, a), mud_object_try_cast_str(pool, b) );
     default:

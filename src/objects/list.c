@@ -142,3 +142,56 @@ mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_
   }
   return new_list;
 }
+
+mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_casting_pool_t * pool, mud_object_type_e sort_by_type) {
+  mud_list_sort_by_t * sort_by = (mud_list_sort_by_t *)malloc(sizeof(mud_list_sort_by_t));
+  switch ( sort_by_type ) {
+    case MUD_OBJ_TYPE_INT:
+      sort_by->_int = mud_object_try_cast_int(pool, object);
+      break;
+    case MUD_OBJ_TYPE_FLOAT:
+      sort_by->_float = mud_object_try_cast_float(pool, object);
+      break;
+    case MUD_OBJ_TYPE_STRING:
+      sort_by->_ptr = (void *)mud_object_try_cast_str(pool, object);
+      break;
+    default:
+      sort_by->_ptr = object->ptr;
+      break;
+  }
+  return sort_by;
+}
+
+int _mud_list_sort_by_compare_int(const void * a, const void * b) {
+  return (*(mud_list_sort_by_t **)a)->_int - (*(mud_list_sort_by_t **)b)->_int;
+}
+
+int _mud_list_sort_by_compare_float(const void * a, const void * b) {
+  return _mud_float_compare( (*(mud_list_sort_by_t **)a)->_float, (*(mud_list_sort_by_t **)b)->_float );
+}
+
+int _mud_list_sort_by_compare_str(const void * a, const void * b) {
+  return strcmp( (*(mud_list_sort_by_t **)a)->_ptr, (*(mud_list_sort_by_t **)b)->_ptr );
+}
+
+int _mud_list_sort_by_compare_ptr(const void * a, const void * b) {
+  return (*(mud_list_sort_by_t **)a)->_ptr - (*(mud_list_sort_by_t **)b)->_ptr;
+}
+
+void mud_list_sort_bies_sort(mud_list_sort_by_t ** sort_bies, size_t count, mud_object_type_e sort_by_type) {
+  switch ( sort_by_type ) {
+    case MUD_OBJ_TYPE_INT:
+      qsort(sort_bies, count, sizeof(mud_list_sort_by_t *), _mud_list_sort_by_compare_int);
+      break;
+    case MUD_OBJ_TYPE_FLOAT:
+      qsort(sort_bies, count, sizeof(mud_list_sort_by_t *), _mud_list_sort_by_compare_float);
+      break;
+    case MUD_OBJ_TYPE_STRING:
+      qsort(sort_bies, count, sizeof(mud_list_sort_by_t *), _mud_list_sort_by_compare_str);
+      break;
+    default:
+      qsort(sort_bies, count, sizeof(mud_list_sort_by_t *), _mud_list_sort_by_compare_ptr);
+      break;
+  }
+}
+

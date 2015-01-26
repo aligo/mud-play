@@ -7,6 +7,13 @@ struct mud_list_s {
   unsigned int          size;
 };
 
+typedef struct mud_list_sort_by_s mud_list_sort_by_t;
+struct mud_list_sort_by_s {
+  mud_object_t *        object;
+  void *                _ptr;
+  mud_int_t             _int;
+  mud_float_t           _float;
+};
 
 mud_list_t * mud_list_alloc();
 void mud_list_free(mud_list_t * list);
@@ -29,3 +36,11 @@ mud_list_t * mud_list_alloc_intersection(mud_list_t * a_list, mud_list_t * b_lis
 mud_list_t * mud_list_alloc_difference(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
 mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
 mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
+
+int _mud_list_sort_by_compare_int(const void * a, const void * b);
+int _mud_list_sort_by_compare_float(const void * a, const void * b);
+int _mud_list_sort_by_compare_str(const void * a, const void * b);
+int _mud_list_sort_by_compare_ptr(const void * a, const void * b);
+
+mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_casting_pool_t * pool, mud_object_type_e sort_by_type);
+void mud_list_sort_bies_sort(mud_list_sort_by_t ** sort_bies, size_t count, mud_object_type_e sort_by_type);
