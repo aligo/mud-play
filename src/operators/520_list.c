@@ -96,7 +96,8 @@ mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
     }
     if ( ME_ARGC > 1 ) {
       args[0] = list->objects[i];
-      sort_by_object = _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 1);
+      args[1] = mud_int_init(i);
+      sort_by_object = _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 2);
     } else {
       sort_by_object = list->objects[i];
     }

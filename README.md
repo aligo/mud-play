@@ -87,4 +87,4 @@
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`
   * 523:   `lfilter, (list), (lambda, (list, 'el', 'i'), ...)`
-  * 524:   `lpluck, (list), operator, arg1, arg2, arg3, ...
+  * 525:   `lsort_by, (list), (lambda, (list, 'el', 'i'), ...)
