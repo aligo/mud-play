@@ -37,7 +37,7 @@ int main() {
   // [lfind, [list, "a", "b", "c"], "b"]
   NSLog(@"t11e should be: 1 == %@", nsMudTestEvaluate([json objectForKey: @"11"]));
 
-  // [lpluck, [list, 1, 2, 3], *, 3]
+  // [lmap, [list, 1, 2, 3], [lambda [*, 3, [sarg, 0]]]]
   NSLog(@"t12e should be: (3, 6, 9) == %@", nsMudTestEvaluate([json objectForKey: @"12"]));
 
   // [lsort_by, [list, 8, 11, 24, 2], [lambda, [list, "el"], [%, [sget, "el"], 5]]]
