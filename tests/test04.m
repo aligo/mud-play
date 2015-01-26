@@ -40,5 +40,8 @@ int main() {
   // [lpluck, [list, 1, 2, 3], *, 3]
   NSLog(@"t12e should be: (3, 6, 9) == %@", nsMudTestEvaluate([json objectForKey: @"12"]));
 
+  // [lsort_by, [list, 8, 11, 24, 2], [lambda, [list, "el"], [%, [sget, "el"], 5]]]
+  NSLog(@"t13e should be: (11, 2, 8, 24) == %@", nsMudTestEvaluate([json objectForKey: @"13"]));  
+
   NSLog(@"ok");
 }
