@@ -18,6 +18,8 @@
 ### Scope
   * 120: `sget, name`
   * 121: `sset, name, value`
+  * 122: `sarg, i`
+  * 123: `sargs`
 
 ### Lambda
   * 130: `lambda, (list, arg1, arg2, ...), (exprs)`, `lambda, (exprs)`

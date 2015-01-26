@@ -2,6 +2,8 @@
 mud_scope_t * mud_scope_init() {
   mud_scope_t * scope = (mud_scope_t *)malloc(sizeof(mud_scope_t));
   scope->vars = NULL;
+  scope->argc = 0;
+  scope->args = NULL;
   return scope;
 }
 
@@ -52,4 +54,12 @@ void mud_scope_set(mud_scope_t * scope, const char * name, mud_object_t * value)
     HASH_ADD_KEYPTR(hh, scope->vars, var->name, strlen(var->name), var);
   }
   var->slot->value = value;
+}
+
+mud_object_t * mud_scope_arg(mud_scope_t * scope, mud_int_t i) {
+  if ( i < scope->argc ) {
+    return scope->args[i];
+  } else {
+    return mud_nil_init();
+  }
 }

@@ -48,6 +48,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_SCOPE_SET:
       ret = _mud_op_scope_set_evaluate(evaluator);
       break;
+    case MUD_OP_SCOPE_ARG:
+      ret = _mud_op_scope_arg_evaluate(evaluator);
+      break;
+    case MUD_OP_SCOPE_ARGC:
+      ret = _mud_op_scope_argc_evaluate(evaluator);
+      break;
     case MUD_OP_LAMBDA_LAMBDA:
       ret = _mud_op_lambda_lambda_evaluate(evaluator);
       break;
