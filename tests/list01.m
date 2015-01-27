@@ -45,5 +45,13 @@ int main() {
 
   NSLog(@"(lunion, (list, 1, 2), (list, 2, 3)) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@516, @[@500, @1, @2], @[@500, @2, @3]]));
 
+  NSLog(@"(lhead, (list, 1, 2, 3), 2) should be: (1, 2) == %@", nsMudTestEvaluate(@[@517, @[@500, @1, @2, @3], @2]));
+
+  NSLog(@"(ltail, (list, 1, 2, 3), 2) should be: (2, 3) == %@", nsMudTestEvaluate(@[@518, @[@500, @1, @2, @3], @2]));
+
+  NSLog(@"(lslice, (list, 1, 2, 3), 1) should be: (2, 3) == %@", nsMudTestEvaluate(@[@519, @[@500, @1, @2, @3], @1]));
+
+  NSLog(@"(lslice, (list, 1, 2, 3), 1, 2) should be: (2) == %@", nsMudTestEvaluate(@[@519, @[@500, @1, @2, @3], @1, @2]));
+
   NSLog(@"ok");
 }

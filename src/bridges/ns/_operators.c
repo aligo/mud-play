@@ -231,6 +231,15 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_UNION:
       ret = _mud_op_list_union_evaluate(evaluator);
       break;
+    case MUD_OP_LIST_HEAD:
+      ret = _mud_op_list_head_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_TAIL:
+      ret = _mud_op_list_tail_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_SLICE:
+      ret = _mud_op_list_slice_evaluate(evaluator);
+      break;
     case MUD_OP_LIST_EACH:
       ret = _mud_op_list_each_evaluate(evaluator);
       break;

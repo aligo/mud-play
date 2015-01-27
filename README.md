@@ -83,6 +83,8 @@
   * 512:   `luniq, (list)`
   * 513:   `lintersection, (list1), (list2)`
   * 514:   `ldifference, (list1), (list2)`
+  * 515:   `lconcat, (list1), (list2)`
+  * 516:   `lunion, (list1), (list2)`
   * 520:   `leach, (list), (lambda, (list, 'el', 'i'), ...)`
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`

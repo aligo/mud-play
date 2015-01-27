@@ -7,6 +7,9 @@
     - ldifference:        514
     - lconcat:            515
     - lunion:             516
+    - lhead:              517
+    - ltail:              518
+    - lslice:             519
 */
 
 mud_object_t * _mud_op_list_reverse_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -75,5 +78,48 @@ mud_object_t * _mud_op_list_union_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * b_obj = ME_ARG(1);
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
   ret->ptr = mud_list_alloc_union((mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr, evaluator->pool);
+  return ret;
+}
+
+mud_object_t * _mud_op_list_head_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 517
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_int_t limit = ME_ARG_INT(1);
+
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  for ( unsigned i = 0; i < limit; i++) {
+    mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
+  }
+  return ret;
+}
+
+mud_object_t * _mud_op_list_tail_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 518
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_int_t limit = ME_ARG_INT(1);
+
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  for ( unsigned i = list->count - limit; i < list->count; i++) {
+    mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
+  }
+  return ret;
+}
+
+mud_object_t * _mud_op_list_slice_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 519
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_int_t start = ME_ARG_INT(1);
+  mud_int_t end = ( ME_ARGC > 2 ) ? ME_ARG_INT(2) : list->count;
+  
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  for ( unsigned i = start; i < end; i++) {
+    mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
+  }
   return ret;
 }
