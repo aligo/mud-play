@@ -8,6 +8,8 @@ int main() {
 
   NSLog(@"(lnth, (list, 1, 2, 3), 0) should be: 1 == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @0]));
   NSLog(@"(lnth, (list, 1, 2, 3), 1) should be: 2 == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @1]));
+  NSLog(@"(lnth, (list, 1, 2, 3), 3) should be: <null> == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @3]));
+  NSLog(@"(lnth, (list, 1, 2, 3), -1) should be: 3 == %@", nsMudTestEvaluate(@[@502, @[@500, @1, @2, @3], @-1]));
 
   NSLog(@"(lappend, (list, 1, 2, 3), 4, nil, 5, 6) should be: (1, 2, 3, 4, 5, 6) == %@", nsMudTestEvaluate(@[@503, @[@500, @1, @2, @3], @4, @[@120, @"ud"], @5, @6]));
 
@@ -24,6 +26,8 @@ int main() {
   NSLog(@"(lreplace, (list, 1, 2, 3), 'all') should be: (all, all, all) == %@", nsMudTestEvaluate(@[@506, @[@500, @3, @2, @3], @"all"]));
 
   NSLog(@"(lremove, (list, 1, 1, 2, 3), 0) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@507, @[@500, @1, @1, @2, @3], @0]));
+
+  NSLog(@"(lremove, (list, 1, 2, 3, 3), -1) should be: (1, 2, 3) == %@", nsMudTestEvaluate(@[@507, @[@500, @1, @2, @3, @3], @-1]));
 
   NSLog(@"(lfind, (list, 1, 2, 3), 2) should be: 1 == %@", nsMudTestEvaluate(@[@508, @[@500, @1, @2, @3], @2]));
 

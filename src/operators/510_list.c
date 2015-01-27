@@ -113,8 +113,8 @@ mud_object_t * _mud_op_list_slice_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 519
   mud_object_t * org = ME_ARG(0);
   mud_list_t * list = (mud_list_t *)org->ptr;
-  mud_int_t start = ME_ARG_INT(1);
-  mud_int_t end = ( ME_ARGC > 2 ) ? ME_ARG_INT(2) : list->count;
+  mud_int_t start = _mud_list_prepare_index(list, ME_ARG_INT(1));
+  mud_int_t end = ( ME_ARGC > 2 ) ? _mud_list_prepare_index(list, ME_ARG_INT(2)) : list->count;
   
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
   ret->ptr = mud_list_alloc();
