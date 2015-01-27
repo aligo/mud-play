@@ -19,7 +19,7 @@
   * 120: `sget, name`
   * 121: `sset, name, value`
   * 122: `sarg, i`
-  * 123: `sargs`
+  * 123: `sargc`
 
 ### Lambda
   * 130: `lambda, (list, arg1, arg2, ...), (exprs)`, `lambda, (exprs)`
@@ -87,4 +87,5 @@
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`
   * 523:   `lfilter, (list), (lambda, (list, 'el', 'i'), ...)`
-  * 525:   `lsort_by, (list), (lambda, (list, 'el', 'i'), ...)
+  * 524:   `lsort, (list), (lambda, (list, 'a', 'b'), ...)`
+  * 525:   `lsort_by, (list), (lambda, (list, 'el', 'i'), ...)`
