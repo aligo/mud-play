@@ -252,11 +252,11 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_FILTER:
       ret = _mud_op_list_filter_evaluate(evaluator);
       break;
-    case MUD_OP_LIST_SORT:
-      ret = _mud_op_list_sort_evaluate(evaluator);
-      break;
     case MUD_OP_LIST_SORT_BY:
       ret = _mud_op_list_sort_by_evaluate(evaluator);
+      break;
+    case MUD_OP_LIST_SORT:
+      ret = _mud_op_list_sort_evaluate(evaluator);
       break;
 // auto-generated: operators switch - end
     default:

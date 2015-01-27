@@ -4,11 +4,9 @@
     - lmap:     521
     - lreduce:  522
     - lfilter:  523
-    - lsort:    524
     - lsort_by: 525
+    - lsort:    526
 */
-
-mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator);
 
 mud_object_t * _mud_op_list_each_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 520
@@ -83,24 +81,6 @@ mud_object_t * _mud_op_list_filter_evaluate(mud_expr_evaluator_t * evaluator) {
   return ret;
 }
 
-mud_object_t * _mud_op_list_sort_evaluate(mud_expr_evaluator_t * evaluator) {
-// Enum: 524
-  if ( ME_ARGC > 1 ) {
-    mud_object_t * ret = ME_ARG(0);
-    mud_list_t * list = (mud_list_t *)ret->ptr;
-    _mud_list_sort_scope = mud_scope_push(evaluator->scope);
-    _mud_list_sort_args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
-    _mud_list_sort_lambda = ME_ARG(1);
-    _mud_list_sort_pool = evaluator->pool;
-    qsort(list->objects, list->count, sizeof(mud_object_t *), _mud_list_sort_by_compare_lambda);
-    mud_scope_free(_mud_list_sort_scope);
-    free(_mud_list_sort_args);
-    return ret;
-  } else {
-    return _mud_op_list_sort_by_evaluate(evaluator);
-  }
-}
-
 mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 525
   mud_object_t * ret = ME_ARG(0);
@@ -136,4 +116,22 @@ mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_scope_free(new_scope);
   free(args);
   return ret;
+}
+
+mud_object_t * _mud_op_list_sort_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 526
+  if ( ME_ARGC > 1 ) {
+    mud_object_t * ret = ME_ARG(0);
+    mud_list_t * list = (mud_list_t *)ret->ptr;
+    _mud_list_sort_scope = mud_scope_push(evaluator->scope);
+    _mud_list_sort_args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
+    _mud_list_sort_lambda = ME_ARG(1);
+    _mud_list_sort_pool = evaluator->pool;
+    qsort(list->objects, list->count, sizeof(mud_object_t *), _mud_list_sort_by_compare_lambda);
+    mud_scope_free(_mud_list_sort_scope);
+    free(_mud_list_sort_args);
+    return ret;
+  } else {
+    return _mud_op_list_sort_by_evaluate(evaluator);
+  }
 }

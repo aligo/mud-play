@@ -92,5 +92,5 @@
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`
   * 523:   `lfilter, (list), (lambda, (list, 'el', 'i'), ...)`
-  * 524:   `lsort, (list), (lambda, (list, 'a', 'b'), ...)`
   * 525:   `lsort_by, (list), (lambda, (list, 'el', 'i'), ...)`
+  * 526:   `lsort, (list), (lambda, (list, 'a', 'b'), ...)`
