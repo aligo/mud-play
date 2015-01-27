@@ -87,7 +87,7 @@
   * 516:   `lunion, (list1), (list2)`
   * 517:   `lhead, (list), n`
   * 518:   `ltail, (list), n`
-  * 517:   `lslice, (list), start, end`
+  * 519:   `lslice, (list), start, end`
   * 520:   `leach, (list), (lambda, (list, 'el', 'i'), ...)`
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`
