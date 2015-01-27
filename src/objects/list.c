@@ -162,6 +162,13 @@ mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_ca
   return sort_by;
 }
 
+int _mud_list_sort_by_compare_lambda(const void * a, const void * b) {
+  _mud_list_sort_args[0] = *(mud_object_t **)a;
+  _mud_list_sort_args[1] = *(mud_object_t **)b;
+  mud_object_t * ret = _mud_lambda_object_apply(_mud_list_sort_lambda, _mud_list_sort_scope, _mud_list_sort_args, 2);
+  return mud_object_try_cast_int(_mud_list_sort_pool, ret);
+}
+
 int _mud_list_sort_by_compare_int(const void * a, const void * b) {
   return (*(mud_list_sort_by_t **)a)->_int - (*(mud_list_sort_by_t **)b)->_int;
 }

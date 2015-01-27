@@ -37,6 +37,14 @@ int main() {
     ]
   ));
 
+  NSLog(@"(lsort, (list, 3, 1, 2)) should be: (1, 2, 3) == %@", nsMudTestEvaluate(
+    @[@524, @[@500, @3, @1, @2]]
+  ));
+
+  NSLog(@"(lsort, (list, 3, 1, 2), (lambda, (-, (sarg, 1), (sarg, 0)))) should be: (3, 2, 1) == %@", nsMudTestEvaluate(
+    @[@524, @[@500, @3, @1, @2], @[@130, @[@201, @[@122, @1], @[@122, @0]]]]
+  ));
+
   NSLog(@"(lsort_by, (list, 3, 1, 2)) should be: (1, 2, 3) == %@", nsMudTestEvaluate(
     @[@525, @[@500, @3, @1, @2]]
   ));
