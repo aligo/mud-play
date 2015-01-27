@@ -77,7 +77,10 @@ typedef enum {
   MUD_OP_LIST_MAP = 521,
   MUD_OP_LIST_REDUCE = 522,
   MUD_OP_LIST_FILTER = 523,
+  MUD_OP_LIST_REJECT = 524,
   MUD_OP_LIST_SORT_BY = 525,
-  MUD_OP_LIST_SORT = 526
+  MUD_OP_LIST_SORT = 526,
+  MUD_OP_LIST_ALL = 527,
+  MUD_OP_LIST_ANY = 528
 // auto-generated: operators enum - end
 } mud_operator_e;

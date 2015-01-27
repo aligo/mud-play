@@ -4,6 +4,7 @@
     - lmap:     521
     - lreduce:  522
     - lfilter:  523
+    - lreject:  524
     - lsort_by: 525
     - lsort:    526
 */
@@ -81,6 +82,26 @@ mud_object_t * _mud_op_list_filter_evaluate(mud_expr_evaluator_t * evaluator) {
   return ret;
 }
 
+mud_object_t * _mud_op_list_reject_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 524
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
+  mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    args[0] = list->objects[i];
+    args[1] = mud_int_init(i);
+    if ( ! mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 2)) ) {
+      mud_list_append((mud_list_t *)ret->ptr, list->objects[i]); 
+    }
+  }
+  mud_scope_free(new_scope);
+  free(args);
+  return ret;
+}
+
 mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 525
   mud_object_t * ret = ME_ARG(0);
@@ -134,4 +155,44 @@ mud_object_t * _mud_op_list_sort_evaluate(mud_expr_evaluator_t * evaluator) {
   } else {
     return _mud_op_list_sort_by_evaluate(evaluator);
   }
+}
+
+mud_object_t * _mud_op_list_all_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 527
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_boolean_t ret = true;
+  mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
+  mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    args[0] = list->objects[i];
+    args[1] = mud_int_init(i);
+    ret = ret && mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 2));
+    if ( !ret ) {
+      break;
+    }
+  }
+  mud_scope_free(new_scope);
+  free(args);
+  return mud_boolean_init(ret);
+}
+
+mud_object_t * _mud_op_list_any_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 528
+  mud_object_t * org = ME_ARG(0);
+  mud_list_t * list = (mud_list_t *)org->ptr;
+  mud_boolean_t ret = false;
+  mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
+  mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
+  for ( unsigned i = 0; i < list->count; i++ ) {
+    args[0] = list->objects[i];
+    args[1] = mud_int_init(i);
+    ret = ret || mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 2));
+    if ( ret ) {
+      break;
+    }
+  }
+  mud_scope_free(new_scope);
+  free(args);
+  return mud_boolean_init(ret);
 }

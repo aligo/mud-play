@@ -37,6 +37,12 @@ int main() {
     ]
   ));
 
+  NSLog(@"(lreject, (list, 1, 2, 3), (lambda, (list, 'el'), (%%, (sget, 'el'), 2))) should be: (2) == %@", nsMudTestEvaluate(
+    @[@524, @[@500, @1, @2, @3],
+      @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @2]]
+    ]
+  ));
+
   NSLog(@"(lsort, (list, 3, 1, 2)) should be: (1, 2, 3) == %@", nsMudTestEvaluate(
     @[@526, @[@500, @3, @1, @2]]
   ));
@@ -52,6 +58,30 @@ int main() {
   NSLog(@"(lsort_by, (list, 8, 11, 24, 2), (lambda, (list, 'el'), (%%, (sget, 'el'), 5) )) should be: (11, 2, 8, 24) == %@", nsMudTestEvaluate(
     @[@525, @[@500, @8, @11, @24, @2],
       @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @5]]
+    ]
+  ));
+
+  NSLog(@"(lall, (list, 1, 2, 3), (lambda, (list, 'el'), (%%, (sget, 'el'), 2))) should be: 0 == %@", nsMudTestEvaluate(
+    @[@527, @[@500, @1, @2, @3],
+      @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @2]]
+    ]
+  ));
+
+  NSLog(@"(lall, (list, 1, 3, 5), (lambda, (list, 'el'), (%%, (sget, 'el'), 2))) should be: 1 == %@", nsMudTestEvaluate(
+    @[@527, @[@500, @1, @3, @5],
+      @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @2]]
+    ]
+  ));
+
+  NSLog(@"(lany, (list, 1, 2, 3), (lambda, (list, 'el'), (%%, (sget, 'el'), 2))) should be: 1 == %@", nsMudTestEvaluate(
+    @[@528, @[@500, @1, @2, @3],
+      @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @2]]
+    ]
+  ));
+
+  NSLog(@"(lany, (list, 2, 4, 6), (lambda, (list, 'el'), (%%, (sget, 'el'), 2))) should be: 0 == %@", nsMudTestEvaluate(
+    @[@528, @[@500, @2, @4, @6],
+      @[@130, @[@500, @"el"], @[@204, @[@120, @"el"], @2]]
     ]
   ));
 
