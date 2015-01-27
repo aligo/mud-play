@@ -41,7 +41,10 @@ int main() {
   NSLog(@"t12e should be: (3, 6, 9) == %@", nsMudTestEvaluate([json objectForKey: @"12"]));
 
   // [lsort_by, [list, 8, 11, 24, 2], [lambda, [list, "el"], [%, [sget, "el"], 5]]]
-  NSLog(@"t13e should be: (11, 2, 8, 24) == %@", nsMudTestEvaluate([json objectForKey: @"13"]));  
+  NSLog(@"t13e should be: (11, 2, 8, 24) == %@", nsMudTestEvaluate([json objectForKey: @"13"]));
+
+  // [lsort, [list, 0.1, 0.3, 0.7, 0.5], [lambda, [-, [sarg, 1], [arg, 0]]]]
+  NSLog(@"t14e should be: (0.7, 0.5, 0.3, 0.1) == %@", nsMudTestEvaluate([json objectForKey: @"14"]));  
 
   NSLog(@"ok");
 }
