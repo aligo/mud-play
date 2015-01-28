@@ -25,6 +25,18 @@ void MudWarningToNSLog(char * formatString, ...) {
   #endif
 }
 
+void MudInfoToNSLog(char * formatString, ...) {
+  #ifndef MUD_MUTE_WARNING
+  va_list args;
+  va_start(args, formatString);
+  NSString * output = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: formatString] arguments: args];
+  NSLog(@"[Mud Runtime] [Info] %@", output);
+  #if !__has_feature(objc_arc)
+  #endif
+  va_end(args);
+  #endif
+}
+
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   mud_object_t * ret;
   if ( [ns_object isKindOfClass: [NSArray class]] ) {

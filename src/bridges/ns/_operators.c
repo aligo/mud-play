@@ -267,6 +267,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_LIST_ANY:
       ret = _mud_op_list_any_evaluate(evaluator);
       break;
+    case MUD_OP_NS_INFO:
+      ret = _mud_op_ns_info_evaluate(evaluator);
+      break;
 // auto-generated: operators switch - end
     default:
       mud_error("Unknown operator: %lu", expr->oper);
