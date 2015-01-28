@@ -6,7 +6,9 @@ void MudErrorToNSLog(char * formatString, ...) {
   va_start(args, formatString);
   NSString * output = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: formatString] arguments: args];
   NSLog(@"[Mud Runtime] [Error] %@", output);
-  [output release];
+  #if !__has_feature(objc_arc)
+    [output release];
+  #endif
   va_end(args);
   #endif
 }
@@ -17,7 +19,8 @@ void MudWarningToNSLog(char * formatString, ...) {
   va_start(args, formatString);
   NSString * output = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: formatString] arguments: args];
   NSLog(@"[Mud Runtime] [Warning] %@", output);
-  [output release];
+  #if !__has_feature(objc_arc)
+  #endif
   va_end(args);
   #endif
 }
