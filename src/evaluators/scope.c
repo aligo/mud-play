@@ -48,11 +48,14 @@ void mud_scope_set(mud_scope_t * scope, const char * name, mud_object_t * value)
   HASH_FIND_STR(scope->vars, name, var);
   if ( var == NULL ) {
     var = (mud_scope_vars_t *)malloc(sizeof(mud_scope_vars_t));
-    var->slot = (mud_scope_slot_t *)malloc(sizeof(mud_scope_slot_t));
     var->name = strdup(name);
-    var->slot->belongs_to = scope;
+    var->slot = NULL;
     HASH_ADD_KEYPTR(hh, scope->vars, var->name, strlen(var->name), var);
   }
+  if ( var->slot == NULL || var->slot->belongs_to != scope ) {
+    var->slot = (mud_scope_slot_t *)malloc(sizeof(mud_scope_slot_t));
+    var->slot->belongs_to = scope;
+  }  
   var->slot->value = value;
 }
 
