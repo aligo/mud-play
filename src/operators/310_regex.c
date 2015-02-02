@@ -6,6 +6,7 @@
     - rtest:        311
     - rmatch:       312
     - rmatch_all:   313
+    - rrep_all:     314
 */
 
 mud_object_t * _mud_op_regex_regex_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -95,6 +96,44 @@ mud_object_t * _mud_op_regex_match_all_evaluate(mud_expr_evaluator_t * evaluator
       mud_list_append((mud_list_t *)ret->ptr, matched);
       match_start += groups[0].rm_eo;
     } while ( regexec(regex, &to_match[match_start], groups_count, groups, 0) == 0 );
+    return ret;
+  }
+}
+
+mud_object_t * _mud_op_regex_rep_all_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 314
+  mud_object_t * obj = ME_ARG(0);
+  regex_t * regex = (regex_t *)obj->ptr;
+  char * to_match = (char *)ME_ARG_STR(1);
+  size_t groups_count = regex->re_nsub + 1;
+  regmatch_t * groups = (regmatch_t *)malloc(groups_count * sizeof(regmatch_t));
+  if ( regexec(regex, to_match, groups_count, groups, 0) != 0 ) {
+    return ME_ARG(1);
+  } else {
+    mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+    ret->ptr = strdup(to_match);
+    size_t ret_len = strlen(ret->ptr);
+    size_t cur_len = 0;
+    unsigned ret_start = 0;
+    unsigned match_start = 0;
+    do {
+      // unsigned start = match_start + groups[0].rm_so;
+      // unsigned end = match_start + groups[0].rm_eo;
+
+      
+      char * rep_str = (char *)ME_ARG_STR(2);
+      size_t rep_len = strlen(rep_str);
+      
+      cur_len += groups[0].rm_so + rep_len;
+      if ( cur_len > ret_len ) {
+        ret->ptr = realloc(ret->ptr, (cur_len + 1) * sizeof(char));
+      }
+      strncpy(&ret->ptr[ret_start], &to_match[match_start], groups[0].rm_so);
+      strncpy(&ret->ptr[ret_start + groups[0].rm_so], rep_str, rep_len);
+      match_start += groups[0].rm_eo;
+      ret_start += groups[0].rm_so + rep_len;
+    } while ( regexec(regex, &to_match[match_start], groups_count, groups, 0) == 0 );
+    ((char *)ret->ptr)[cur_len] = '\0';
     return ret;
   }
 }
