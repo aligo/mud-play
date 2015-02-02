@@ -9,6 +9,7 @@ typedef enum {
   MUD_OBJ_TYPE_INT        = 120,
   MUD_OBJ_TYPE_FLOAT      = 121,
   MUD_OBJ_TYPE_STRING     = 130,
+  MUD_OBJ_TYPE_REGEX      = 135,
   MUD_OBJ_TYPE_LIST       = 150,
   MUD_OBJ_TYPE_HASH       = 160,
   MUD_OBJ_TYPE_BRIDGE     = 300

@@ -27,6 +27,8 @@ void mud_object_free(mud_object_t * object) {
     mud_lambda_free(object->ptr);
   } else if ( object->type == MUD_OBJ_TYPE_LIST ) {
     mud_list_free(object->ptr);
+  } else if ( object->type == MUD_OBJ_TYPE_REGEX ) {
+    regfree(object->ptr);
   } else if ( object->type >= MUD_OBJ_TYPE_BRIDGE ) {
     mud_object_bridge_free(object);
   }

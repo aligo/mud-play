@@ -9,6 +9,7 @@
 #import "../../operators/220_float.c"
 #import "../../operators/290_compare.c"
 #import "../../operators/300_string.c"
+#import "../../operators/310_regex.c"
 #import "../../operators/500_list.c"
 #import "../../operators/510_list.c"
 #import "../../operators/520_list.c"
@@ -182,6 +183,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
       break;
     case MUD_OP_STRING_JOIN:
       ret = _mud_op_string_join_evaluate(evaluator);
+      break;
+    case MUD_OP_REGEX_REGEX:
+      ret = _mud_op_regex_regex_evaluate(evaluator);
+      break;
+    case MUD_OP_REGEX_MATCH:
+      ret = _mud_op_regex_match_evaluate(evaluator);
       break;
     case MUD_OP_LIST_LIST:
       ret = _mud_op_list_list_evaluate(evaluator);

@@ -17,6 +17,7 @@ script:
   - make test TEST=list01
   - make test TEST=list02
   - make test TEST=lambda
+  - make test TEST=regex
   - make test TEST=test01
   - make test TEST=test02
   - make test TEST=test03

@@ -90,6 +90,8 @@ mud_boolean_t mud_object_try_cast_boolean(mud_object_casting_pool_t * pool, mud_
       return *(mud_boolean_t *)object->ptr;
     case MUD_OBJ_TYPE_NIL:
       return 0;
+    case MUD_OBJ_TYPE_LIST:
+      return ((mud_list_t *)object->ptr)->count == 0 ? 0 : 1;
     default:
       mud_warning("casting Type:%lu as mud_boolean, return false", object->type);
       return 0;
