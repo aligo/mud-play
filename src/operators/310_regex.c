@@ -56,6 +56,7 @@ mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
       matched->ptr = _mud_regmatch_get_str(groups, to_match, i);
       mud_list_append((mud_list_t *)ret->ptr, matched);
     }
+    free(groups);
     return ret;
   }
 }
@@ -95,6 +96,7 @@ mud_object_t * _mud_op_regex_match_all_evaluate(mud_expr_evaluator_t * evaluator
       mud_list_append((mud_list_t *)ret->ptr, matched);
       match_start += groups[0].rm_eo;
     } while ( regexec(regex, &to_match[match_start], groups_count, groups, 0) == 0 );
+    free(groups);
     return ret;
   }
 }
@@ -151,6 +153,7 @@ mud_object_t * _mud_op_regex_rep_all_evaluate(mud_expr_evaluator_t * evaluator) 
       mud_scope_free(new_scope);
       free(args);
     }
+    free(groups);
     return ret;
   }
 }
