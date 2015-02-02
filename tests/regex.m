@@ -15,4 +15,8 @@ int main() {
   NSLog(@"(rmatch, (regex, 'abc'), '111abc111') should be: (abc) == %@", nsMudTestEvaluate(@[@312, @[@310, @"abc"], @"111abc111"]));
 
   NSLog(@"(rmatch_all, (regex, '(ab|bc)'), 'abcbcab') should be: (ab, bc, ab) == %@", nsMudTestEvaluate(@[@313, @[@310, @"(ab|bc)"], @"abcbcab"]));
+
+  NSLog(@"(rmatch_all, (regex, '(ab|bc)(\\d{2})', true), 'ab12bc13ab14') should be: ( (ab12, ab, 12), (bc13, bc, 13), (ab14, ab, 14) ) == %@", nsMudTestEvaluate(@[@313, @[@310, @"(ab|bc)([0-9]{2})"], @"ab12bc13ab14", @YES]));
+  
+
 }
