@@ -3,7 +3,8 @@
 /*
   regex
     - regex:     310
-    - rmatch:    311
+    - rtest:     311
+    - rmatch:    312
 */
 
 mud_object_t * _mud_op_regex_regex_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -15,8 +16,19 @@ mud_object_t * _mud_op_regex_regex_evaluate(mud_expr_evaluator_t * evaluator) {
   return ret;
 }
 
-mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
+mud_object_t * _mud_op_regex_test_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 311
+  mud_object_t * obj = ME_ARG(0);
+  regex_t * regex = (regex_t *)obj->ptr;
+  if ( regexec(regex, ME_ARG_STR(1), 0, NULL, 0) != 0 ) {
+    return mud_boolean_init(0);
+  } else {
+    return mud_boolean_init(1);
+  }
+}
+
+mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 312
   mud_object_t * ret;
   mud_object_t * obj = ME_ARG(0);
   regex_t * regex = (regex_t *)obj->ptr;
@@ -43,4 +55,3 @@ mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
   }
   return ret;
 }
-

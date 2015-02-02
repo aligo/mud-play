@@ -6,10 +6,10 @@ int main() {
 
   NSLog(@"(rmatch, (regex, 'a'), 'b') should be: 0 == %@", nsMudTestEvaluate(@[@311, @[@310, @"a"], @"b"]));
 
-  NSLog(@"(rmatch, (regex, 'a'), 'a') should be: (a) == %@", nsMudTestEvaluate(@[@311, @[@310, @"a"], @"a"]));
+  NSLog(@"(rmatch, (regex, 'a'), 'a') should be: 1 == %@", nsMudTestEvaluate(@[@311, @[@310, @"a"], @"a"]));
 
-  NSLog(@"(rmatch, (regex, 'ab?'), 'a') should be: (a) == %@", nsMudTestEvaluate(@[@311, @[@310, @"ab?"], @"a"]));
+  NSLog(@"(rmatch, (regex, 'ab?'), 'a') should be: 1 == %@", nsMudTestEvaluate(@[@311, @[@310, @"ab?"], @"a"]));
 
-  NSLog(@"(rmatch, (regex, 'a(b?)'), 'ab') should be: (ab, b) == %@", nsMudTestEvaluate(@[@311, @[@310, @"a(b?)"], @"ab"]));
+  NSLog(@"(rmatch, (regex, 'a(b?)'), 'ab') should be: (ab, b) == %@", nsMudTestEvaluate(@[@312, @[@310, @"a(b?)"], @"ab"]));
 
 }
