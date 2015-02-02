@@ -9,6 +9,16 @@
     - rrep_all:     314
 */
 
+char * _mud_regmatch_get_str(regmatch_t * groups, const char * to_match, unsigned i) {
+  unsigned start = groups[i].rm_so;
+  unsigned end = groups[i].rm_eo;
+  size_t len = end - start;
+  char * str = (char *)malloc((len + 1) * sizeof(char));
+  strncpy(str, to_match + start, len);
+  str[len] = '\0';
+  return str;
+}
+
 mud_object_t * _mud_op_regex_regex_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 310
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_REGEX);
@@ -42,14 +52,8 @@ mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
     mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
     ret->ptr = mud_list_alloc();
     for ( unsigned i = 0; i < groups_count; i++ ) {
-      unsigned start = groups[i].rm_so;
-      unsigned end = groups[i].rm_eo;
-      size_t len = end - start;
-      char * str = (char *)malloc((len + 1) * sizeof(char));
-      strncpy(str, to_match + start, len);
-      str[len] = '\0';
       mud_object_t * matched = mud_object_alloc(MUD_OBJ_TYPE_STRING);
-      matched->ptr = str;
+      matched->ptr = _mud_regmatch_get_str(groups, to_match, i);
       mud_list_append((mud_list_t *)ret->ptr, matched);
     }
     return ret;
@@ -77,12 +81,7 @@ mud_object_t * _mud_op_regex_match_all_evaluate(mud_expr_evaluator_t * evaluator
         matched->ptr = mud_list_alloc();
       }
       for ( unsigned i = 0; i < groups_count; i++ ) {
-        unsigned start = match_start + groups[i].rm_so;
-        unsigned end = match_start + groups[i].rm_eo;
-        size_t len = end - start;
-        char * str = (char *)malloc((len + 1) * sizeof(char));
-        strncpy(str, to_match + start, len);
-        str[len] = '\0';
+        char * str = _mud_regmatch_get_str(groups, &to_match[match_start], i);
         if ( sub_groups ) {
           mud_object_t * sub = mud_object_alloc(MUD_OBJ_TYPE_STRING);
           sub->ptr = str;
@@ -116,12 +115,26 @@ mud_object_t * _mud_op_regex_rep_all_evaluate(mud_expr_evaluator_t * evaluator) 
     size_t cur_len = 0;
     unsigned ret_start = 0;
     unsigned match_start = 0;
-    do {
-      // unsigned start = match_start + groups[0].rm_so;
-      // unsigned end = match_start + groups[0].rm_eo;
+    char * rep_str;
+    mud_object_t * rep_obj = ME_ARG(2);
+    mud_scope_t * new_scope = NULL;
+    mud_object_t ** args;
+    if ( rep_obj->type == MUD_OBJ_TYPE_LAMBDA ) {
+      new_scope = mud_scope_push(evaluator->scope);
+      args = (mud_object_t **)malloc(groups_count * sizeof(mud_object_t *));
+    } else {
+      rep_str = (char *)ME_ARG_STR(2);
+    }
 
-      
-      char * rep_str = (char *)ME_ARG_STR(2);
+    do {
+      if ( new_scope ) {
+        for ( unsigned i = 0; i < groups_count; i++ ) {
+          mud_object_t * matched = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+          matched->ptr = _mud_regmatch_get_str(groups, &to_match[match_start], i);
+          args[i] = matched;
+        }
+        rep_str = (char *)mud_object_try_cast_str(evaluator->pool, _mud_lambda_object_apply(rep_obj, new_scope, args, groups_count));
+      }
       size_t rep_len = strlen(rep_str);
       
       cur_len += groups[0].rm_so + rep_len;
@@ -134,6 +147,10 @@ mud_object_t * _mud_op_regex_rep_all_evaluate(mud_expr_evaluator_t * evaluator) 
       ret_start += groups[0].rm_so + rep_len;
     } while ( regexec(regex, &to_match[match_start], groups_count, groups, 0) == 0 );
     ((char *)ret->ptr)[cur_len] = '\0';
+    if ( new_scope ) {
+      mud_scope_free(new_scope);
+      free(args);
+    }
     return ret;
   }
 }
