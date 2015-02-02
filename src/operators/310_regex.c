@@ -89,6 +89,7 @@ mud_object_t * _mud_op_regex_match_all_evaluate(mud_expr_evaluator_t * evaluator
         } else {
           matched = mud_object_alloc(MUD_OBJ_TYPE_STRING);
           matched->ptr = str;
+          break;
         }
       }
       mud_list_append((mud_list_t *)ret->ptr, matched);
