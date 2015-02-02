@@ -18,9 +18,9 @@ int main() {
 
   NSLog(@"(rmatch_all, (regex, '(ab|bc)(\\d{2})', true), 'ab12bc13ab14') should be: ( (ab12, ab, 12), (bc13, bc, 13), (ab14, ab, 14) ) == %@", nsMudTestEvaluate(@[@313, @[@310, @"(ab|bc)([0-9]{2})"], @"ab12bc13ab14", @YES]));
   
-  NSLog(@"(rmatch_all, (regex, '(ab|bc)(\\d{2})', 'xx'), 'ab12-bc13中文ab14') should be: ? == %@", nsMudTestEvaluate(@[@314, @[@310, @"(ab|bc)([0-9]{2})"], @"ab12-bc13中文ab14", @"xx"]));
+  NSLog(@"(rrep_all, (regex, '(ab|bc)(\\d{2})', 'xx'), 'ab12-bc13中文ab14') should be: ? == %@", nsMudTestEvaluate(@[@314, @[@310, @"(ab|bc)([0-9]{2})"], @"ab12-bc13中文ab14", @"xx"]));
   
-  NSLog(@"(rmatch_all, (regex, '(ab|bc)(\\d{2})', (lambda, (concat, (sarg, 1), ',', (*, 100, (sarg, 2))))), 'ab12-bc13中文ab14') should be: ab,1200-bc,1300中文ab,1400 == %@", nsMudTestEvaluate(@[
+  NSLog(@"(rrep_all, (regex, '(ab|bc)(\\d{2})', (lambda, (concat, (sarg, 1), ',', (*, 100, (sarg, 2))))), 'ab12-bc13中文ab14') should be: ab,1200-bc,1300中文ab,1400 == %@", nsMudTestEvaluate(@[
     @314, @[@310, @"(ab|bc)([0-9]{2})"], @"ab12-bc13中文ab14", @[
       @130, @[@300, @[@122, @1], @",", @[@202, @100, @[@122, @2]]]
     ]
