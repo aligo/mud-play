@@ -59,7 +59,7 @@ int main() {
   NSLog(@"t18e should be: a.b.c.d.2014 = %@", nsMudTestEvaluate([json objectForKey: @"18"]));
 
   //  [rrep_all, [regex, "\\[([^]]+)\\]"], "[b]te[i]s[/]t[/b]1234", [lambda, [concat, "<", (arg, 1] ,">"]]]
-  NSLog(@"t19e should be: a.b.c.d.2014 = %@", nsMudTestEvaluate([json objectForKey: @"19"]));
+  NSLog(@"t19e should be: <b>te<i>s</>t</b> = %@", nsMudTestEvaluate([json objectForKey: @"19"]));
 
   NSLog(@"ok");
 }
