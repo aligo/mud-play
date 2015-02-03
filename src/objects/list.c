@@ -1,4 +1,3 @@
-#define MUD_LIST_ALLOC_SIZE 256;
 
 mud_list_t * mud_list_alloc() {
   mud_list_t * list = (mud_list_t *)malloc(sizeof(mud_list_t));

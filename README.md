@@ -41,6 +41,7 @@
   * 210:   `round, 1.1`
   * 211:   `floor, 1.1`
   * 212:   `ceil, 1.1`
+  * 213:   `rand`, `rand, 1024`
 
 ### Float
   * 206:   `**, 2, 10`
@@ -67,6 +68,13 @@
   * 307:   `substr, "abc", 0, 1`
   * 308:   `strrep, "abc", "a", "d", all`
   * 309:   `join, ",", a, b, ...`
+
+### Regex
+  * 310:   `regex, "(.*)"`
+  * 311:   `rtest, (regex, ...), "string"`
+  * 312:   `rmatch, (regex, ...), "string"`
+  * 313:   `rmatch_all, (regex, ...), "string"`, `rmatch_all, (regex, ...), "string", true`
+  * 314:   `rrep_all, (regex, ...), "string", "rep"`, `rrep_all, (regex, ...), "string", (lambda, ...)`
 
 ### List
   * 500:   `list, a, b, ...`
