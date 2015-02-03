@@ -22,5 +22,9 @@ int main() {
 
   NSLog(@"log2(1024) should be: %@ == %lf", nsMudTestEvaluate(@[@229, @1024]), log2(1024));
 
+  NSLog(@"rand() should be: %@ == rand", nsMudTestEvaluate(@[@213]));
+
+  NSLog(@"rand(1024) should be: %@ == rand", nsMudTestEvaluate(@[@213, @1024]));
+
   NSLog(@"ok");
 }

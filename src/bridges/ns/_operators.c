@@ -85,56 +85,59 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_ARITHMETIC_REMAINDER:
       ret = _mud_op_arithmetic_remainder_evaluate(evaluator);
       break;
-    case MUD_OP_FLOAT_ROUND:
-      ret = _mud_op_float_round_evaluate(evaluator);
+    case MUD_OP_INT_ROUND:
+      ret = _mud_op_int_round_evaluate(evaluator);
       break;
-    case MUD_OP_FLOAT_FLOOR:
-      ret = _mud_op_float_floor_evaluate(evaluator);
+    case MUD_OP_INT_FLOOR:
+      ret = _mud_op_int_floor_evaluate(evaluator);
       break;
-    case MUD_OP_FLOAT_CEIL:
-      ret = _mud_op_float_ceil_evaluate(evaluator);
+    case MUD_OP_INT_CEIL:
+      ret = _mud_op_int_ceil_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_POW:
-      ret = _mud_op_arithmetic_pow_evaluate(evaluator);
+    case MUD_OP_INT_RAND:
+      ret = _mud_op_int_rand_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_ABS:
-      ret = _mud_op_arithmetic_abs_evaluate(evaluator);
+    case MUD_OP_FLOAT_POW:
+      ret = _mud_op_float_pow_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_LOG:
-      ret = _mud_op_arithmetic_log_evaluate(evaluator);
+    case MUD_OP_FLOAT_ABS:
+      ret = _mud_op_float_abs_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_EXP:
-      ret = _mud_op_arithmetic_exp_evaluate(evaluator);
+    case MUD_OP_FLOAT_LOG:
+      ret = _mud_op_float_log_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_COS:
-      ret = _mud_op_arithmetic_cos_evaluate(evaluator);
+    case MUD_OP_FLOAT_EXP:
+      ret = _mud_op_float_exp_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_SIN:
-      ret = _mud_op_arithmetic_sin_evaluate(evaluator);
+    case MUD_OP_FLOAT_COS:
+      ret = _mud_op_float_cos_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_TAN:
-      ret = _mud_op_arithmetic_tan_evaluate(evaluator);
+    case MUD_OP_FLOAT_SIN:
+      ret = _mud_op_float_sin_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_ACOS:
-      ret = _mud_op_arithmetic_acos_evaluate(evaluator);
+    case MUD_OP_FLOAT_TAN:
+      ret = _mud_op_float_tan_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_ASIN:
-      ret = _mud_op_arithmetic_asin_evaluate(evaluator);
+    case MUD_OP_FLOAT_ACOS:
+      ret = _mud_op_float_acos_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_ATAN:
-      ret = _mud_op_arithmetic_atan_evaluate(evaluator);
+    case MUD_OP_FLOAT_ASIN:
+      ret = _mud_op_float_asin_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_ATAN2:
-      ret = _mud_op_arithmetic_atan2_evaluate(evaluator);
+    case MUD_OP_FLOAT_ATAN:
+      ret = _mud_op_float_atan_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_LOG10:
-      ret = _mud_op_arithmetic_log10_evaluate(evaluator);
+    case MUD_OP_FLOAT_ATAN2:
+      ret = _mud_op_float_atan2_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_LOG1P:
-      ret = _mud_op_arithmetic_log1p_evaluate(evaluator);
+    case MUD_OP_FLOAT_LOG10:
+      ret = _mud_op_float_log10_evaluate(evaluator);
       break;
-    case MUD_OP_ARITHMETIC_LOG2:
-      ret = _mud_op_arithmetic_log2_evaluate(evaluator);
+    case MUD_OP_FLOAT_LOG1P:
+      ret = _mud_op_float_log1p_evaluate(evaluator);
+      break;
+    case MUD_OP_FLOAT_LOG2:
+      ret = _mud_op_float_log2_evaluate(evaluator);
       break;
     case MUD_OP_COMPARE_EQ_TO:
       ret = _mud_op_compare_eq_to_evaluate(evaluator);
