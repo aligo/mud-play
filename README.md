@@ -86,6 +86,7 @@
   * 506:   `lreplace, (list), item, 1`
   * 507:   `lremove, (list), 1, ...`
   * 508:   `lfind, (list), item`
+  * 509:   `lstr, "abc"`, `lstr, "a,b,c", ","`
   * 510:   `lreverse, (list)`
   * 511:   `lflatten, (list)`, `lflatten, (list), [shallow]`
   * 512:   `luniq, (list)`

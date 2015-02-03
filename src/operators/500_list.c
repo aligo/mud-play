@@ -9,6 +9,7 @@
     - lreplace:  506
     - lremove:   507
     - lfind:     508
+    - lstr:      509
 */
 
 mud_int_t _mud_list_prepare_index(mud_list_t * list, mud_int_t i) {
@@ -125,3 +126,57 @@ mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
   }
 }
 
+mud_object_t * _mud_op_list_str_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 509
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  char * str = (char *)ME_ARG_STR(0);
+  size_t str_len = strlen(str);
+  size_t i = 0, j = 0, si = 0;
+  if ( ME_ARGC > 1 ) {
+    char * spr = (char *)ME_ARG_STR(1);
+    size_t spr_len = strlen(spr);
+    while (str[i]) {
+      i++;
+      size_t is_spr = 0;
+      if ( str[i] == spr[spr_len - 1] ) {
+        is_spr = 1;
+        for ( size_t k = 1; k < spr_len; k++ ) {
+          if ( str[i - k] != spr[spr_len - 1 - k] ) {
+            is_spr = 0;
+            break;
+          }
+        }
+      }
+      if ( i == str_len ) {
+        is_spr = 1;
+        j += spr_len;
+      }
+      if ( is_spr ) {
+        j += i - spr_len + 1;
+        size_t l = j - si;
+        mud_object_t * obj = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+        obj->ptr = (char *)malloc((l + 1) * sizeof(char));
+        strncpy(obj->ptr, &str[si], l);
+        ((char *)obj->ptr)[l] = '\0';
+        mud_list_append((mud_list_t *)ret->ptr, obj);
+        si = i + 1;
+        j = 0;
+      }
+    }
+  } else {
+    while (str[i]) {
+      j++;
+      i++;
+      if ( (str[i] & 0xc0) != 0x80 ) {
+        mud_object_t * obj = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+        obj->ptr = (char *)malloc((j + 1) * sizeof(char));
+        strncpy(obj->ptr, &str[i - j], j);
+        ((char *)obj->ptr)[j] = '\0';
+        mud_list_append((mud_list_t *)ret->ptr, obj);
+        j = 0;
+      }
+    }
+  }
+  return ret;
+}

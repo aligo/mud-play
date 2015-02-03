@@ -57,5 +57,11 @@ int main() {
 
   NSLog(@"(lslice, (list, 1, 2, 3), 1, 2) should be: (2) == %@", nsMudTestEvaluate(@[@519, @[@500, @1, @2, @3], @1, @2]));
 
+  NSLog(@"(lstr, 'test 中文') should be:  %@", nsMudTestEvaluate(@[@509, @"test 中文"]));
+
+  NSLog(@"(lstr, 'test,中文', ',') should be: %@", nsMudTestEvaluate(@[@509, @"test,中文", @","]));
+
+  NSLog(@"(lstr, 't中e中s中t', '中') should be: %@", nsMudTestEvaluate(@[@509, @"t中e中s中t", @"中"]));
+
   NSLog(@"ok");
 }
