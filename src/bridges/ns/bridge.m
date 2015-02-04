@@ -50,7 +50,7 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
     if ( [ns_object class] == [@(YES) class] ) {
       ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
     } else {
-      if ( CFNumberIsFloatType((CFNumberRef)ns_object) ) {
+      if ( CFNumberIsFloatType((CFNumberRef)(NSNumber*)ns_object) ) {
         ret = mud_float_init([(NSNumber*)ns_object doubleValue]);
       } else {
         ret = mud_int_init([(NSNumber*)ns_object longValue]);
