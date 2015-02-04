@@ -2,9 +2,9 @@
 
 int main() {
 
-  NSLog(@"(ht, 1, 'a', 2, 'b') should be: { 1 = 'a', 2 = 'b' } == %@", nsMudTestEvaluate(@[@600, @1, @"a", @2, @"b"]));
+  NSLog(@"(ht, 1, 'a', 2, 'b') should be: { 1 = a, 2 = b } == %@", nsMudTestEvaluate(@[@600, @1, @"a", @2, @"b"]));
 
-  NSLog(@"(ht, (list, 1, 'a'), (list, 2, 'b')) should be: { 1 = 'a', 2 = 'b' } == %@", nsMudTestEvaluate(@[@600, @[@500, @1, @"a"], @[@500, @2, @"b"]]));
+  NSLog(@"(ht, (list, 1, 'a'), (list, 2, 'b')) should be: { 1 = a, 2 = b } == %@", nsMudTestEvaluate(@[@600, @[@500, @1, @"a"], @[@500, @2, @"b"]]));
 
   NSLog(@"(htcount, (ht, 'hello', 'world')) should be: 1 == %@", nsMudTestEvaluate(@[@601, @[@600, @"hello", @"world"]]));
 
@@ -18,5 +18,7 @@ int main() {
 
   NSLog(@"(htpairs, (ht, 1, 'a', 2, 'b')) should be: (('1', 'a') ('2', b')) == %@", nsMudTestEvaluate(@[@606, @[@600, @1, @"a", @2, @"b"]]));
 
-  NSLog(@"(htmerge, (ht, 1, 'a', 2, 'c'), (h1, 2, 'b', 3, 'c')) should be: { 1 = 'a', 2 = 'b', 3 = 'c' }  == %@", nsMudTestEvaluate(@[@607, @[@600, @1, @"a", @2, @"c"], @[@600, @2, @"b", @3, @"c"]]));
+  NSLog(@"(htmerge, (ht, 1, 'a', 2, 'c'), (h1, 2, 'b', 3, 'c')) should be: { 1 = a, 2 = b, 3 = c }  == %@", nsMudTestEvaluate(@[@607, @[@600, @1, @"a", @2, @"c"], @[@600, @2, @"b", @3, @"c"]]));
+
+  NSLog(@"(htinvert, (ht, 1, 'a', 2, 'b')) should be:  { a = 1, b = 2 } == %@", nsMudTestEvaluate(@[@608, @[@600, @1, @"a", @2, @"b"]]));
 }

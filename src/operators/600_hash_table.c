@@ -105,3 +105,15 @@ mud_object_t * _mud_op_hash_table_merge_evaluate(mud_expr_evaluator_t * evaluato
   }
   return ret;
 }
+
+mud_object_t * _mud_op_hash_table_invert_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 608
+  mud_object_t * org = ME_ARG(0);
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_HASH_TABLE);
+  ret->ptr = mud_hash_table_alloc();
+  mud_hash_table_t * tmp, * cur_hash = NULL;
+  HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
+    ret->ptr = mud_hash_table_set(ret->ptr, mud_object_try_cast_str(evaluator->pool, cur_hash->value), mud_string_init(cur_hash->key));
+  }
+  return ret;
+}
