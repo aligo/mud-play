@@ -7,6 +7,7 @@
     - htkeys:   604
     - htvalues: 605
     - htpairs:  606
+    - htmerge:  607
 */
 
 mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -24,7 +25,7 @@ mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) 
       key = mud_object_try_cast_str(evaluator->pool, list->objects[0]);
       value = list->objects[1];
     } else {
-      key = ME_ARG_STR(i);
+      key = mud_object_try_cast_str(evaluator->pool, arg);
       value = ME_ARG(i + 1);
       i += 1;
     }
@@ -88,6 +89,19 @@ mud_object_t * _mud_op_hash_table_pairs_evaluate(mud_expr_evaluator_t * evaluato
     mud_list_append((mud_list_t *)pair->ptr, mud_string_init(cur_hash->key));
     mud_list_append((mud_list_t *)pair->ptr, cur_hash->value);
     mud_list_append((mud_list_t *)ret->ptr, pair);
+  }
+  return ret;
+}
+
+mud_object_t * _mud_op_hash_table_merge_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 607
+  mud_object_t * ret = ME_ARG(0);
+  for ( unsigned i = 1; i < ME_ARGC; i++ ) {
+    mud_hash_table_t * tmp, * cur_hash = NULL;
+    mud_object_t * org = ME_ARG(i);
+    HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
+      ret->ptr = mud_hash_table_set(ret->ptr, cur_hash->key, cur_hash->value);
+    }
   }
   return ret;
 }

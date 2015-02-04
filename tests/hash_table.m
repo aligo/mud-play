@@ -17,4 +17,6 @@ int main() {
   NSLog(@"(htvalues, (ht, 1, 'a', 2, 'b')) should be: ('a', b') == %@", nsMudTestEvaluate(@[@605, @[@600, @1, @"a", @2, @"b"]]));
 
   NSLog(@"(htpairs, (ht, 1, 'a', 2, 'b')) should be: (('1', 'a') ('2', b')) == %@", nsMudTestEvaluate(@[@606, @[@600, @1, @"a", @2, @"b"]]));
+
+  NSLog(@"(htmerge, (ht, 1, 'a', 2, 'c'), (h1, 2, 'b', 3, 'c')) should be: { 1 = 'a', 2 = 'b', 3 = 'c' }  == %@", nsMudTestEvaluate(@[@607, @[@600, @1, @"a", @2, @"c"], @[@600, @2, @"b", @3, @"c"]]));
 }

@@ -117,5 +117,6 @@
   * 604:   `htkeys, (ht)`
   * 605:   `htvalues, (ht)`
   * 606:   `htpairs, (ht)`
-  
+  * 607:   `htmerge, (ht), (ht1), (ht2), (ht3), ...`
+
   

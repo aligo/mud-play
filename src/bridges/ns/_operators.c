@@ -311,6 +311,9 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_HASH_TABLE_PAIRS:
       ret = _mud_op_hash_table_pairs_evaluate(evaluator);
       break;
+    case MUD_OP_HASH_TABLE_MERGE:
+      ret = _mud_op_hash_table_merge_evaluate(evaluator);
+      break;
     case MUD_OP_NS_INFO:
       ret = _mud_op_ns_info_evaluate(evaluator);
       break;
