@@ -6,7 +6,7 @@
 mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 600
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_HASH_TABLE);
-  ret->ptr = NULL;
+  ret->ptr = mud_hash_table_alloc();
   for ( unsigned i = 0; i < ME_ARGC; i++ ) {
     mud_object_t * arg = ME_ARG(i);
     const char * key;

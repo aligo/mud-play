@@ -111,7 +111,6 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
   NSMutableDictionary * ns_dic = [NSMutableDictionary new];
   mud_hash_table_t * tmp, * cur_hash = NULL;
   HASH_ITER(hh, hash_table, cur_hash, tmp) {
-
     [ns_dic setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
   }
   return ns_dic;
