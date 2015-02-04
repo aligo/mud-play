@@ -14,6 +14,7 @@ void MudInfoToNSLog(char * formatString, ...);
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object);
 NSObject * nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
+NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 
 #import "../../mud_evaluator.h"
 #import "_operators.c"

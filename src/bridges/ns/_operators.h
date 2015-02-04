@@ -89,6 +89,7 @@ typedef enum {
   MUD_OP_LIST_SORT = 526,
   MUD_OP_LIST_ALL = 527,
   MUD_OP_LIST_ANY = 528,
+  MUD_OP_HASH_TABLE_HT = 600,
   MUD_OP_NS_INFO = 1200
 // auto-generated: operators enum - end
 } mud_operator_e;

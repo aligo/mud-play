@@ -88,6 +88,9 @@ NSObject * nsWithMudObject(mud_object_t * object) {
     case MUD_OBJ_TYPE_LIST:
       ret = nsArrayWithMudList((mud_list_t *)object->ptr);
       break;
+    case MUD_OBJ_TYPE_HASH_TABLE:
+      ret = nsDictionaryWithMudHashTable((mud_hash_table_t *)object->ptr);
+      break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
       ret = [NSNull null];
@@ -102,6 +105,16 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
     [ns_arr insertObject: nsWithMudObject(list->objects[i]) atIndex: i];
   }
   return ns_arr;
+}
+
+NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
+  NSMutableDictionary * ns_dic = [NSMutableDictionary new];
+  mud_hash_table_t * tmp, * cur_hash = NULL;
+  HASH_ITER(hh, hash_table, cur_hash, tmp) {
+
+    [ns_dic setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
+  }
+  return ns_dic;
 }
 
 mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {

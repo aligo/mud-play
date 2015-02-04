@@ -11,7 +11,7 @@ typedef enum {
   MUD_OBJ_TYPE_STRING     = 130,
   MUD_OBJ_TYPE_REGEX      = 135,
   MUD_OBJ_TYPE_LIST       = 150,
-  MUD_OBJ_TYPE_HASH       = 160,
+  MUD_OBJ_TYPE_HASH_TABLE = 160,
   MUD_OBJ_TYPE_BRIDGE     = 300
 } mud_object_type_e;
 
@@ -56,4 +56,5 @@ mud_object_t * mud_lambda_init();
 #import "evaluators/casting.h"
 
 #import "objects/list.h"
+#import "objects/hash_table.h"
 #import "objects/lambda.h"

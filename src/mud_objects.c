@@ -1,5 +1,6 @@
 #import "mud_objects.h"
 #import "mud_gc.h"
+#import "objects/hash_table.c"
 #import "objects/list.c"
 #import "objects/lambda.c"
 
