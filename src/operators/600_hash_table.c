@@ -4,6 +4,9 @@
     - htcount:  601
     - htget:    602
     - htset:    603
+    - htkeys:   604
+    - htvalues: 605
+    - htpairs:  606
 */
 
 mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -47,4 +50,44 @@ mud_object_t * _mud_op_hash_table_set_evaluate(mud_expr_evaluator_t * evaluator)
   mud_object_t * org = ME_ARG(0);
   org->ptr = mud_hash_table_set((mud_hash_table_t *)org->ptr, ME_ARG_STR(1), ME_ARG(2));
   return org;
+}
+
+mud_object_t * _mud_op_hash_table_keys_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 604
+  mud_object_t * org = ME_ARG(0);
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  mud_hash_table_t * tmp, * cur_hash = NULL;
+  HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
+    mud_list_append((mud_list_t *)ret->ptr, mud_string_init(cur_hash->key));
+  }
+  return ret;
+}
+
+mud_object_t * _mud_op_hash_table_values_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 605
+  mud_object_t * org = ME_ARG(0);
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  mud_hash_table_t * tmp, * cur_hash = NULL;
+  HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
+    mud_list_append((mud_list_t *)ret->ptr, cur_hash->value);
+  }
+  return ret;
+}
+
+mud_object_t * _mud_op_hash_table_pairs_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 606
+  mud_object_t * org = ME_ARG(0);
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  mud_hash_table_t * tmp, * cur_hash = NULL;
+  HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
+    mud_object_t * pair = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+    pair->ptr = mud_list_alloc();
+    mud_list_append((mud_list_t *)pair->ptr, mud_string_init(cur_hash->key));
+    mud_list_append((mud_list_t *)pair->ptr, cur_hash->value);
+    mud_list_append((mud_list_t *)ret->ptr, pair);
+  }
+  return ret;
 }

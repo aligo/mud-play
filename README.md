@@ -114,4 +114,8 @@
   * 601:   `htcount, (ht)`
   * 602:   `htget, (ht), key`
   * 603:   `htset, (ht), key, value`
+  * 604:   `htkeys, (ht)`
+  * 605:   `htvalues, (ht)`
+  * 606:   `htpairs, (ht)`
+  
   
