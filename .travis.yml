@@ -16,7 +16,8 @@ script:
   - make test TEST=compare
   - make test TEST=list01
   - make test TEST=list02
-  - make test TEST=hash_table
+  - make test TEST=hash_table01
+  - make test TEST=hash_table02
   - make test TEST=lambda
   - make test TEST=regex
   - make test TEST=test01

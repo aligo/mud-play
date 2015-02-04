@@ -98,6 +98,8 @@ typedef enum {
   MUD_OP_HASH_TABLE_PAIRS = 606,
   MUD_OP_HASH_TABLE_MERGE = 607,
   MUD_OP_HASH_TABLE_INVERT = 608,
+  MUD_OP_HASH_TABLE_EACH = 620,
+  MUD_OP_HASH_TABLE_MAP = 621,
   MUD_OP_NS_INFO = 1200
 // auto-generated: operators enum - end
 } mud_operator_e;

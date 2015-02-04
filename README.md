@@ -119,4 +119,7 @@
   * 606:   `htpairs, (ht)`
   * 607:   `htmerge, (ht), (ht1), (ht2), (ht3), ...`
   * 608:   `htinvert, (ht)`
+
+  * 620:   `hteach, (ht), (lambda, (list, 'key', 'value'), ...)`
+  * 621:   `htmap, (ht), (lambda, (list, 'key', 'value'), ...)`
   

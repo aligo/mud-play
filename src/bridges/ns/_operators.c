@@ -14,6 +14,7 @@
 #import "../../operators/510_list.c"
 #import "../../operators/520_list.c"
 #import "../../operators/600_hash_table.c"
+#import "../../operators/620_hash_table.c"
 #import "../../bridges/ns/operators/ns.m"
 // auto-generated: operators import - end
 
@@ -316,6 +317,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
       break;
     case MUD_OP_HASH_TABLE_INVERT:
       ret = _mud_op_hash_table_invert_evaluate(evaluator);
+      break;
+    case MUD_OP_HASH_TABLE_EACH:
+      ret = _mud_op_hash_table_each_evaluate(evaluator);
+      break;
+    case MUD_OP_HASH_TABLE_MAP:
+      ret = _mud_op_hash_table_map_evaluate(evaluator);
       break;
     case MUD_OP_NS_INFO:
       ret = _mud_op_ns_info_evaluate(evaluator);
