@@ -11,6 +11,16 @@ void mud_hash_table_free(mud_hash_table_t * hash_table) {
   }
 }
 
+mud_object_t * mud_hash_table_get(mud_hash_table_t * hash_table, const char * key) {
+  mud_hash_table_t * cur_hash = NULL;
+  HASH_FIND_STR(hash_table, key, cur_hash);
+  if ( cur_hash == NULL ) {
+    return mud_nil_init();
+  } else {
+    return cur_hash->value;
+  }
+}
+
 mud_hash_table_t * mud_hash_table_set(mud_hash_table_t * hash_table, const char * key, mud_object_t * value) {
   mud_hash_table_t * cur_hash = NULL;
   HASH_FIND_STR(hash_table, key, cur_hash);

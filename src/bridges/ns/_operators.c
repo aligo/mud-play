@@ -293,6 +293,15 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_HASH_TABLE_HT:
       ret = _mud_op_hash_table_ht_evaluate(evaluator);
       break;
+    case MUD_OP_HASH_TABLE_COUNT:
+      ret = _mud_op_hash_table_count_evaluate(evaluator);
+      break;
+    case MUD_OP_HASH_TABLE_GET:
+      ret = _mud_op_hash_table_get_evaluate(evaluator);
+      break;
+    case MUD_OP_HASH_TABLE_SET:
+      ret = _mud_op_hash_table_set_evaluate(evaluator);
+      break;
     case MUD_OP_NS_INFO:
       ret = _mud_op_ns_info_evaluate(evaluator);
       break;

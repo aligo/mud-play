@@ -87,6 +87,7 @@
   * 507:   `lremove, (list), 1, ...`
   * 508:   `lfind, (list), item`
   * 509:   `lstr, "abc"`, `lstr, "a,b,c", ","`
+
   * 510:   `lreverse, (list)`
   * 511:   `lflatten, (list)`, `lflatten, (list), [shallow]`
   * 512:   `luniq, (list)`
@@ -97,6 +98,7 @@
   * 517:   `lhead, (list), n`
   * 518:   `ltail, (list), n`
   * 519:   `lslice, (list), start, end`
+
   * 520:   `leach, (list), (lambda, (list, 'el', 'i'), ...)`
   * 521:   `lmap, (list), (lambda, (list, 'el', 'i'), ...)`
   * 522:   `lreduce, (list), ret, (lambda, (list, 'ret', 'el', 'i'), ...)`
@@ -107,3 +109,9 @@
   * 527:   `lall, (list), (lambda, (list, 'el', 'i'), ...)`
   * 528:   `lany, (list), (lambda, (list, 'el', 'i'), ...)`
 
+### Hash Table
+  * 600:   `ht, key1, value1, key2, value2`, `ht, (list, key1, value1), (list, key2, value2)`
+  * 601:   `htcount, (ht)`
+  * 602:   `htget, (ht), key`
+  * 603:   `htset, (ht), key, value`
+  
