@@ -324,6 +324,12 @@ mud_object_t * _mud_expr_evaluate(mud_expr_t * expr, mud_scope_t * scope) {
     case MUD_OP_HASH_TABLE_MAP:
       ret = _mud_op_hash_table_map_evaluate(evaluator);
       break;
+    case MUD_OP_HASH_TABLE_FILTER:
+      ret = _mud_op_hash_table_filter_evaluate(evaluator);
+      break;
+    case MUD_OP_HASH_TABLE_REJECT:
+      ret = _mud_op_hash_table_reject_evaluate(evaluator);
+      break;
     case MUD_OP_HASH_TABLE_SORT_BY:
       ret = _mud_op_hash_table_sort_by_evaluate(evaluator);
       break;

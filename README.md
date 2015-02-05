@@ -122,5 +122,8 @@
 
   * 620:   `hteach, (ht), (lambda, (list, 'key', 'value'), ...)`
   * 621:   `htmap, (ht), (lambda, (list, 'key', 'value'), ...)`
+  * 623:   `htfilter, (list), (lambda, (list, 'key', 'value'), ...)`
+  * 624:   `htreject, (list), (lambda, (list, 'key', 'value'), ...)`
   * 625:   `htsort_by, (ht), (lambda, (list, 'key', 'value'), ...)`
+  * 626:   `htsort, (list), (lambda, (list, 'a_value', 'b_value', 'a_key', 'b_key'), ...)`
   
