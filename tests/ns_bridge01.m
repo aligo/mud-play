@@ -57,5 +57,7 @@ int main() {
   NSLog(@"exprs1_1 should be mud_expr: 1 == %d", exprs1_1->type == MUD_OBJ_TYPE_STRING);
   NSLog(@"exprs1_1 should be: expr2 == %s", (char *)exprs1_1->ptr);
 
+  NSLog(@"NSDictionary should be: %@", nsWithMudObject(_initMudHashTableWithNSDictionary(@{ @"a": @1, @"b": @2, @"c": @3 })));
+
   NSLog(@"ok");
 }

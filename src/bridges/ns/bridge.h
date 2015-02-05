@@ -23,5 +23,6 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 
 mud_object_t * _initMudExprWithNSArray(NSArray * expr);
 mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs);
+mud_object_t * _initMudHashTableWithNSDictionary(NSDictionary * ns_dict);
 
 void mud_object_bridge_free(mud_object_t * object);

@@ -108,12 +108,12 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
 }
 
 NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
-  NSMutableDictionary * ns_dic = [NSMutableDictionary new];
+  NSMutableDictionary * ns_dict = [NSMutableDictionary new];
   mud_hash_table_t * tmp, * cur_hash = NULL;
   HASH_ITER(hh, hash_table, cur_hash, tmp) {
-    [ns_dic setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
+    [ns_dict setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
   }
-  return ns_dic;
+  return ns_dict;
 }
 
 mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {
@@ -133,6 +133,15 @@ mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs) {
     exprs[i] = initMudObjectWithNSObject([ns_exprs objectAtIndex: i]);
   }
   return mud_exprs_init(exprs, exprs_count);
+}
+
+mud_object_t * _initMudHashTableWithNSDictionary(NSDictionary * ns_dict) {
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_HASH_TABLE);
+  ret->ptr = mud_hash_table_alloc();
+  for ( NSString * key in ns_dict) {
+    ret->ptr = mud_hash_table_set(ret->ptr, [key UTF8String], initMudObjectWithNSObject([ns_dict objectForKey:key]));
+  }
+  return ret;
 }
 
 void mud_object_bridge_free(mud_object_t * object) {
