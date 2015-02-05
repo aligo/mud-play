@@ -113,15 +113,15 @@ mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
 
   for ( unsigned i = 0; i < list->count; i++ ) {
-    if ( i == 0 ) {
-      sort_by_type = list->objects[i]->type;
-    }
     if ( ME_ARGC > 1 ) {
       args[0] = list->objects[i];
       args[1] = mud_int_init(i);
       sort_by_object = _mud_lambda_object_apply(ME_ARG(1), new_scope, args, 2);
     } else {
       sort_by_object = list->objects[i];
+    }
+    if ( i == 0 ) {
+      sort_by_type = sort_by_object->type;
     }
     sort_bies[i] = (mud_list_sort_by_t *)mud_list_sort_by_alloc(sort_by_object, evaluator->pool, sort_by_type);
     sort_bies[i]->object = list->objects[i];
