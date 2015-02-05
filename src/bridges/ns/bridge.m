@@ -38,7 +38,6 @@ void MudInfoToNSLog(char * formatString, ...) {
 }
 
 mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
-  mud_object_t * ret;
   if ( [ns_object isKindOfClass: [NSArray class]] ) {
     NSObject * first_el = [(NSArray *)ns_object objectAtIndex: 0];
     if ( [first_el isKindOfClass: [NSNumber class]] ) {
@@ -48,23 +47,24 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
     }
   } else if ( [ns_object isKindOfClass: [NSNumber class]] ) {
     if ( [ns_object class] == [@(YES) class] ) {
-      ret = mud_boolean_init([(NSNumber*)ns_object boolValue]);
+      return mud_boolean_init([(NSNumber*)ns_object boolValue]);
     } else {
       if ( CFNumberIsFloatType((CFNumberRef)(NSNumber*)ns_object) ) {
-        ret = mud_float_init([(NSNumber*)ns_object doubleValue]);
+        return mud_float_init([(NSNumber*)ns_object doubleValue]);
       } else {
-        ret = mud_int_init([(NSNumber*)ns_object longValue]);
+        return mud_int_init([(NSNumber*)ns_object longValue]);
       }
     }
   } else if ( [ns_object isKindOfClass: [NSString class]] ) {
-    ret = mud_string_init([(NSString *)ns_object UTF8String]);
+    return mud_string_init([(NSString *)ns_object UTF8String]);
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
-    ret = mud_nil_init(); 
+    return mud_nil_init();
+  } else if ( [ns_object isKindOfClass: [NSDictionary class]] ) {
+    return _initMudHashTableWithNSDictionary((NSDictionary *)ns_object); 
   } else {
     mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
-    ret = mud_nil_init();
+    return mud_nil_init();
   }
-  return ret;
 }
 
 NSObject * nsWithMudObject(mud_object_t * object) {
