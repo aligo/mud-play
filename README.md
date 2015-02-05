@@ -122,4 +122,5 @@
 
   * 620:   `hteach, (ht), (lambda, (list, 'key', 'value'), ...)`
   * 621:   `htmap, (ht), (lambda, (list, 'key', 'value'), ...)`
+  * 625:   `htsort_by, (ht), (lambda, (list, 'key', 'value'), ...)`
   

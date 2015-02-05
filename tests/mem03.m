@@ -6,7 +6,7 @@
 int main() {
   NSMutableArray * _code = [[NSMutableArray alloc] init];
 
-  for (int i = 1; i < 5; i++) {
+  for (int i = 1; i < 6; i++) {
     NSDictionary * json = openAndParseJson([NSString stringWithFormat: @"fixtures/test0%d.json", i]);
     for ( NSArray * test in [json allValues] ) {
       for ( NSArray * expr in test ) {
@@ -19,7 +19,7 @@ int main() {
 
   int ft = 100;
   int t = ft;
-  while ( t <= ( 1024 * ft ) ) {
+  while ( t <= ( 512 * ft ) ) {
     NSLog(@"%d units", t);
     reportMemory();
     mud_scope_t * scope = mud_scope_init();

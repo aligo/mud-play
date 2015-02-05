@@ -74,6 +74,7 @@ mud_object_t * _mud_op_hash_table_sort_by_evaluate(mud_expr_evaluator_t * evalua
   ret->ptr = mud_hash_table_alloc();
   for ( unsigned i = 0; i <  org_ht_count; i++ ) {
     cur_hash = (mud_hash_table_t *)sort_bies[i]->object;
+    printf("%s\n", cur_hash->key);
     ret->ptr = mud_hash_table_set(ret->ptr, cur_hash->key, cur_hash->value);
     free(sort_bies[i]);
   }

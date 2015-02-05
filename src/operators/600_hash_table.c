@@ -8,6 +8,7 @@
     - htvalues: 605
     - htpairs:  606
     - htmerge:  607
+    - htinvert: 608
 */
 
 mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) {
