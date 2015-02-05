@@ -17,5 +17,8 @@ int main() {
   NSLog(@"t04e should be: { a = 1, b = 2, c = 3 } == %@", nsMudTestEvaluate([json objectForKey: @"04"]));
 
   // [htvalues, [htsort_by, [ht, "b", 2, "a", 1]]]
-  NSLog(@"t05e should be: [1, 2] == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+  NSLog(@"t05e should be: (1, 2) == %@", nsMudTestEvaluate([json objectForKey: @"05"]));
+
+  // [htpairs, [htsort, [ht, "c", 3, "a", 1, "b", 2], [lambda, [-, [sarg, 1], [sarg, 0]]]]]
+  NSLog(@"t06e should be: ((c, 3), (b, 2), (a, 1)) == %@", nsMudTestEvaluate([json objectForKey: @"06"]));
 }

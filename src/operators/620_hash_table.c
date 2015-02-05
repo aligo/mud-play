@@ -74,7 +74,6 @@ mud_object_t * _mud_op_hash_table_sort_by_evaluate(mud_expr_evaluator_t * evalua
   ret->ptr = mud_hash_table_alloc();
   for ( unsigned i = 0; i <  org_ht_count; i++ ) {
     cur_hash = (mud_hash_table_t *)sort_bies[i]->object;
-    printf("%s\n", cur_hash->key);
     ret->ptr = mud_hash_table_set(ret->ptr, cur_hash->key, cur_hash->value);
     free(sort_bies[i]);
   }
@@ -83,4 +82,23 @@ mud_object_t * _mud_op_hash_table_sort_by_evaluate(mud_expr_evaluator_t * evalua
   mud_scope_free(new_scope);
   free(args);
   return ret;
+}
+
+mud_object_t * _mud_op_hash_table_sort_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 626
+  if ( ME_ARGC > 1 ) {
+    mud_object_t * ret = ME_ARG(0);
+    _mud_list_sort_scope = mud_scope_push(evaluator->scope);
+    _mud_list_sort_args = (mud_object_t **)malloc(4 * sizeof(mud_object_t *));
+    _mud_list_sort_lambda = ME_ARG(1);
+    _mud_list_sort_pool = evaluator->pool;
+    mud_hash_table_t * ht = ret->ptr;
+    HASH_SORT(ht, _mud_hash_table_sort_by_compare_lambda);
+    ret->ptr = ht;
+    mud_scope_free(_mud_list_sort_scope);
+    free(_mud_list_sort_args);
+    return ret;
+  } else {
+    return _mud_op_hash_table_sort_by_evaluate(evaluator);
+  }
 }
