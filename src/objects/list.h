@@ -1,4 +1,4 @@
-#define MUD_LIST_ALLOC_SIZE 256;
+#define MUD_LIST_ALLOC_SIZE 256
 
 typedef struct mud_list_s mud_list_t;
 struct mud_list_s {

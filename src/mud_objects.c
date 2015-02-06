@@ -3,6 +3,7 @@
 #import "objects/hash_table.c"
 #import "objects/list.c"
 #import "objects/lambda.c"
+#import "objects/date.c"
 
 mud_object_t * mud_object_alloc(mud_object_type_e type) {
   mud_object_t * object = (mud_object_t *)malloc(sizeof(mud_object_t));

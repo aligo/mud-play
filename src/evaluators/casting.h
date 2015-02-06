@@ -1,4 +1,4 @@
-#define MUD_OBJECT_CASTING_TMP_POOL_ALLOC_SIZE 128;
+#define MUD_OBJECT_CASTING_TMP_POOL_ALLOC_SIZE 128
 
 typedef struct mud_object_casting_pool_s mud_object_casting_pool_t;
 struct mud_object_casting_pool_s {
