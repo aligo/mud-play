@@ -60,7 +60,9 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
     return mud_nil_init();
   } else if ( [ns_object isKindOfClass: [NSDictionary class]] ) {
-    return _initMudHashTableWithNSDictionary((NSDictionary *)ns_object); 
+    return _initMudHashTableWithNSDictionary((NSDictionary *)ns_object);
+  } else if ( [ns_object isKindOfClass: [NSDate class]] ) {
+    return _initMudDateWithNSDate((NSDate *)ns_object);
   } else {
     mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
     return mud_nil_init();
@@ -91,6 +93,9 @@ NSObject * nsWithMudObject(mud_object_t * object) {
     case MUD_OBJ_TYPE_HASH_TABLE:
       ret = nsDictionaryWithMudHashTable((mud_hash_table_t *)object->ptr);
       break;
+    case MUD_OBJ_TYPE_DATE:
+      ret = nsDateWithMudDate((mud_date_t *)object->ptr);
+      break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
       ret = [NSNull null];
@@ -114,6 +119,25 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
     [ns_dict setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
   }
   return ns_dict;
+}
+
+NSDate * nsDateWithMudDate(mud_date_t * date) {
+  NSString * calendar_type = NSCalendarIdentifierGregorian;
+  NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier: calendar_type];
+  NSDateComponents * components = [[NSDateComponents alloc] init];
+  [components setYear:    date->year];
+  [components setMonth:   date->mon];
+  [components setDay:     date->mday];
+  [components setHour:    date->hour];
+  [components setMinute:  date->sec / 60];
+  [components setSecond:  date->sec % 60];
+  [components setTimeZone: [NSTimeZone timeZoneForSecondsFromGMT: 0]];
+  NSDate * ns_date = [calendar dateFromComponents: components];
+  #if !__has_feature(objc_arc)
+    [components release];
+    [calendar release];
+  #endif
+  return ns_date;
 }
 
 mud_object_t * _initMudExprWithNSArray(NSArray * ns_expr) {
@@ -141,6 +165,14 @@ mud_object_t * _initMudHashTableWithNSDictionary(NSDictionary * ns_dict) {
   for ( NSString * key in ns_dict) {
     ret->ptr = mud_hash_table_set(ret->ptr, [key UTF8String], initMudObjectWithNSObject([ns_dict objectForKey:key]));
   }
+  return ret;
+}
+
+mud_object_t * _initMudDateWithNSDate(NSDate * ns_date) {
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_DATE);
+  mud_date_t * date = mud_date_alloc_from_timestamp([ns_date timeIntervalSince1970]);
+  date->off = [[NSTimeZone localTimeZone] secondsFromGMT];
+  ret->ptr = date;
   return ret;
 }
 

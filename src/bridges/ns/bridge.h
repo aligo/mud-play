@@ -15,6 +15,7 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object);
 NSObject * nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
 NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
+NSDate * nsDateWithMudDate(mud_date_t * date);
 
 #import "../../mud_evaluator.h"
 #import "_operators.c"
@@ -24,5 +25,6 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 mud_object_t * _initMudExprWithNSArray(NSArray * expr);
 mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs);
 mud_object_t * _initMudHashTableWithNSDictionary(NSDictionary * ns_dict);
+mud_object_t * _initMudDateWithNSDate(NSDate * ns_date);
 
 void mud_object_bridge_free(mud_object_t * object);
