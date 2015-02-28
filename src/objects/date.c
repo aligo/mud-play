@@ -26,7 +26,7 @@ mud_date_t * mud_date_alloc_from_timestamp(time_t timestamp) {
 mud_date_t * mud_date_alloc_from_string(char * str) {
   mud_date_t * date = mud_date_alloc();
   regex_t * regex = (regex_t *)malloc(sizeof(regex_t));
-  regcomp(regex, "^(-?[0-9]+)-([0-9]+)-([0-9]+)[T\\s]([0-9]+):([0-9]+):([0-9]+)[Z\\s]?(\\+|-)?(([0-9]{2})([0-9]{2}))?$", REG_EXTENDED);
+  regcomp(regex, "^(-?[0-9]+)-([0-9]+)-([0-9]+)[T\\s]([0-9]+):([0-9]+):([0-9]+)[Z\\s]?(\\+|-)?(([0-9]{2}):?([0-9]{2}))?$", REG_EXTENDED);
   size_t groups_count = regex->re_nsub + 1;
   regmatch_t * groups = (regmatch_t *)malloc(groups_count * sizeof(regmatch_t));
   if ( regexec(regex, str, groups_count, groups, 0) == 0 ) {
@@ -47,6 +47,17 @@ mud_date_t * mud_date_alloc_from_string(char * str) {
     date->sec = atoi(min) * 60 + atoi(sec);
     free(min);
     free(sec);
+    char * off_sign = _mud_regmatch_get_str(groups, str, 7);
+    char * off_pre = _mud_regmatch_get_str(groups, str, 8);
+    char * off_suf = _mud_regmatch_get_str(groups, str, 9);
+    if ( ( strlen(off_sign) + strlen(off_pre) ) > 0 ) {
+      mud_int_t off = atoi(off_pre) * 3600 + atoi(off_suf) * 60;
+      if ( ( strlen(off_sign) > 0 ) && ( off_sign[0] == '-' ) ) {
+        off = - off;
+      }
+      date->off = off;
+      mud_date_adjust(date, -off);
+    }
   }
   return date;
 }

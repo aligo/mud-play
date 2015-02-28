@@ -10,6 +10,9 @@ int main() {
   NSLog(@"%@", nsDateWithMudDate(mud_date_alloc_from_string("2014-12-31T17:31:22Z")));
   NSLog(@"mud_date: %ld - %ld - %ld %ld : %ld", date->year, date->mon, date->mday, date->hour, date->sec);
   
+  NSLog(@"%@", nsDateWithMudDate(mud_date_alloc_from_string("2014-12-31T17:31:22+08:00")));
+  NSLog(@"mud_date: %ld - %ld - %ld %ld : %ld", date->year, date->mon, date->mday, date->hour, date->sec);
+  
   mud_date_adjust(date, 7200);
   NSLog(@"mud_date: %ld - %ld - %ld %ld : %ld", date->year, date->mon, date->mday, date->hour, date->sec);
   NSLog(@"Date should be: 2 hour + %@ == %@", [NSDate date], nsWithMudObject(date_obj));
