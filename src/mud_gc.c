@@ -1,4 +1,4 @@
-#import "mud_gc.h"
+mud_gc_stack_t * _mud_gc_stack_cur = NULL;
 
 void mud_gc_stack_start() {
   mud_gc_stack_t * new_stack = _mud_gc_stack_init();

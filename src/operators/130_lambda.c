@@ -4,17 +4,6 @@
     - apply:  131
 */
 
-mud_object_t * _mud_lambda_object_apply(mud_object_t * obj, mud_scope_t * scope, mud_object_t ** args, size_t argc) {
-  mud_object_t * ret;
-  if ( obj->type == MUD_OBJ_TYPE_LAMBDA ) {
-    mud_lambda_t * lambda = (mud_lambda_t *)obj->ptr;
-    ret = mud_lambda_apply(lambda, scope, args, argc);
-  } else {
-    ret = mud_evaluate(obj, scope);
-  }
-  return ret;
-}    
-
 mud_object_t * _mud_op_lambda_lambda_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 130
   mud_object_t * ret = mud_lambda_init();

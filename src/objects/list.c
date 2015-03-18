@@ -1,4 +1,3 @@
-
 mud_list_t * mud_list_alloc() {
   mud_list_t * list = (mud_list_t *)malloc(sizeof(mud_list_t));
   list->count   = 0;
@@ -59,7 +58,7 @@ void mud_list_flatten_to(mud_list_t * new_list, mud_list_t * list, mud_boolean_t
   for ( unsigned i = 0; i < list->count; i++ ) {
     mud_object_t * obj = list->objects[i];
     if ( ( first_level || shallow ) && ( obj->type == MUD_OBJ_TYPE_LIST ) ) {
-      mud_list_flatten_to(new_list, (mud_list_t *)obj->ptr, shallow, false);
+      mud_list_flatten_to(new_list, (mud_list_t *)obj->ptr, shallow, 0);
     } else {
       mud_list_append(new_list, obj);
     }

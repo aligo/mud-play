@@ -161,7 +161,7 @@ mud_object_t * _mud_op_list_all_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 527
   mud_object_t * org = ME_ARG(0);
   mud_list_t * list = (mud_list_t *)org->ptr;
-  mud_boolean_t ret = true;
+  mud_boolean_t ret = 1;
   mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
   mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
   for ( unsigned i = 0; i < list->count; i++ ) {
@@ -181,7 +181,7 @@ mud_object_t * _mud_op_list_any_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 528
   mud_object_t * org = ME_ARG(0);
   mud_list_t * list = (mud_list_t *)org->ptr;
-  mud_boolean_t ret = false;
+  mud_boolean_t ret = 0;
   mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
   mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
   for ( unsigned i = 0; i < list->count; i++ ) {

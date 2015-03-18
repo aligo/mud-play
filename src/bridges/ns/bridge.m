@@ -1,5 +1,3 @@
-#import "bridge.h"
-
 void MudErrorToNSLog(char * formatString, ...) {
   #ifndef MUD_MUTE_ERROR
   va_list args;

@@ -1,4 +1,3 @@
-
 int _mud_float_compare(mud_float_t a, mud_float_t b) {
   mud_float_t float_diff =  a - b;
   if ( float_diff == 0 ) {

@@ -1,12 +1,19 @@
 #!/usr/bin/env ruby
+require 'pathname'
+
 require_relative 'support'
 
-Dir[expand_src_path('bridges/*')].each do |bridge_path|
-  bridge = bridge_path.split('/').last
+generated_opeartors_files_prefix = ARGV[0]
+
+# Dir[expand_src_path('bridges/*')].each do |bridge_path|
+#   bridge = bridge_path.split('/').last
   mud_operators = {}
+  funcs = []
   import_files = []
 
-  [expand_src_path('operators/*.c'), bridge_path + '/operators/*.m'].each do |operators_path|
+#   [expand_src_path('operators/*.c'), bridge_path + '/operators/*.m'].each do |operators_path|
+    
+  [expand_src_path('operators/*.c')].each do |operators_path|
     Dir[operators_path].each do |path|
       # push file to import_files
       import_files.push path.gsub(expand_src_path('/'), '../..')
@@ -34,22 +41,37 @@ Dir[expand_src_path('bridges/*')].each do |bridge_path|
     end
   end
 
-  prepare_codes 'operators enum', 'mud_operators.h', "bridges/#{bridge}/_operators.h" do |f|
-    f.puts( 
-      mud_operators.map do |enum, operator|
-      "  #{operator[:name]} = #{enum}"
-      end.join(",\n")
-    )
-  end
-
-  prepare_codes 'operators import', 'mud_operators.c', "bridges/#{bridge}/_operators.c" do |f|
-    import_files.each do |path|
-      path.gsub!(expand_src_path('/'), '../..')
-      f.puts "#import \"#{path}\""
+  prepare_codes 'operators includes', 'mud_operators.h.tpl', "#{generated_opeartors_files_prefix}_operators.h" do |f|
+    [expand_src_path('operators/*.h')].each do |operators_path|
+      Dir[operators_path].each do |path|
+        f.puts "#include \"#{Pathname.new(path).relative_path_from(Pathname.new(f.path).dirname)}\""
+      end
     end
   end
 
-  prepare_codes 'operators switch', "bridges/#{bridge}/_operators.c" do |f|
+  prepare_codes 'operators enum', "#{generated_opeartors_files_prefix}_operators.h" do |f|
+    f.puts( 
+      mud_operators.map do |enum, operator|
+      "#define  #{operator[:name]} #{enum}"
+      end.join("\n")
+    )
+  end
+
+  prepare_codes 'operators declaration', "#{generated_opeartors_files_prefix}_operators.h" do |f|
+    f.puts(mud_operators.map do |enum, operator|
+        "mud_object_t * #{operator[:func]}(mud_expr_evaluator_t * evaluator);"
+      end.join("\n")
+    )
+  end
+
+  # prepare_codes 'operators import', 'mud_operators.c.tpl', "#{generated_opeartors_files_prefix}_operators.c" do |f|
+  #   import_files.each do |path|
+  #     path.gsub!(expand_src_path('/'), '../..')
+  #     f.puts "#import \"#{path}\""
+  #   end
+  # end
+
+  prepare_codes 'operators switch', 'mud_operators.c.tpl', "#{generated_opeartors_files_prefix}_operators.c" do |f|
     mud_operators.each do |enum, operator|
       if operator[:func]
         f.puts "    case #{operator[:name]}:"
@@ -59,4 +81,4 @@ Dir[expand_src_path('bridges/*')].each do |bridge_path|
     end
   end
 
-end
+# end

@@ -1,4 +1,3 @@
-
 mud_object_casting_pool_t * mud_object_casting_pool_init() {
   mud_object_casting_pool_t * pool = (mud_object_casting_pool_t *)malloc(sizeof(mud_object_casting_pool_t));
 

@@ -1,4 +1,3 @@
-
 mud_date_t * mud_date_alloc() {
   mud_date_t * date = (mud_date_t *)malloc(sizeof(mud_date_t));
   date->cal = MUD_DATE_CAL_COMMON;

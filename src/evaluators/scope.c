@@ -1,4 +1,3 @@
-
 mud_scope_t * mud_scope_init() {
   mud_scope_t * scope = (mud_scope_t *)malloc(sizeof(mud_scope_t));
   scope->vars = NULL;

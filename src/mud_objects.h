@@ -1,5 +1,3 @@
-#import "../deps/uthash/uthash.h"
-
 typedef enum {
   MUD_OBJ_TYPE_EXPR       = 10,
   MUD_OBJ_TYPE_EXPRS      = 20,
@@ -16,6 +14,10 @@ typedef enum {
   MUD_OBJ_TYPE_BRIDGE     = 300
 } mud_object_type_e;
 
+typedef signed char   mud_boolean_t;
+typedef long          mud_int_t;
+typedef double        mud_float_t;
+typedef unsigned      mud_operator_e;
 
 typedef struct mud_object_s mud_object_t;
 struct mud_object_s {
@@ -36,16 +38,11 @@ struct mud_exprs_s {
   unsigned              count;
 };
 
-typedef signed char   mud_boolean_t;
-typedef long          mud_int_t;
-typedef double        mud_float_t;
-
 #define MUD_INT_MIN LONG_MIN
 #define MUD_INT_MAX LONG_MAX
 
 #define MUD_FLOAT_MIN DBL_MIN
 #define MUD_FLOAT_MAX DBL_MAX
-
 
 mud_object_t * mud_object_alloc(mud_object_type_e type);
 void mud_object_free(mud_object_t * object);
@@ -60,10 +57,4 @@ mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned
 mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count);
 mud_object_t * mud_lambda_init();
 
-#import "evaluators/scope.h"
-#import "evaluators/casting.h"
-
-#import "objects/list.h"
-#import "objects/hash_table.h"
-#import "objects/lambda.h"
-#import "objects/date.h"
+void mud_object_bridge_free(mud_object_t * object);

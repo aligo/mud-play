@@ -30,7 +30,7 @@ mud_object_t * _mud_op_list_flatten_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 511
   mud_object_t * ret = ME_ARG(0);
   mud_list_t * new_list = mud_list_alloc();
-  mud_list_flatten_to(new_list, (mud_list_t *)ret->ptr, ME_ARG_BOOLEAN(1), true);
+  mud_list_flatten_to(new_list, (mud_list_t *)ret->ptr, ME_ARG_BOOLEAN(1), 1);
   mud_list_free((mud_list_t *)ret->ptr);
   free((mud_list_t *)ret->ptr);
   ret->ptr = new_list;

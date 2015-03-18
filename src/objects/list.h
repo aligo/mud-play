@@ -51,3 +51,5 @@ int _mud_list_sort_by_compare_ptr(const void * a, const void * b);
 
 mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_casting_pool_t * pool, mud_object_type_e sort_by_type);
 void mud_list_sort_bies_sort(mud_list_sort_by_t ** sort_bies, size_t count, mud_object_type_e sort_by_type);
+
+mud_int_t _mud_list_prepare_index(mud_list_t * list, mud_int_t i);

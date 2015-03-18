@@ -1,14 +1,3 @@
-#import <regex.h>
-
-/*
-  regex
-    - regex:        310
-    - rtest:        311
-    - rmatch:       312
-    - rmatch_all:   313
-    - rrep_all:     314
-*/
-
 char * _mud_regmatch_get_str(regmatch_t * groups, const char * to_match, unsigned i) {
   unsigned start = groups[i].rm_so;
   unsigned end = groups[i].rm_eo;

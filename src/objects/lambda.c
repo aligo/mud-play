@@ -28,3 +28,14 @@ mud_object_t * mud_lambda_apply(mud_lambda_t * lambda, mud_scope_t * scope, mud_
   }
   return mud_evaluate(lambda->block, scope);
 }
+
+mud_object_t * _mud_lambda_object_apply(mud_object_t * obj, mud_scope_t * scope, mud_object_t ** args, size_t argc) {
+  mud_object_t * ret;
+  if ( obj->type == MUD_OBJ_TYPE_LAMBDA ) {
+    mud_lambda_t * lambda = (mud_lambda_t *)obj->ptr;
+    ret = mud_lambda_apply(lambda, scope, args, argc);
+  } else {
+    ret = mud_evaluate(obj, scope);
+  }
+  return ret;
+}

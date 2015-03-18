@@ -1,5 +1,3 @@
-#import "mud_objects.h"
-
 #define MUD_GC_POOL_ALLOC_SIZE 4096
 
 typedef struct mud_gc_stack_s mud_gc_stack_t;
@@ -9,8 +7,6 @@ struct mud_gc_stack_s {
   unsigned int          size;
   mud_gc_stack_t *      prev;
 };
-
-mud_gc_stack_t * _mud_gc_stack_cur = NULL;
 
 void mud_gc_stack_start();
 void mud_gc_stack_finish();

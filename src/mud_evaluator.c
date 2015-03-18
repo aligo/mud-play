@@ -1,9 +1,3 @@
-#import "mud_evaluator.h"
-#import "evaluators/casting.c"
-#import "evaluators/compare.c"
-#import "evaluators/expr.c"
-#import "evaluators/scope.c"
-
 mud_object_t * mud_evaluate(mud_object_t * object, mud_scope_t * scope) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_EXPR:

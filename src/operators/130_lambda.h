@@ -1,0 +1,1 @@
+mud_object_t * _mud_lambda_object_apply(mud_object_t * obj, mud_scope_t * scope, mud_object_t ** args, size_t argc);
