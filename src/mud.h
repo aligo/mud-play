@@ -10,6 +10,8 @@
 #include "evaluators/scope.h"
 #include "evaluators/casting.h"
 
+#include "helpers/regex.h"
+
 #include "objects/list.h"
 #include "objects/hash_table.h"
 #include "objects/lambda.h"

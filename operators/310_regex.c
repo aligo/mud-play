@@ -1,13 +1,3 @@
-char * _mud_regmatch_get_str(regmatch_t * groups, const char * to_match, unsigned i) {
-  unsigned start = groups[i].rm_so;
-  unsigned end = groups[i].rm_eo;
-  size_t len = end - start;
-  char * str = (char *)malloc((len + 1) * sizeof(char));
-  strncpy(str, to_match + start, len);
-  str[len] = '\0';
-  return str;
-}
-
 mud_object_t * _mud_op_regex_regex_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 310
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_REGEX);
