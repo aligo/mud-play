@@ -34,29 +34,15 @@ TEST_DIR									=	tests
 TEST_SRCS         				= $(wildcard $(TEST_DIR)/*.m)
 TEST_EXEC         				= $(TEST_SRCS:$(TEST_DIR)/%.m=$(TEST_DIR)/%)
 
-# all: run
-
-# prepare:
-# 	mkdir -p ./build/tests
-# 	./scripts/prepare_operators.rb
-
-# main: prepare
-# 	$(CC) $(CFLAGS) main.c $(LDFLAGS) -o build/$@
-
-# run: main
-# 	./build/main
-
-# test:
-# 	mkdir -p ./build/tests
-# 	./scripts/prepare_operators.rb ../tmp/ns_bridge
-# 	$(CC) $(CFLAGS) $(LDFLAGS) $(MUD_INCLUDE) $(BRIDGE_OPERATORS_INCLUDE) $(BRIDGE_INCLUDE) $(MUD_FILES) $(BRIDGE_OPERATORS_FILES) $(BRIDGE_FILES) tests/$(TEST).m -o build/tests/$(TEST)
-# 	./build/tests/$(TEST)
-
-make_tmp:
+make_dir:
+	mkdir -p $(BINDIR)
 	mkdir -p $(TMP_DIR)
 
 clean:
-	rm -Rf ./build
+	rm -Rf $(BINDIR)
+	rm -Rf $(TMP_DIR)
+	mkdir -p $(BINDIR)
+	mkdir -p $(TMP_DIR)
 
 mud_core: $(MUD_CORE_OBJS)
 	$(LD) -r $(MUD_CORE_OBJS:%.o=$(BINDIR)/%.o) -o $(BINDIR)/mud.o
@@ -65,10 +51,10 @@ $(MUD_CORE_OBJS):
 	@mkdir -p $(BINDIR)/$(@D)
 	$(CC) $(MUD_CORE_INCLUDE) -c $(@:mud/%.o=$(MUD_CORE_DIR)/%.c) -o $(BINDIR)/$@
 
-ns_bridge:
+ns_bridge: make_dir
 	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
 
-ns_operators: make_tmp
+ns_operators:
 	./scripts/prepare_operators.rb -a $(MUD_CORE_OPERATORS_DIR) -a $(NS_BRIDGE_OPERATORS_DIR) -o $(TMP_DIR)
 	@rm -rf $(BINDIR)/operators
 	@mkdir -p $(BINDIR)/operators
