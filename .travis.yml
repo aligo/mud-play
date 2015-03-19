@@ -5,6 +5,8 @@ compiler:
 before_install:
   - brew install clib
   - clib install
+before_script:
+  - make make_dir
 script:
   - make tests/ns_bridge01
   - make tests/eval01
