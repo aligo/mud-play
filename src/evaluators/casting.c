@@ -68,7 +68,9 @@ const char * mud_object_try_cast_str(mud_object_casting_pool_t * pool, mud_objec
     case MUD_OBJ_TYPE_BOOLEAN:
       return ( *(mud_boolean_t *)object->ptr != 0 ) ? "true" : "false";
     default:
+      #ifdef mud_warning
       mud_warning("casting Type:%lu as mud_string", object->type);
+      #endif
       return "";
   }
 }
@@ -92,7 +94,9 @@ mud_boolean_t mud_object_try_cast_boolean(mud_object_casting_pool_t * pool, mud_
     case MUD_OBJ_TYPE_LIST:
       return ((mud_list_t *)object->ptr)->count == 0 ? 0 : 1;
     default:
+      #ifdef mud_warning
       mud_warning("casting Type:%lu as mud_boolean, return false", object->type);
+      #endif
       return 0;
   }
 }
@@ -108,7 +112,9 @@ mud_int_t mud_object_try_cast_int(mud_object_casting_pool_t * pool, mud_object_t
     case MUD_OBJ_TYPE_BOOLEAN:
       return (mud_boolean_t)(*(mud_boolean_t *)object->ptr);
     default:
+      #ifdef mud_warning
       mud_warning("casting Type:%lu as mud_int, return 0", object->type);
+      #endif
       return 0;
   }
 }
@@ -124,7 +130,9 @@ mud_float_t mud_object_try_cast_float(mud_object_casting_pool_t * pool, mud_obje
     case MUD_OBJ_TYPE_BOOLEAN:
       return (mud_boolean_t)(*(mud_boolean_t *)object->ptr);
     default:
+      #ifdef mud_warning
       mud_warning("casting Type:%lu as mud_float, return 0.0", object->type);
+      #endif
       return 0.0;
   }
 }
