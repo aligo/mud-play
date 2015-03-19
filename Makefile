@@ -53,7 +53,7 @@ TEST_EXEC         				= $(TEST_SRCS:$(TEST_DIR)/%.m=$(TEST_DIR)/%)
 # 	./build/tests/$(TEST)
 
 make_tmp:
-	mkdir -p TMP_DIR
+	mkdir -p $(TMP_DIR)
 
 clean:
 	rm -Rf ./build
