@@ -77,6 +77,7 @@ ns_operators:
 	$(LD) -r $(wildcard $(BINDIR)/operators/*.o) -o $(BINDIR)/ns_operators.o
 
 $(TEST_EXEC): mud_core ns_bridge ns_operators
+	@mkdir -p $(BINDIR)/tests
 	$(CC) $(CFLAGS) $(LDFLAGS) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -include $(TMP_DIR)/_operators.h \
 		$(BINDIR)/mud.o $(BINDIR)/ns_bridge.o $(BINDIR)/ns_operators.o \
 		$(TEST_DIR)/support.m $(@:$(TEST_DIR)/%=$(TEST_DIR)/%.m) \
