@@ -52,6 +52,9 @@ TEST_EXEC         				= $(TEST_SRCS:$(TEST_DIR)/%.m=$(TEST_DIR)/%)
 # 	$(CC) $(CFLAGS) $(LDFLAGS) $(MUD_INCLUDE) $(BRIDGE_OPERATORS_INCLUDE) $(BRIDGE_INCLUDE) $(MUD_FILES) $(BRIDGE_OPERATORS_FILES) $(BRIDGE_FILES) tests/$(TEST).m -o build/tests/$(TEST)
 # 	./build/tests/$(TEST)
 
+make_tmp:
+	mkdir -p TMP_DIR
+
 clean:
 	rm -Rf ./build
 
@@ -65,7 +68,7 @@ $(MUD_CORE_OBJS):
 ns_bridge:
 	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
 
-ns_operators:
+ns_operators: make_tmp
 	./scripts/prepare_operators.rb -a $(MUD_CORE_OPERATORS_DIR) -a $(NS_BRIDGE_OPERATORS_DIR) -o $(TMP_DIR)
 	@rm -rf $(BINDIR)/operators
 	@mkdir -p $(BINDIR)/operators
