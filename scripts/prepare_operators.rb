@@ -23,23 +23,25 @@ mud_operators = {}
 options[:operators_dirs].each do |dir|
   files = File.join(Dir.pwd, dir) + '/*'
   Dir[files].each do |path|
-    # parse operators
-    File.open(path, 'r') do |f|
-      codes = f.to_a.map(&:strip).delete_if(&:empty?)
-      codes.each_with_index do |line, i|
-        if r = /.*(_(mud_op_\w+)_evaluate).*{.*/.match(line)
-          operator = {
-            func: r[1],
-            name: r[2].upcase
-          }
-          unless m = /.*Enum\:\D*(\d+)/.match(codes[i + 1])
-            raise "Not Enum for Operator '#{operator[:name]}'"
+    unless FileTest.directory? path
+      # parse operators
+      File.open(path, 'r') do |f|
+        codes = f.to_a.map(&:strip).delete_if(&:empty?)
+        codes.each_with_index do |line, i|
+          if r = /.*(_(mud_op_\w+)_evaluate).*{.*/.match(line)
+            operator = {
+              func: r[1],
+              name: r[2].upcase
+            }
+            unless m = /.*Enum\:\D*(\d+)/.match(codes[i + 1])
+              raise "Not Enum for Operator '#{operator[:name]}'"
+            end
+            enum = m[1].to_i
+            if mud_operators[enum]
+              raise "Conflicting Operator Enum #{enum}"
+            end
+            mud_operators[enum] = operator
           end
-          enum = m[1].to_i
-          if mud_operators[enum]
-            raise "Conflicting Operator Enum #{enum}"
-          end
-          mud_operators[enum] = operator
         end
       end
     end
