@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'pathname'
 require 'optparse'
+require 'yaml'
 
 options = {
   operators_dirs: []
@@ -101,3 +102,12 @@ prepare_codes operators_c_tpl, File.join(options[:output_dir], '_operators.c'), 
     end
   }
 }
+
+operators_map = {}
+mud_operators.each do |enum, operator|
+  operators_map[operator[:name]] = enum
+end
+
+File.open File.join(options[:output_dir], '_operators.yml'), 'w' do |f|
+  f.puts operators_map.to_yaml
+end
