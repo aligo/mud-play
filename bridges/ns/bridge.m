@@ -67,8 +67,8 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   }
 }
 
-NSObject * nsWithMudObject(mud_object_t * object) {
-  NSObject * ret;
+id nsWithMudObject(mud_object_t * object) {
+  id ret;
   switch ( object->type ) {
     case MUD_OBJ_TYPE_NIL:
       ret = [NSNull null];

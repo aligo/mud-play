@@ -2,8 +2,8 @@
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 
-mud_object_t * initMudObjectWithNSObject(NSObject * ns_object);
-NSObject * nsWithMudObject(mud_object_t * object);
+mud_object_t * initMudObjectWithNSObject(id ns_object);
+id nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
 NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 NSDate * nsDateWithMudDate(mud_date_t * date);
