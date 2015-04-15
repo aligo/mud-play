@@ -49,7 +49,7 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
       args[argc++] = org;
     }
   }
-  mud_object_t * expr = mud_expr_init(ME_ARG_INT(0), args, argc);
+  mud_object_t * expr = mud_expr_init((int)ME_ARG_INT(0), args, argc);
   return mud_evaluate(expr, evaluator->scope);
 }
 

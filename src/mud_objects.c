@@ -68,7 +68,7 @@ mud_object_t * mud_string_init(const char * value) {
   return object; 
 }
 
-mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc) {
+mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, size_t argc) {
   mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_EXPR);
   object->ptr = malloc(sizeof(mud_expr_t));
   mud_expr_t * expr = (mud_expr_t *)object->ptr;
@@ -78,7 +78,7 @@ mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned
   return object;
 }
 
-mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count) {
+mud_object_t * mud_exprs_init(mud_object_t ** exprs, size_t count) {
   mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_EXPRS);
   object->ptr = malloc(sizeof(mud_exprs_t));
   mud_exprs_t * mud_exprs = (mud_exprs_t *)object->ptr;
