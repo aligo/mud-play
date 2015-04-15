@@ -7,6 +7,7 @@ struct mud_scope_s {
   mud_scope_vars_t *    vars;
   mud_object_t **       args;
   unsigned              argc;
+  void *                context;
 };
 
 struct mud_scope_vars_s {
