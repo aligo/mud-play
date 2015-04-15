@@ -49,7 +49,7 @@ int _mud_hash_table_sort_by_compare_lambda(mud_hash_table_t * a, mud_hash_table_
         return 0;
       }
     default:
-      return mud_object_try_cast_int(_mud_list_sort_pool, ret);
+      return (int)mud_object_try_cast_int(_mud_list_sort_pool, ret);
   }
   
 }

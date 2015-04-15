@@ -6,7 +6,7 @@ struct mud_scope_s {
   mud_scope_t *         prev;
   mud_scope_vars_t *    vars;
   mud_object_t **       args;
-  unsigned              argc;
+  size_t                argc;
 };
 
 struct mud_scope_vars_s {
