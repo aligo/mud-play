@@ -29,13 +29,13 @@ typedef struct mud_expr_s mud_expr_t;
 struct mud_expr_s {
   mud_operator_e        oper;
   mud_object_t **       args;
-  unsigned              argc;
+  size_t                argc;
 };
 
 typedef struct mud_exprs_s mud_exprs_t;
 struct mud_exprs_s {
   mud_object_t **       exprs;
-  unsigned              count;
+  size_t                count;
 };
 
 #define MUD_INT_MIN LONG_MIN
@@ -53,8 +53,8 @@ mud_object_t * mud_int_init(mud_int_t value);
 mud_object_t * mud_float_init(mud_float_t value);
 mud_object_t * mud_string_init(const char * value);
 
-mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, unsigned argc);
-mud_object_t * mud_exprs_init(mud_object_t ** exprs, unsigned count);
+mud_object_t * mud_expr_init(mud_operator_e oper, mud_object_t ** args, size_t argc);
+mud_object_t * mud_exprs_init(mud_object_t ** exprs, size_t count);
 mud_object_t * mud_lambda_init();
 
 void mud_object_bridge_free(mud_object_t * object);

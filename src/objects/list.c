@@ -174,17 +174,17 @@ int _mud_list_sort_by_compare_lambda(const void * a, const void * b) {
         return 0;
       }
     default:
-      return mud_object_try_cast_int(_mud_list_sort_pool, ret);
+      return (int)mud_object_try_cast_int(_mud_list_sort_pool, ret);
   }
   
 }
 
 int _mud_list_sort_by_compare_int(const void * a, const void * b) {
-  return (*(mud_list_sort_by_t **)a)->_int - (*(mud_list_sort_by_t **)b)->_int;
+  return (int)((*(mud_list_sort_by_t **)a)->_int - (*(mud_list_sort_by_t **)b)->_int);
 }
 
 int _mud_list_sort_by_compare_float(const void * a, const void * b) {
-  return _mud_float_compare( (*(mud_list_sort_by_t **)a)->_float, (*(mud_list_sort_by_t **)b)->_float );
+  return (int)(_mud_float_compare( (*(mud_list_sort_by_t **)a)->_float, (*(mud_list_sort_by_t **)b)->_float ));
 }
 
 int _mud_list_sort_by_compare_str(const void * a, const void * b) {
@@ -192,7 +192,7 @@ int _mud_list_sort_by_compare_str(const void * a, const void * b) {
 }
 
 int _mud_list_sort_by_compare_ptr(const void * a, const void * b) {
-  return (*(mud_list_sort_by_t **)a)->_ptr - (*(mud_list_sort_by_t **)b)->_ptr;
+  return (int)((*(mud_list_sort_by_t **)a)->_ptr - (*(mud_list_sort_by_t **)b)->_ptr);
 }
 
 void mud_list_sort_bies_sort(mud_list_sort_by_t ** sort_bies, size_t count, mud_object_type_e sort_by_type) {

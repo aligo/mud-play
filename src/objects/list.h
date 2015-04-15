@@ -3,8 +3,8 @@
 typedef struct mud_list_s mud_list_t;
 struct mud_list_s {
   mud_object_t **       objects;
-  unsigned int          count;
-  unsigned int          size;
+  size_t                count;
+  size_t                size;
 };
 
 typedef struct mud_list_sort_by_s mud_list_sort_by_t;
