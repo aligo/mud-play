@@ -23,6 +23,7 @@ mud_scope_t * mud_scope_push(mud_scope_t * scope) {
   mud_scope_vars_t * tmp, * var = NULL;
   mud_scope_t * new_scope = (mud_scope_t *)malloc(sizeof(mud_scope_t));
   new_scope->vars = NULL;
+  new_scope->context = scope->context;
   HASH_ITER(hh, scope->vars, var, tmp) {
     mud_scope_vars_t * new_var = (mud_scope_vars_t *)malloc(sizeof(mud_scope_vars_t));
     new_var->slot = var->slot;
