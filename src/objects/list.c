@@ -6,6 +6,15 @@ mud_list_t * mud_list_alloc() {
   return list;
 }
 
+mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count) {
+  mud_list_t * list = (mud_list_t *)malloc(sizeof(mud_list_t));
+  list->count   = count;
+  list->size    = count;
+  list->objects = (mud_object_t **)malloc(list->size * sizeof(mud_object_t *));
+  memcpy(list->objects, args, count * sizeof(mud_object_t *));
+  return list;
+}
+
 void mud_list_free(mud_list_t * list) {
   free(list->objects);
   list->objects = NULL;
