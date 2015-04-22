@@ -89,7 +89,7 @@ mud_object_t * _mud_op_hash_table_sort_by_evaluate(mud_expr_evaluator_t * evalua
   mud_hash_table_t * org_ht = (mud_hash_table_t *)ret->ptr;
   size_t org_ht_count = HASH_COUNT(org_ht);
   mud_list_sort_by_t ** sort_bies = (mud_list_sort_by_t **)malloc(org_ht_count * sizeof(mud_list_sort_by_t *));
-  mud_object_type_e sort_by_type;
+  mud_object_type_e sort_by_type = MUD_OBJ_TYPE_NIL;
   mud_object_t * sort_by_object;
   mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
   mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));

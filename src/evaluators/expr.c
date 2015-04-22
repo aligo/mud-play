@@ -23,7 +23,7 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
   free(evaluator);
 }
 
-mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, unsigned i) {
+mud_object_t * _mud_expr_evaluator_get(mud_expr_evaluator_t * evaluator, size_t i) {
   if ( evaluator->argc > i ) {
     if ( !evaluator->args[i] ) {
       evaluator->args[i] = mud_evaluate(evaluator->orgs[i], evaluator->scope);

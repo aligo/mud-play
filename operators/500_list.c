@@ -23,7 +23,7 @@ mud_object_t * _mud_op_list_list_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 500
   mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
   ret->ptr = mud_list_alloc();
-  for ( unsigned i = 0; i < ME_ARGC; i++ ) {
+  for ( size_t i = 0; i < ME_ARGC; i++ ) {
     mud_object_t * arg = ME_ARG(i);
     if ( arg->type != MUD_OBJ_TYPE_NIL ) {
       mud_list_append((mud_list_t *)ret->ptr, (mud_object_t *)ME_ARG(i));
@@ -57,7 +57,7 @@ mud_object_t * _mud_op_list_nth_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_append_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 503
   mud_object_t * list = ME_ARG(0);
-  for ( unsigned i = 1; i < ME_ARGC; i++ ) {
+  for ( size_t i = 1; i < ME_ARGC; i++ ) {
     mud_object_t * arg = ME_ARG(i);
     if ( arg->type != MUD_OBJ_TYPE_NIL ) {
       mud_list_append((mud_list_t *)list->ptr, arg);
@@ -69,7 +69,7 @@ mud_object_t * _mud_op_list_append_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_prepend_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 504
   mud_object_t * list = ME_ARG(0);
-  for ( unsigned i = ME_ARGC; i > 0; i-- ) {
+  for ( size_t i = ME_ARGC; i > 0; i-- ) {
     mud_object_t * arg = ME_ARG(i);
     if ( arg->type != MUD_OBJ_TYPE_NIL ) {
       mud_list_prepend((mud_list_t *)list->ptr, arg);
@@ -100,7 +100,7 @@ mud_object_t * _mud_op_list_replace_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( ME_ARGC > 2 ) {
     mud_list_replace(list, rep, _mud_list_prepare_index(list, ME_ARG_INT(2)));
   } else {
-    for ( unsigned i = 0; i < list->count; i++ ) {
+    for ( size_t i = 0; i < list->count; i++ ) {
       mud_list_replace(list, rep, i);
     }
   }

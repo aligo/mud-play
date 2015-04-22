@@ -107,7 +107,7 @@ mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * ret = ME_ARG(0);
   mud_list_t * list = (mud_list_t *)ret->ptr;
   mud_list_sort_by_t ** sort_bies = (mud_list_sort_by_t **)malloc(list->count * sizeof(mud_list_sort_by_t *));
-  mud_object_type_e sort_by_type;
+  mud_object_type_e sort_by_type = MUD_OBJ_TYPE_NIL;
   mud_object_t * sort_by_object;
   mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
   mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
