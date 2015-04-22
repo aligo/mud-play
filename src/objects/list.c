@@ -15,6 +15,12 @@ mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count) {
   return list;
 }
 
+mud_object_t * _mud_object_list_init_with_args(mud_object_t ** args, size_t count) {
+  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  ret->ptr = _mud_list_init_with_args(args, count);
+  return ret;
+}
+
 void mud_list_free(mud_list_t * list) {
   free(list->objects);
   list->objects = NULL;

@@ -19,6 +19,7 @@ mud_list_t * mud_list_alloc();
 void mud_list_free(mud_list_t * list);
 
 mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count);
+mud_object_t * _mud_object_list_init_with_args(mud_object_t ** args, size_t count);
 
 mud_boolean_t _mud_list_check(mud_object_t * object);
 
