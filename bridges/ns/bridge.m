@@ -62,8 +62,11 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
   } else if ( [ns_object isKindOfClass: [NSDate class]] ) {
     return _initMudDateWithNSDate((NSDate *)ns_object);
   } else {
-    mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
-    return mud_nil_init();
+    // mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
+    // return mud_nil_init();
+    mud_object_t * object = mud_object_alloc(MUD_OBJ_TYPE_BRIDGE);
+    object->ptr = (__bridge void *)ns_object;
+    return object;
   }
 }
 
@@ -93,6 +96,9 @@ id nsWithMudObject(mud_object_t * object) {
       break;
     case MUD_OBJ_TYPE_DATE:
       ret = nsDateWithMudDate((mud_date_t *)object->ptr);
+      break;
+    case MUD_OBJ_TYPE_BRIDGE:
+      ret = (__bridge NSObject *)object->ptr;
       break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
@@ -175,4 +181,5 @@ mud_object_t * _initMudDateWithNSDate(NSDate * ns_date) {
 }
 
 void mud_object_bridge_free(mud_object_t * object) {
+  object->ptr = NULL;
 }
