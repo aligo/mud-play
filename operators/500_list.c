@@ -47,7 +47,7 @@ mud_object_t * _mud_op_list_nth_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * org = ME_ARG(0);
   mud_list_t * list = (mud_list_t *)org->ptr;
   mud_int_t i = ME_ARG_INT(1);
-  if ( i < ME_ARGC ) {
+  if ( i < list->count ) {
     return list->objects[_mud_list_prepare_index(list, i)];
   } else {
     return mud_nil_init();
