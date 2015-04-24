@@ -71,6 +71,9 @@ mud_object_t * initMudObjectWithNSObject(NSObject * ns_object) {
 }
 
 id nsWithMudObject(mud_object_t * object) {
+  if ( !object ) {
+    return nil;
+  }
   id ret;
   switch ( object->type ) {
     case MUD_OBJ_TYPE_NIL:
@@ -111,7 +114,10 @@ id nsWithMudObject(mud_object_t * object) {
 NSArray * nsArrayWithMudList(mud_list_t * list) {
   NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: list->count];
   for ( unsigned i = 0; i < list->count; i++ ) {
-    [ns_arr insertObject: nsWithMudObject(list->objects[i]) atIndex: i];
+    id ns_obj = nsWithMudObject(list->objects[i]);
+    if ( ns_obj != nil ) {
+      [ns_arr insertObject: ns_obj atIndex: i];
+    }
   }
   return ns_arr;
 }
@@ -120,7 +126,10 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
   NSMutableDictionary * ns_dict = [NSMutableDictionary new];
   mud_hash_table_t * tmp, * cur_hash = NULL;
   HASH_ITER(hh, hash_table, cur_hash, tmp) {
-    [ns_dict setValue: nsWithMudObject(cur_hash->value) forKey: [NSString stringWithUTF8String: cur_hash->key]];
+    id ns_obj = nsWithMudObject(cur_hash->value);
+    if ( ns_obj != nil ) {
+      [ns_dict setValue: ns_obj forKey: [NSString stringWithUTF8String: cur_hash->key]];
+    }
   }
   return ns_dict;
 }
