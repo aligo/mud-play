@@ -65,7 +65,11 @@ mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
     // mud_error("Converting an unsupported NSObject %@ '%@' as Number, as mud_nil", [ns_object class], ns_object);
     // return mud_nil_init();
     mud_object_t * object = mud_object_alloc(stack, MUD_OBJ_TYPE_BRIDGE);
+    #if __has_feature(objc_arc)
+    object->ptr = (__bridge_retained void *)ns_object;
+    #else
     object->ptr = (__bridge void *)ns_object;
+    #endif
     return object;
   }
 }
@@ -101,7 +105,11 @@ id nsWithMudObject(mud_object_t * object) {
       ret = nsDateWithMudDate((mud_date_t *)object->ptr);
       break;
     case MUD_OBJ_TYPE_BRIDGE:
+      #if __has_feature(objc_arc)
+      ret = (__bridge_transfer NSObject *)object->ptr;
+      #else
       ret = (__bridge NSObject *)object->ptr;
+      #endif
       break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
@@ -190,5 +198,8 @@ mud_object_t * _initMudDateWithNSDate(mud_gc_stack_t * stack, NSDate * ns_date) 
 }
 
 void mud_object_bridge_free(mud_object_t * object) {
+  if ( object->ptr ) {
+    CFRelease((__bridge CFTypeRef)object->ptr);
+  }
   object->ptr = NULL;
 }
