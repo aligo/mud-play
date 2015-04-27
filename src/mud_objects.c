@@ -39,7 +39,7 @@ void mud_object_free(mud_object_t * object) {
 }
 
 mud_object_t * mud_nil_init(mud_gc_stack_t * stack) {
-  return mud_object_alloc(stack, MUD_OBJ_TYPE_NIL);
+  return stack->nil;
 }
 
 mud_object_t * mud_boolean_init(mud_gc_stack_t * stack, mud_boolean_t value) {
@@ -99,6 +99,7 @@ mud_gc_stack_t * mud_gc_stack_init() {
   stack->size  = MUD_GC_POOL_ALLOC_SIZE;
   stack->pool  = (mud_object_t **)malloc(stack->size * sizeof(mud_object_t *));
   stack->prev  = NULL;
+  stack->nil   = mud_object_alloc(stack, MUD_OBJ_TYPE_NIL);
   return stack;
 }
 
@@ -107,6 +108,7 @@ void mud_gc_stack_free(mud_gc_stack_t * stack) {
   free(stack->pool);
   stack->pool = NULL;
   stack->prev = NULL;
+  stack->nil  = NULL;
   stack->count = stack->size = 0;
   free(stack);
 }
