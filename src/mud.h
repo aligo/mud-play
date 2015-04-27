@@ -17,8 +17,6 @@
 #include "objects/lambda.h"
 #include "objects/date.h"
 
-#include "mud_gc.h"
-
 #include "mud_evaluator.h"
 #include "evaluators/compare.h"
 #include "evaluators/expr.h"

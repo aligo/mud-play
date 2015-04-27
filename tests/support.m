@@ -10,13 +10,13 @@ NSDictionary * openAndParseJson(NSString * path) {
 }
 
 NSObject * nsMudTestEvaluate(NSObject * input) {
-  mud_gc_stack_start();
-  mud_object_t * code = initMudObjectWithNSObject(input);
+  mud_gc_stack_t * stack = mud_gc_stack_init();
+  mud_object_t * code = initMudObjectWithNSObject(stack, input);
   mud_scope_t * scope = mud_scope_init();
-  mud_object_t * result = mud_evaluate(code, scope);
+  mud_object_t * result = mud_evaluate(code, scope, stack);
   mud_scope_free(scope);
   NSObject * ret = nsWithMudObject(result);
-  mud_gc_stack_finish();
+  mud_gc_stack_free(stack);
   return ret;
 }
 

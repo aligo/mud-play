@@ -14,9 +14,9 @@ int main() {
     reportMemory();
     @autoreleasepool {
       for (int i = 0; i < t; i++ ) {
-        mud_gc_stack_start();
-        test01 = _initMudExprsWithNSArray(ns01);
-        mud_gc_stack_finish();
+        mud_gc_stack_t * stack = mud_gc_stack_init();
+        test01 = _initMudExprsWithNSArray(stack, ns01);
+        mud_gc_stack_free(stack);
       }
     }
     reportMemory();
@@ -25,7 +25,9 @@ int main() {
 
   printf("\n========================\n\n");
 
-  mud_object_t * test02 = mud_string_init("Wow, such leaking and slow!");
+  mud_gc_stack_t * stack = mud_gc_stack_init();
+
+  mud_object_t * test02 = mud_string_init(stack, "Wow, such leaking and slow!");
   NSObject * ns02;
 
   t = ft;
@@ -43,7 +45,7 @@ int main() {
 
   printf("\n========================\n\n");
 
-  mud_object_t * test03 = mud_string_init("Wow, such good!");
+  mud_object_t * test03 = mud_string_init(stack, "Wow, such good!");
   NSObject * ns03;
 
   t = ft;
@@ -59,4 +61,5 @@ int main() {
     t *= 2;
   }
 
+  mud_gc_stack_free(stack);
 }

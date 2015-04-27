@@ -104,7 +104,7 @@ mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) 
     _strs_len[i] = strlen(_strs[i]);
     length += _strs_len[i];
   }
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = (char *)malloc((length + 1) * sizeof(char));
   size_t cpy_len = 0;
   length = 0;
@@ -123,7 +123,7 @@ mud_object_t * _mud_op_string_concat_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 301
-  mud_object_t * ret = mud_string_init("");
+  mud_object_t * ret = mud_string_init(evaluator->stack, "");
   char * fmt = (char *)ME_ARG_STR(0);
   size_t fmt_len = strlen(fmt);
 
@@ -156,7 +156,7 @@ mud_object_t * _mud_op_string_format_evaluate(mud_expr_evaluator_t * evaluator) 
 
 mud_object_t * _mud_op_string_strlen_byte_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 302
-  return mud_int_init(
+  return mud_int_init(evaluator->stack, 
     strlen((char *)ME_ARG_STR(0))
   );
 }
@@ -166,22 +166,22 @@ mud_object_t * _mud_op_string_strstr_byte_evaluate(mud_expr_evaluator_t * evalua
   char * str = (char *)ME_ARG_STR(0);
   char * ptr = strstr(str, (char *)ME_ARG_STR(1));
   if ( ptr ) {
-    return mud_int_init(ptr - str);
+    return mud_int_init(evaluator->stack, ptr - str);
   } else {
-    return mud_nil_init();
+    return mud_nil_init(evaluator->stack);
   }
 }
 
 mud_object_t * _mud_op_string_substr_byte_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 304
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = _mud_string_substr((char *)ME_ARG_STR(0), ME_ARG_INT(1), ME_ARG_INT(2));
   return ret;
 }
 
 mud_object_t * _mud_op_string_strlen_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 305
-  return mud_int_init(
+  return mud_int_init(evaluator->stack, 
     _mud_string_strlen_utf8((char *)ME_ARG_STR(0))
   );
 }
@@ -190,22 +190,22 @@ mud_object_t * _mud_op_string_strstr_evaluate(mud_expr_evaluator_t * evaluator) 
 // Enum: 306
   mud_int_t pos = _mud_string_strstr_utf8((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1));
   if ( pos == -1 ) {
-    return mud_nil_init();
+    return mud_nil_init(evaluator->stack);
   } else {
-    return mud_int_init(pos);
+    return mud_int_init(evaluator->stack, pos);
   }
 }
 
 mud_object_t * _mud_op_string_substr_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 307
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = _mud_string_substr_utf8((char *)ME_ARG_STR(0), ME_ARG_INT(1), ME_ARG_INT(2));
   return ret;
 }
 
 mud_object_t * _mud_op_string_strrep_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 308
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = _mud_string_strrep((char *)ME_ARG_STR(0), (char *)ME_ARG_STR(1), (char *)ME_ARG_STR(2), ME_ARG_BOOLEAN(3));
   return ret;
 }
@@ -221,7 +221,7 @@ mud_object_t * _mud_op_string_join_evaluate(mud_expr_evaluator_t * evaluator) {
     length += _strs_len[i];
   }
   length += _strs_len[0] * (ME_ARGC - 3);
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = (char *)malloc((length + 1) * sizeof(char));
   size_t cpy_len = 0;
   length = 0;

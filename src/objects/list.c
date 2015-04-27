@@ -15,8 +15,8 @@ mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count) {
   return list;
 }
 
-mud_object_t * _mud_object_list_init_with_args(mud_object_t ** args, size_t count) {
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+mud_object_t * _mud_object_list_init_with_args(mud_gc_stack_t * stack, mud_object_t ** args, size_t count) {
+  mud_object_t * ret = mud_object_alloc(stack, MUD_OBJ_TYPE_LIST);
   ret->ptr = _mud_list_init_with_args(args, count);
   return ret;
 }
@@ -178,7 +178,7 @@ mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_ca
 int _mud_list_sort_by_compare_lambda(const void * a, const void * b) {
   _mud_list_sort_args[0] = *(mud_object_t **)a;
   _mud_list_sort_args[1] = *(mud_object_t **)b;
-  mud_object_t * ret = _mud_lambda_object_apply(_mud_list_sort_lambda, _mud_list_sort_scope, _mud_list_sort_args, 2);
+  mud_object_t * ret = _mud_lambda_object_apply(_mud_list_sort_lambda, _mud_list_sort_scope, _mud_list_sort_stack, _mud_list_sort_args, 2);
   mud_float_t float_diff;
   switch ( ret->type ) {
     case MUD_OBJ_TYPE_FLOAT:

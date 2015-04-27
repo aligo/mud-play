@@ -1,5 +1,5 @@
-#define MUD_MUTE_ERROR    1
-#define MUD_MUTE_WARNING  1
+#define MUD_MUTE_ERROR    TRUE
+#define MUD_MUTE_WARNING  TRUE
 
 #import "support.h"
 
@@ -15,7 +15,9 @@ int main() {
     }
   }
 
-  mud_object_t * code = initMudObjectWithNSObject(_code);
+  mud_gc_stack_t * stack1 = mud_gc_stack_init();
+
+  mud_object_t * code = initMudObjectWithNSObject(stack1, _code);
 
   int ft = 100;
   int t = ft;
@@ -24,13 +26,14 @@ int main() {
     reportMemory();
     mud_scope_t * scope = mud_scope_init();
     for (int i = 0; i < t; i++ ) {
-      mud_gc_stack_start();
-      mud_evaluate(code, scope);
-      mud_gc_stack_finish();
+      mud_gc_stack_t * stack2 = mud_gc_stack_init();
+      mud_evaluate(code, scope, stack2);
+      mud_gc_stack_free(stack2);
     }
     mud_scope_free(scope);
     reportMemory();
     t *= 2;
   }
 
+  mud_gc_stack_free(stack1);
 }

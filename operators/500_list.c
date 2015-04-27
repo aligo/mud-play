@@ -21,7 +21,7 @@ mud_int_t _mud_list_prepare_index(mud_list_t * list, mud_int_t i) {
 
 mud_object_t * _mud_op_list_list_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 500
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
   ret->ptr = mud_list_alloc();
   for ( size_t i = 0; i < ME_ARGC; i++ ) {
     mud_object_t * arg = ME_ARG(i);
@@ -36,9 +36,9 @@ mud_object_t * _mud_op_list_count_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 501
   mud_object_t * list = ME_ARG(0);
   if ( _mud_list_check(list) ) {
-    return mud_int_init( ( (mud_list_t *) list->ptr )->count );
+    return mud_int_init(evaluator->stack, ( (mud_list_t *) list->ptr )->count );
   } else {
-    return mud_int_init(0);
+    return mud_int_init(evaluator->stack, 0);
   }
 }
 
@@ -50,7 +50,7 @@ mud_object_t * _mud_op_list_nth_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( i < (mud_int_t)list->count ) {
     return list->objects[_mud_list_prepare_index(list, i)];
   } else {
-    return mud_nil_init();
+    return mud_nil_init(evaluator->stack);
   }
 }
 
@@ -120,15 +120,15 @@ mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * obj = ME_ARG(0);
   mud_int_t pos = mud_list_find((mud_list_t *)obj->ptr, evaluator->pool, ME_ARG(1));
   if ( pos == -1 ) {
-    return mud_nil_init();
+    return mud_nil_init(evaluator->stack);
   } else {
-    return mud_int_init(pos);
+    return mud_int_init(evaluator->stack, pos);
   }
 }
 
 mud_object_t * _mud_op_list_str_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 509
-  mud_object_t * ret = mud_object_alloc(MUD_OBJ_TYPE_LIST);
+  mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
   ret->ptr = mud_list_alloc();
   char * str = (char *)ME_ARG_STR(0);
   size_t str_len = strlen(str);
@@ -155,7 +155,7 @@ mud_object_t * _mud_op_list_str_evaluate(mud_expr_evaluator_t * evaluator) {
       if ( is_spr ) {
         j += i - spr_len + 1;
         size_t l = j - si;
-        mud_object_t * obj = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+        mud_object_t * obj = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
         obj->ptr = (char *)malloc((l + 1) * sizeof(char));
         strncpy(obj->ptr, &str[si], l);
         ((char *)obj->ptr)[l] = '\0';
@@ -169,7 +169,7 @@ mud_object_t * _mud_op_list_str_evaluate(mud_expr_evaluator_t * evaluator) {
       j++;
       i++;
       if ( (str[i] & 0xc0) != 0x80 ) {
-        mud_object_t * obj = mud_object_alloc(MUD_OBJ_TYPE_STRING);
+        mud_object_t * obj = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
         obj->ptr = (char *)malloc((j + 1) * sizeof(char));
         strncpy(obj->ptr, &str[i - j], j);
         ((char *)obj->ptr)[j] = '\0';

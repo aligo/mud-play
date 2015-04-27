@@ -2,16 +2,16 @@
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 
-mud_object_t * initMudObjectWithNSObject(id ns_object);
+mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, id ns_object);
 id nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
 NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 NSDate * nsDateWithMudDate(mud_date_t * date);
 
-mud_object_t * _initMudExprWithNSArray(NSArray * expr);
-mud_object_t * _initMudExprsWithNSArray(NSArray * ns_exprs);
-mud_object_t * _initMudHashTableWithNSDictionary(NSDictionary * ns_dict);
-mud_object_t * _initMudDateWithNSDate(NSDate * ns_date);
+mud_object_t * _initMudExprWithNSArray(mud_gc_stack_t * stack, NSArray * expr);
+mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exprs);
+mud_object_t * _initMudHashTableWithNSDictionary(mud_gc_stack_t * stack, NSDictionary * ns_dict);
+mud_object_t * _initMudDateWithNSDate(mud_gc_stack_t * stack, NSDate * ns_date);
 #endif
 
 void MudErrorToNSLog(char * formatString, ...);

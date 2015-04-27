@@ -52,7 +52,7 @@ $(MUD_CORE_OBJS):
 	$(CC) $(MUD_CORE_INCLUDE) -c $(@:mud/%.o=$(MUD_CORE_DIR)/%.c) -o $(BINDIR)/$@
 
 ns_bridge: make_dir
-	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
+	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) $(NS_BRIDGE_DEFINES) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
 
 ns_operators: make_dir
 	./scripts/prepare_operators.rb -a $(MUD_CORE_OPERATORS_DIR) -a $(NS_BRIDGE_OPERATORS_DIR) -o $(TMP_DIR)

@@ -33,11 +33,11 @@ mud_scope_t * mud_scope_push(mud_scope_t * scope) {
   return new_scope;
 }
 
-mud_object_t * mud_scope_get(mud_scope_t * scope, const char * name) {
+mud_object_t * mud_scope_get(mud_scope_t * scope, mud_gc_stack_t * stack, const char * name) {
   mud_scope_vars_t * var = NULL;
   HASH_FIND_STR(scope->vars, name, var);
   if ( var == NULL ) {
-    return mud_nil_init();
+    return mud_nil_init(stack);
   } else {
     return var->slot->value;
   }
@@ -59,10 +59,10 @@ void mud_scope_set(mud_scope_t * scope, const char * name, mud_object_t * value)
   var->slot->value = value;
 }
 
-mud_object_t * mud_scope_arg(mud_scope_t * scope, mud_int_t i) {
+mud_object_t * mud_scope_arg(mud_scope_t * scope, mud_gc_stack_t * stack, mud_int_t i) {
   if ( i < scope->argc ) {
     return scope->args[i];
   } else {
-    return mud_nil_init();
+    return mud_nil_init(stack);
   }
 }

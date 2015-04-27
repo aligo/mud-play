@@ -11,11 +11,11 @@ void mud_hash_table_free(mud_hash_table_t * hash_table) {
   }
 }
 
-mud_object_t * mud_hash_table_get(mud_hash_table_t * hash_table, const char * key) {
+mud_object_t * mud_hash_table_get(mud_hash_table_t * hash_table, mud_gc_stack_t * stack, const char * key) {
   mud_hash_table_t * cur_hash = NULL;
   HASH_FIND_STR(hash_table, key, cur_hash);
   if ( cur_hash == NULL ) {
-    return mud_nil_init();
+    return mud_nil_init(stack);
   } else {
     return cur_hash->value;
   }
@@ -36,9 +36,9 @@ mud_hash_table_t * mud_hash_table_set(mud_hash_table_t * hash_table, const char 
 int _mud_hash_table_sort_by_compare_lambda(mud_hash_table_t * a, mud_hash_table_t * b) {
   _mud_list_sort_args[0] = a->value;
   _mud_list_sort_args[1] = b->value;
-  _mud_list_sort_args[2] = mud_string_init(a->key);
-  _mud_list_sort_args[3] = mud_string_init(b->key);
-  mud_object_t * ret = _mud_lambda_object_apply(_mud_list_sort_lambda, _mud_list_sort_scope, _mud_list_sort_args, 4);
+  _mud_list_sort_args[2] = mud_string_init(_mud_list_sort_stack, a->key);
+  _mud_list_sort_args[3] = mud_string_init(_mud_list_sort_stack, b->key);
+  mud_object_t * ret = _mud_lambda_object_apply(_mud_list_sort_lambda, _mud_list_sort_scope, _mud_list_sort_stack, _mud_list_sort_args, 4);
   mud_float_t float_diff;
   switch ( ret->type ) {
     case MUD_OBJ_TYPE_FLOAT:

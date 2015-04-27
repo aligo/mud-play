@@ -13,7 +13,7 @@ mud_object_t * _mud_op_base_quote_evaluate(mud_expr_evaluator_t * evaluator) {
 
 mud_object_t * _mud_op_base_eval_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 101
-  return mud_evaluate(ME_ARG(0), evaluator->scope);
+  return mud_evaluate(ME_ARG(0), evaluator->scope, evaluator->stack);
 }
 
 mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -30,7 +30,7 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
         args_size += expr->argc - 1;
         args = (mud_object_t ** )realloc(args, args_size * sizeof(mud_object_t *));
         for (unsigned j = 0; j < expr->argc; j++) {
-          mud_object_t * earg = mud_evaluate(expr->args[j], evaluator->scope);
+          mud_object_t * earg = mud_evaluate(expr->args[j], evaluator->scope, evaluator->stack);
           if ( earg->type == MUD_OBJ_TYPE_LIST ) {
             mud_list_t * list = (mud_list_t *)earg->ptr;
             args_size += list->count - 1;
@@ -49,8 +49,8 @@ mud_object_t * _mud_op_base_expr_evaluate(mud_expr_evaluator_t * evaluator) {
       args[argc++] = org;
     }
   }
-  mud_object_t * expr = mud_expr_init((int)ME_ARG_INT(0), args, argc);
-  return mud_evaluate(expr, evaluator->scope);
+  mud_object_t * expr = mud_expr_init(evaluator->stack, (int)ME_ARG_INT(0), args, argc);
+  return mud_evaluate(expr, evaluator->scope, evaluator->stack);
 }
 
 mud_object_t * _mud_op_base_eargs_evaluate(mud_expr_evaluator_t * evaluator) {

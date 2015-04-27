@@ -56,15 +56,15 @@ void _mud_arithmetic_free(mud_arithmetic_t * arithmetic) {
   free(arithmetic);
 }
 
-mud_object_t * _mud_arithmetic_return(mud_arithmetic_t * arithmetic) {
+mud_object_t * _mud_arithmetic_return(mud_arithmetic_t * arithmetic, mud_gc_stack_t * stack) {
   mud_object_t * ret;
   switch ( arithmetic->type ) {
     case MUD_OBJ_TYPE_INT:
-      ret = mud_int_init(arithmetic->int_res);
+      ret = mud_int_init(stack, arithmetic->int_res);
       break;
     case MUD_OBJ_TYPE_FLOAT:
     default:
-      ret = mud_float_init(arithmetic->float_res);
+      ret = mud_float_init(stack, arithmetic->float_res);
       break;
   }
   _mud_arithmetic_free(arithmetic);
@@ -87,7 +87,7 @@ mud_object_t * _mud_op_arithmetic_adding_evaluate(mud_expr_evaluator_t * evaluat
       }
       break;
   }
-  return _mud_arithmetic_return(arithmetic);
+  return _mud_arithmetic_return(arithmetic, evaluator->stack);
 }
 
 mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -116,7 +116,7 @@ mud_object_t * _mud_op_arithmetic_subtracting_evaluate(mud_expr_evaluator_t * ev
       }
       break;
   }
-  return _mud_arithmetic_return(arithmetic);
+  return _mud_arithmetic_return(arithmetic, evaluator->stack);
 }
 
 mud_object_t * _mud_op_arithmetic_multiplying_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -137,7 +137,7 @@ mud_object_t * _mud_op_arithmetic_multiplying_evaluate(mud_expr_evaluator_t * ev
       }
       break;
   }
-  return _mud_arithmetic_return(arithmetic);
+  return _mud_arithmetic_return(arithmetic, evaluator->stack);
 }
 
 mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -166,7 +166,7 @@ mud_object_t * _mud_op_arithmetic_dividing_evaluate(mud_expr_evaluator_t * evalu
       }
       break;
   }
-  return _mud_arithmetic_return(arithmetic);
+  return _mud_arithmetic_return(arithmetic, evaluator->stack);
 }
 
 mud_object_t * _mud_op_arithmetic_remainder_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -185,5 +185,5 @@ mud_object_t * _mud_op_arithmetic_remainder_evaluate(mud_expr_evaluator_t * eval
         break;
     }
   }
-  return _mud_arithmetic_return(arithmetic);
+  return _mud_arithmetic_return(arithmetic, evaluator->stack);
 }

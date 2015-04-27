@@ -6,7 +6,7 @@
 
 mud_object_t * _mud_op_lambda_lambda_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 130
-  mud_object_t * ret = mud_lambda_init();
+  mud_object_t * ret = mud_lambda_init(evaluator->stack);
   mud_lambda_t * lambda = (mud_lambda_t *)ret->ptr;
   if ( ME_ARGC > 1 ) {
     lambda->block = _ME_ORG(1);
@@ -35,7 +35,7 @@ mud_object_t * _mud_op_lambda_apply_evaluate(mud_expr_evaluator_t * evaluator) {
     args[i] = ME_ARG(i + 1);
   }
   mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
-  mud_object_t * ret = _mud_lambda_object_apply(ME_ARG(0), new_scope, args, argc);
+  mud_object_t * ret = _mud_lambda_object_apply(ME_ARG(0), new_scope, evaluator->stack, args, argc);
   mud_scope_free(new_scope);
   free(args);
   return ret;
