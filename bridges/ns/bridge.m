@@ -199,7 +199,11 @@ mud_object_t * _initMudDateWithNSDate(mud_gc_stack_t * stack, NSDate * ns_date) 
 
 void mud_object_bridge_free(mud_object_t * object) {
   if ( object->ptr ) {
+    #if __has_feature(objc_arc)
+    (__bridge_transfer NSObject *)object->ptr;
+    #else
     CFRelease((__bridge CFTypeRef)object->ptr);
+    #endif
   }
   object->ptr = NULL;
 }
