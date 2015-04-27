@@ -69,6 +69,7 @@ mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
     object->ptr = (__bridge_retained void *)ns_object;
     #else
     object->ptr = (__bridge void *)ns_object;
+    CFRetain((CFTypeRef)object->ptr);
     #endif
     return object;
   }
@@ -109,6 +110,8 @@ id nsWithMudObject(mud_object_t * object) {
       ret = (__bridge_transfer NSObject *)object->ptr;
       #else
       ret = (__bridge NSObject *)object->ptr;
+      CFRelease((CFTypeRef)ret);
+      object->ptr = NULL;
       #endif
       break;
     default:
@@ -199,11 +202,11 @@ mud_object_t * _initMudDateWithNSDate(mud_gc_stack_t * stack, NSDate * ns_date) 
 
 void mud_object_bridge_free(mud_object_t * object) {
   if ( object->ptr ) {
-    #if __has_feature(objc_arc)
-    (__bridge_transfer NSObject *)object->ptr;
-    #else
-    CFRelease((__bridge CFTypeRef)object->ptr);
-    #endif
+  //   #if __has_feature(objc_arc)
+  //   (__bridge_transfer NSObject *)object->ptr;
+  //   #else
+    CFRelease((CFTypeRef)object->ptr);
+  //   #endif
   }
   object->ptr = NULL;
 }
