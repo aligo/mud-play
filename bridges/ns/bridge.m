@@ -111,8 +111,8 @@ id nsWithMudObject(mud_object_t * object) {
       #else
       ret = (__bridge NSObject *)object->ptr;
       CFRelease((CFTypeRef)ret);
-      object->ptr = NULL;
       #endif
+      object->ptr = NULL;
       break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
