@@ -44,7 +44,7 @@ struct mud_gc_stack_s {
   unsigned int          count;
   unsigned int          size;
   mud_gc_stack_t *      prev;
-  mud_object_t *        nil;
+  mud_object_t *        _nil;
 };
 
 
