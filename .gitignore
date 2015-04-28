@@ -4,6 +4,7 @@
 /.bundle
 
 /build
+/tmp
 /old.m
 /old
 /old2
