@@ -82,7 +82,7 @@ id nsWithMudObject(mud_object_t * object) {
   id ret;
   switch ( object->type ) {
     case MUD_OBJ_TYPE_NIL:
-      ret = [NSNull null];
+      ret = nil;
       break;
     case MUD_OBJ_TYPE_BOOLEAN:
       ret = *(mud_boolean_t *)object->ptr ? @YES : @NO;
@@ -116,7 +116,7 @@ id nsWithMudObject(mud_object_t * object) {
       break;
     default:
       mud_error("Unsupported converting Type:%lu to NSObject, return NSNull", object->type);
-      ret = [NSNull null];
+      ret = nil;
       break;
   }
   return ret;
