@@ -35,7 +35,7 @@ void MudInfoToNSLog(char * formatString, ...) {
   #endif
 }
 
-mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_object) {
+mud_object_t * initMudScriptWithNSObject(mud_gc_stack_t * stack, NSObject * ns_object) {
   if ( [ns_object isKindOfClass: [NSArray class]] ) {
     NSObject * first_el = [(NSArray *)ns_object objectAtIndex: 0];
     if ( [first_el isKindOfClass: [NSNumber class]] ) {
@@ -43,7 +43,13 @@ mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
     } else {
       return _initMudExprsWithNSArray(stack, (NSArray *) ns_object);
     }
-  } else if ( [ns_object isKindOfClass: [NSNumber class]] ) {
+  } else {
+    return initMudObjectWithNSObject(stack, ns_object);
+  }
+}
+
+mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_object) {
+  if ( [ns_object isKindOfClass: [NSNumber class]] ) {
     if ( [ns_object class] == [@(YES) class] ) {
       return mud_boolean_init(stack, [(NSNumber*)ns_object boolValue]);
     } else {
@@ -169,7 +175,7 @@ mud_object_t * _initMudExprWithNSArray(mud_gc_stack_t * stack, NSArray * ns_expr
   NSUInteger args_count = [ns_expr count] - 1;
   mud_object_t ** args = malloc(args_count * sizeof(mud_object_t *));
   for (NSUInteger i = 0; i < args_count; i++ ) {
-    args[i] = initMudObjectWithNSObject(stack, [ns_expr objectAtIndex: i + 1]);
+    args[i] = initMudScriptWithNSObject(stack, [ns_expr objectAtIndex: i + 1]);
   }
   return mud_expr_init(stack, (mud_operator_e)[oper unsignedIntegerValue], args, args_count);
 }
@@ -178,7 +184,7 @@ mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exp
   NSUInteger exprs_count = [ns_exprs count];
   mud_object_t ** exprs = malloc(exprs_count * sizeof(mud_object_t *));
   for (NSUInteger i = 0; i < exprs_count; i++ ) {
-    exprs[i] = initMudObjectWithNSObject(stack, [ns_exprs objectAtIndex: i]);
+    exprs[i] = initMudScriptWithNSObject(stack, [ns_exprs objectAtIndex: i]);
   }
   return mud_exprs_init(stack, exprs, exprs_count);
 }

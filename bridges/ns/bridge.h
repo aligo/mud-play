@@ -2,6 +2,7 @@
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 
+mud_object_t * initMudScriptWithNSObject(mud_gc_stack_t * stack, NSObject * ns_object);
 mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, id ns_object);
 id nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
