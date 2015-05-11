@@ -63,6 +63,8 @@ mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
     return mud_string_init(stack, [(NSString *)ns_object UTF8String]);
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
     return mud_nil_init(stack);
+  } else if ( [ns_object isKindOfClass: [NSArray class]] ) {
+    return _initMudListWithNSArray(stack,(NSArray *)ns_object);
   } else if ( [ns_object isKindOfClass: [NSDictionary class]] ) {
     return _initMudHashTableWithNSDictionary(stack, (NSDictionary *)ns_object);
   } else if ( [ns_object isKindOfClass: [NSDate class]] ) {
@@ -187,6 +189,16 @@ mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exp
     exprs[i] = initMudScriptWithNSObject(stack, [ns_exprs objectAtIndex: i]);
   }
   return mud_exprs_init(stack, exprs, exprs_count);
+}
+
+mud_object_t * _initMudListWithNSArray(mud_gc_stack_t * stack, NSArray * ns_array) {
+  mud_object_t * ret = mud_object_alloc(stack, MUD_OBJ_TYPE_LIST);
+  ret->ptr = mud_list_alloc();
+  NSUInteger count = [ns_array count];
+  for (NSUInteger i = 0; i < count; i++ ) {
+    mud_list_append((mud_list_t * )ret->ptr, initMudObjectWithNSObject(stack, [ns_array objectAtIndex: i]));
+  }
+  return ret;
 }
 
 mud_object_t * _initMudHashTableWithNSDictionary(mud_gc_stack_t * stack, NSDictionary * ns_dict) {

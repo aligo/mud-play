@@ -11,6 +11,7 @@ NSDate * nsDateWithMudDate(mud_date_t * date);
 
 mud_object_t * _initMudExprWithNSArray(mud_gc_stack_t * stack, NSArray * expr);
 mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exprs);
+mud_object_t * _initMudListWithNSArray(mud_gc_stack_t * stack, NSArray * ns_array);
 mud_object_t * _initMudHashTableWithNSDictionary(mud_gc_stack_t * stack, NSDictionary * ns_dict);
 mud_object_t * _initMudDateWithNSDate(mud_gc_stack_t * stack, NSDate * ns_date);
 #endif
