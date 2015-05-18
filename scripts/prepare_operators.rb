@@ -22,7 +22,7 @@ end.parse!
 mud_operators = {}
 
 options[:operators_dirs].each do |dir|
-  files = File.join(Dir.pwd, dir) + '/*'
+  files = dir + '/*'
   Dir[files].each do |path|
     unless FileTest.directory? path
       # parse operators
