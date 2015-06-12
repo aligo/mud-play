@@ -134,11 +134,15 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
   NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: list->count];
   for ( unsigned i = 0; i < list->count; i++ ) {
     id ns_obj = nsWithMudObject(list->objects[i]);
-    if ( ns_obj == nil ) {
-      [ns_arr insertObject: [NSNull null] atIndex: i];
-    } else {
-      [ns_arr insertObject: ns_obj atIndex: i];
-    }
+    // if ( ns_obj == nil ) {
+    //   #if !__has_feature(objc_arc)
+    //     [ns_arr release];
+    //   #endif
+    //   ns_arr = nil;
+    //   i = list->count;
+    // } else {
+    [ns_arr insertObject: ns_obj atIndex: i];
+    // }
   }
   return ns_arr;
 }
@@ -148,9 +152,7 @@ NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table) {
   mud_hash_table_t * tmp, * cur_hash = NULL;
   HASH_ITER(hh, hash_table, cur_hash, tmp) {
     id ns_obj = nsWithMudObject(cur_hash->value);
-    if ( ns_obj == nil ) {
-      [ns_dict setValue: [NSNull null] forKey: [NSString stringWithUTF8String: cur_hash->key]];
-    } else {
+    if ( ns_obj != nil ) {
       [ns_dict setValue: ns_obj forKey: [NSString stringWithUTF8String: cur_hash->key]];
     }
   }
