@@ -92,6 +92,12 @@ id nsWithMudObject(mud_object_t * object) {
     case MUD_OBJ_TYPE_NIL:
       ret = nil;
       break;
+    case MUD_OBJ_TYPE_EXPR:
+      ret = nsArrayWithMudExpr((mud_expr_t *)object->ptr);
+      break;
+    case MUD_OBJ_TYPE_EXPRS:
+      ret = nsArrayWithMudExprs((mud_exprs_t *)object->ptr);
+      break;
     case MUD_OBJ_TYPE_BOOLEAN:
       ret = *(mud_boolean_t *)object->ptr ? @YES : @NO;
       break;
@@ -134,15 +140,35 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
   NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: list->count];
   for ( unsigned i = 0; i < list->count; i++ ) {
     id ns_obj = nsWithMudObject(list->objects[i]);
-    // if ( ns_obj == nil ) {
-    //   #if !__has_feature(objc_arc)
-    //     [ns_arr release];
-    //   #endif
-    //   ns_arr = nil;
-    //   i = list->count;
-    // } else {
+    if ( ns_obj != nil ) {
+      [ns_arr insertObject: ns_obj atIndex: i];
+    }
+  }
+  return ns_arr;
+}
+
+NSArray * nsArrayWithMudExpr(mud_expr_t * expr) {
+  unsigned arr_count = expr->argc + 1;
+  NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: arr_count];
+  [ns_arr insertObject: [NSNumber numberWithLong: expr->oper] atIndex: 0];
+  for ( unsigned i = 1; i < arr_count; i++ ) {
+    id ns_obj = nsWithMudObject(expr->args[i - 1]);
+    if ( ns_obj == nil ) {
+      ns_obj = [NSNull null];
+    }
     [ns_arr insertObject: ns_obj atIndex: i];
-    // }
+  }
+  return ns_arr;
+}
+
+NSArray * nsArrayWithMudExprs(mud_exprs_t * exprs) {
+  NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: exprs->count];
+  for ( unsigned i = 0; i < exprs->count; i++ ) {
+    id ns_obj = nsWithMudObject(exprs->exprs[i]);
+    if ( ns_obj == nil ) {
+      ns_obj = [NSNull null];
+    }
+    [ns_arr insertObject: ns_obj atIndex: i];
   }
   return ns_arr;
 }

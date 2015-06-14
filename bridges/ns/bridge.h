@@ -6,6 +6,8 @@ mud_object_t * initMudScriptWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
 mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, id ns_object);
 id nsWithMudObject(mud_object_t * object);
 NSArray * nsArrayWithMudList(mud_list_t * list);
+NSArray * nsArrayWithMudExpr(mud_expr_t * expr);
+NSArray * nsArrayWithMudExprs(mud_exprs_t * exprs);
 NSDictionary * nsDictionaryWithMudHashTable(mud_hash_table_t * hash_table);
 NSDate * nsDateWithMudDate(mud_date_t * date);
 
