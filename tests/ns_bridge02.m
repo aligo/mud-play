@@ -12,6 +12,8 @@ int main() {
 
   NSLog(@"(quote, ((+, 1, 1) (+, 1, 1))) should be: ((200, 1, 1), (200, 1, 1)) == %@", nsMudTestEvaluate(@[@100, @[@[@200, @1, @1], @[@200, @1, @1]]]));
 
+  NSLog(@"(quote, (+, 1, 1) (+, 1, 1)) should be: ((200, 1, 1), (200, 1, 1)) == %@", nsMudTestEvaluate(@[@100, @[@200, @1, @1], @[@200, @1, @1]]));
+
   NSLog(@"(quote, (+, 1, null)) should be: (200, 1, null) == %@", nsMudTestEvaluate(@[@100, @[@200, @1, [NSNull null]]]));
 
   NSLog(@"nsMudTestEvaluate (quote, (+, 1, null)) should be: 1 == %@", nsMudTestEvaluate(nsMudTestEvaluate(@[@100, @[@200, @1, [NSNull null]]])));

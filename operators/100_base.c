@@ -8,7 +8,15 @@
 
 mud_object_t * _mud_op_base_quote_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 100
-  return _ME_ORG(0);
+  if ( ME_ARGC == 1 ) {
+    return _ME_ORG(0);
+  } else {
+    mud_object_t ** exprs = malloc(ME_ARGC * sizeof(mud_object_t *));
+    for ( size_t i = 0; i < ME_ARGC; i++ ) {
+      exprs[i] = _ME_ORG(i);
+    }
+    return mud_exprs_init(evaluator->stack, exprs, ME_ARGC);
+  }
 }
 
 mud_object_t * _mud_op_base_eval_evaluate(mud_expr_evaluator_t * evaluator) {
