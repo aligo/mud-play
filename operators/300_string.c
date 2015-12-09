@@ -41,7 +41,7 @@ mud_int_t _mud_string_strstr_utf8(const char * str, const char * search) {
 }
 
 char * _mud_string_substr_utf8(const char * str, size_t start, size_t length) {
-  size_t i = 0, j = 0, s = 0, l = 0;
+  size_t i = 0, j = 0, s = start, l = length;
   while (str[i]) {
     if ( j == start ) s = i;
     if ((str[i] & 0xc0) != 0x80) j++;

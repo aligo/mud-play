@@ -61,5 +61,9 @@ int main() {
   //  [rrep_all, [regex, "\\[([^]]+)\\]"], "[b]te[i]s[/]t[/b]1234", [lambda, [concat, "<", (arg, 1] ,">"]]]
   NSLog(@"t19e should be: <b>te<i>s</>t</b> = %@", nsMudTestEvaluate([json objectForKey: @"19"]));
 
+  // [substr, "U", 0, 1]
+  NSLog(@"t20e should: U = %@", nsMudTestEvaluate([json objectForKey: @"20"]));
+
+
   NSLog(@"ok");
 }
