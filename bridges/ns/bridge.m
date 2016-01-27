@@ -140,9 +140,10 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
   NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: list->count];
   for ( unsigned i = 0; i < list->count; i++ ) {
     id ns_obj = nsWithMudObject(list->objects[i]);
-    if ( ns_obj != nil ) {
-      [ns_arr insertObject: ns_obj atIndex: i];
+    if ( ns_obj == nil ) {
+      ns_obj = [NSNull null];
     }
+    [ns_arr insertObject: ns_obj atIndex: i];
   }
   return ns_arr;
 }
