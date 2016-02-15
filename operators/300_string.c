@@ -220,7 +220,7 @@ mud_object_t * _mud_op_string_join_evaluate(mud_expr_evaluator_t * evaluator) {
     _strs_len[i] = strlen(_strs[i]);
     length += _strs_len[i];
   }
-  length += _strs_len[0] * (ME_ARGC - 3);
+  length += _strs_len[0] * (ME_ARGC - 1);
   mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
   ret->ptr = (char *)malloc((length + 1) * sizeof(char));
   size_t cpy_len = 0;
