@@ -59,12 +59,12 @@ mud_object_t * initMudObjectWithNSObject(mud_gc_stack_t * stack, NSObject * ns_o
         return mud_int_init(stack, [(NSNumber*)ns_object longValue]);
       }
     }
-  } else if ( [ns_object isKindOfClass: [NSString class]] ) {
-    return mud_string_init(stack, [(NSString *)ns_object UTF8String]);
   } else if ( [ns_object isKindOfClass: [NSNull class] ]) {
     return mud_nil_init(stack);
+  } else if ( [ns_object isKindOfClass: [NSString class]] ) {
+    return _initMudStringWithNSString(stack, (NSString *)ns_object);
   } else if ( [ns_object isKindOfClass: [NSArray class]] ) {
-    return _initMudListWithNSArray(stack,(NSArray *)ns_object);
+    return _initMudListWithNSArray(stack, (NSArray *)ns_object);
   } else if ( [ns_object isKindOfClass: [NSDictionary class]] ) {
     return _initMudHashTableWithNSDictionary(stack, (NSDictionary *)ns_object);
   } else if ( [ns_object isKindOfClass: [NSDate class]] ) {
@@ -222,6 +222,18 @@ mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exp
     exprs[i] = initMudScriptWithNSObject(stack, [ns_exprs objectAtIndex: i]);
   }
   return mud_exprs_init(stack, exprs, exprs_count);
+}
+
+mud_object_t * _initMudStringWithNSString(mud_gc_stack_t * stack, NSString * ns_str) {
+  char * c_str = [ns_str UTF8String];
+  if ( ( c_str == nil ) && ( ns_str.length > 4 ) ) {
+    ns_str = [ns_str substringToIndex: ns_str.length - 4];
+    c_str = [ns_str UTF8String];
+  }
+  if ( c_str == nil ) {
+    c_str = "";
+  }
+  return mud_string_init(stack, c_str);
 }
 
 mud_object_t * _initMudListWithNSArray(mud_gc_stack_t * stack, NSArray * ns_array) {
