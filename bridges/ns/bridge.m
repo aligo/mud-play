@@ -37,11 +37,15 @@ void MudInfoToNSLog(char * formatString, ...) {
 
 mud_object_t * initMudScriptWithNSObject(mud_gc_stack_t * stack, NSObject * ns_object) {
   if ( [ns_object isKindOfClass: [NSArray class]] ) {
-    NSObject * first_el = [(NSArray *)ns_object objectAtIndex: 0];
-    if ( [first_el isKindOfClass: [NSNumber class]] ) {
-      return _initMudExprWithNSArray(stack, (NSArray *) ns_object);
+    NSObject * first_el = [(NSArray *)ns_object firstObject];
+    if ( first_el ) {
+      if ( [first_el isKindOfClass: [NSNumber class]] ) {
+        return _initMudExprWithNSArray(stack, (NSArray *) ns_object);
+      } else {
+        return _initMudExprsWithNSArray(stack, (NSArray *) ns_object);
+      }
     } else {
-      return _initMudExprsWithNSArray(stack, (NSArray *) ns_object);
+      return mud_nil_init(stack);
     }
   } else {
     return initMudObjectWithNSObject(stack, ns_object);
@@ -225,10 +229,10 @@ mud_object_t * _initMudExprsWithNSArray(mud_gc_stack_t * stack, NSArray * ns_exp
 }
 
 mud_object_t * _initMudStringWithNSString(mud_gc_stack_t * stack, NSString * ns_str) {
-  char * c_str = [ns_str UTF8String];
+  char * c_str = (char *)[ns_str UTF8String];
   if ( ( c_str == nil ) && ( ns_str.length > 4 ) ) {
     ns_str = [ns_str substringToIndex: ns_str.length - 4];
-    c_str = [ns_str UTF8String];
+    c_str = (char *)[ns_str UTF8String];
   }
   if ( c_str == nil ) {
     c_str = "";
