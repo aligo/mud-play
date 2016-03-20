@@ -26,6 +26,7 @@ mud_scope_t * mud_scope_init();
 void mud_scope_free(mud_scope_t * scope);
 
 mud_scope_t * mud_scope_push(mud_scope_t * scope);
+mud_scope_t * mud_scope_deep_copy(mud_scope_t * scope);
 
 mud_object_t * mud_scope_get(mud_scope_t * scope, mud_gc_stack_t * stack, const char * name);
 void mud_scope_set(mud_scope_t * scope, const char * name, mud_object_t * value);
