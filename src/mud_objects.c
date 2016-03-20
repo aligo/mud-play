@@ -2,40 +2,45 @@ mud_object_t * mud_object_alloc(mud_gc_stack_t * stack, mud_object_type_e type) 
   mud_object_t * object = (mud_object_t *)malloc(sizeof(mud_object_t));
   object->ptr  = NULL;
   object->type = type;
+  object->ref_count = 1;
   mud_gc_stack_push(stack, object);
   return object;
 }
 
 void mud_object_free(mud_object_t * object) {
-  if ( object->type == MUD_OBJ_TYPE_EXPR ) {
-    mud_expr_t * expr = (mud_expr_t *)object->ptr;
-    free(expr->args);
-    expr->args = NULL;
-    expr->argc = 0;
-    expr->oper = 0;
-  } else if ( object->type == MUD_OBJ_TYPE_EXPRS ) {
-    mud_exprs_t * exprs = (mud_exprs_t *)object->ptr;
-    free(exprs->exprs);
-    exprs->exprs = NULL;
-    exprs->count = 0;
-  } else if ( object->type == MUD_OBJ_TYPE_LAMBDA ) {
-    mud_lambda_free(object->ptr);
-  } else if ( object->type == MUD_OBJ_TYPE_LIST ) {
-    mud_list_free(object->ptr);
-  } else if ( object->type == MUD_OBJ_TYPE_HASH_TABLE ) {
-    mud_hash_table_free(object->ptr);
-    object->ptr = NULL;
-  } else if ( object->type == MUD_OBJ_TYPE_REGEX ) {
-    regfree(object->ptr);
-  } else if ( object->type >= MUD_OBJ_TYPE_BRIDGE ) {
-    mud_object_bridge_free(object);
+  object->ref_count -= 1;
+  if ( object->ref_count == 0 ) {
+    if ( object->type == MUD_OBJ_TYPE_EXPR ) {
+      mud_expr_t * expr = (mud_expr_t *)object->ptr;
+      free(expr->args);
+      expr->args = NULL;
+      expr->argc = 0;
+      expr->oper = 0;
+    } else if ( object->type == MUD_OBJ_TYPE_EXPRS ) {
+      mud_exprs_t * exprs = (mud_exprs_t *)object->ptr;
+      free(exprs->exprs);
+      exprs->exprs = NULL;
+      exprs->count = 0;
+    } else if ( object->type == MUD_OBJ_TYPE_LAMBDA ) {
+      mud_lambda_free(object->ptr);
+    } else if ( object->type == MUD_OBJ_TYPE_LIST ) {
+      mud_list_free(object->ptr);
+    } else if ( object->type == MUD_OBJ_TYPE_HASH_TABLE ) {
+      mud_hash_table_free(object->ptr);
+      object->ptr = NULL;
+    } else if ( object->type == MUD_OBJ_TYPE_REGEX ) {
+      regfree(object->ptr);
+    } else if ( object->type >= MUD_OBJ_TYPE_BRIDGE ) {
+      mud_object_bridge_free(object);
+    }
+    if ( object->ptr ) {
+      free(object->ptr);
+      object->ptr = NULL;
+    }
+    object->type = 0;
+    object->ref_count = 0;
+    free(object);
   }
-  if ( object->ptr ) {
-    free(object->ptr);
-    object->ptr = NULL;
-  }
-  object->type = 0;
-  free(object);
 }
 
 mud_object_t * mud_nil_init(mud_gc_stack_t * stack) {

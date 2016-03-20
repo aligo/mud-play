@@ -23,6 +23,7 @@ typedef struct mud_object_s mud_object_t;
 struct mud_object_s {
   mud_object_type_e     type;
   void *                ptr;
+  unsigned int          ref_count;
 };
 
 typedef struct mud_expr_s mud_expr_t;
