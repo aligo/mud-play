@@ -73,6 +73,7 @@ mud_object_t * mud_lambda_init(mud_gc_stack_t * stack);
 void mud_object_bridge_free(mud_object_t * object);
 
 mud_gc_stack_t * mud_gc_stack_init();
+mud_gc_stack_t * mud_gc_stack_retain(mud_gc_stack_t * old_stack);
 void mud_gc_stack_free(mud_gc_stack_t * stack);
 void mud_gc_stack_push(mud_gc_stack_t * stack, mud_object_t * mud_object);
 

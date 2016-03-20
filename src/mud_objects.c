@@ -108,6 +108,18 @@ mud_gc_stack_t * mud_gc_stack_init() {
   return stack;
 }
 
+mud_gc_stack_t * mud_gc_stack_retain(mud_gc_stack_t * old_stack) {
+  mud_gc_stack_t * new_stack = mud_gc_stack_init();
+
+  for ( unsigned int i = 0; i < old_stack->count; i++ ) {
+    mud_object_t * obj = old_stack->pool[i];
+    obj->ref_count += 1;
+    mud_gc_stack_push(new_stack, obj);
+  }
+  
+  return new_stack;
+}
+
 void mud_gc_stack_free(mud_gc_stack_t * stack) {
   _mud_gc_stack_release(stack);
   free(stack->pool);
