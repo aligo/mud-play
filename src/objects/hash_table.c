@@ -11,6 +11,10 @@ void mud_hash_table_free(mud_hash_table_t * hash_table) {
   }
 }
 
+mud_boolean_t _mud_hash_table_check(mud_object_t * object) {
+  return object->type == MUD_OBJ_TYPE_HASH_TABLE;
+}
+
 mud_object_t * mud_hash_table_get(mud_hash_table_t * hash_table, mud_gc_stack_t * stack, const char * key) {
   mud_hash_table_t * cur_hash = NULL;
   HASH_FIND_STR(hash_table, key, cur_hash);
