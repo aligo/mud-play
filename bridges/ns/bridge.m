@@ -153,7 +153,7 @@ NSArray * nsArrayWithMudList(mud_list_t * list) {
 }
 
 NSArray * nsArrayWithMudExpr(mud_expr_t * expr) {
-  unsigned arr_count = expr->argc + 1;
+  unsigned long arr_count = expr->argc + 1;
   NSMutableArray * ns_arr = [NSMutableArray arrayWithCapacity: arr_count];
   [ns_arr insertObject: [NSNumber numberWithLong: expr->oper] atIndex: 0];
   for ( unsigned i = 1; i < arr_count; i++ ) {
