@@ -4,6 +4,7 @@
     - floor:  211
     - ceil:   212
     - rand:   213
+    - srand:  214
 */
 
 mud_object_t * _mud_op_int_round_evaluate(mud_expr_evaluator_t * evaluator) {
@@ -34,4 +35,10 @@ mud_object_t * _mud_op_int_rand_evaluate(mud_expr_evaluator_t * evaluator) {
   } else {
     return mud_float_init(evaluator->stack, (mud_float_t)rand() / (mud_float_t)RAND_MAX );
   }
+}
+
+mud_object_t * _mud_op_int_srand_evaluate(mud_expr_evaluator_t * evaluator) {
+// Enum: 214
+  srand((int)time(NULL));
+  return _mud_op_int_rand_evaluate(evaluator);
 }
