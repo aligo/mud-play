@@ -29,7 +29,6 @@ mud_object_t * _mud_op_int_ceil_evaluate(mud_expr_evaluator_t * evaluator) {
 
 mud_object_t * _mud_op_int_rand_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 213
-  srand((int)time(NULL));
   if ( ME_ARGC > 0 ) {
     return mud_int_init(evaluator->stack, rand() % ME_ARG_INT(0) );
   } else {
