@@ -32,11 +32,13 @@ mud_boolean_t _mud_list_check(mud_object_t * object) {
 }
 
 void mud_list_append(mud_list_t * list, mud_object_t * item) {
-  if (list->count == list->size) {
-    list->size *= 2;
-    list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
+  if ( item ) {
+    if (list->count == list->size) {
+      list->size *= 2;
+      list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
+    }
+    list->objects[list->count++] = item;
   }
-  list->objects[list->count++] = item;
 }
 
 void mud_list_prepend(mud_list_t * list, mud_object_t * item) {

@@ -111,6 +111,9 @@ mud_object_t * _mud_op_list_head_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( _mud_list_check(org) ) {
     mud_list_t * list = (mud_list_t *)org->ptr;
     mud_int_t limit = ME_ARG_INT(1);
+    if ( limit > list->count ) {
+      limit = list->count;
+    }
   
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
     ret->ptr = mud_list_alloc();
@@ -129,6 +132,9 @@ mud_object_t * _mud_op_list_tail_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( _mud_list_check(org) ) {
     mud_list_t * list = (mud_list_t *)org->ptr;
     mud_int_t limit = ME_ARG_INT(1);
+    if ( limit > list->count ) {
+      limit = list->count;
+    }
 
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
     ret->ptr = mud_list_alloc();
