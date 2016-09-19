@@ -40,11 +40,11 @@ mud_list_t * mud_list_alloc_difference(mud_list_t * a_list, mud_list_t * b_list,
 mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
 mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool);
 
-mud_object_t *                _mud_list_sort_lambda;
-mud_object_casting_pool_t *   _mud_list_sort_pool;
-mud_object_t **               _mud_list_sort_args;
-mud_scope_t *                 _mud_list_sort_scope;
-mud_gc_stack_t *              _mud_list_sort_stack;
+extern mud_object_t *                _mud_list_sort_lambda;
+extern mud_object_casting_pool_t *   _mud_list_sort_pool;
+extern mud_object_t **               _mud_list_sort_args;
+extern mud_scope_t *                 _mud_list_sort_scope;
+extern mud_gc_stack_t *              _mud_list_sort_stack;
 
 int _mud_list_sort_by_compare_lambda(const void * a, const void * b);
 

@@ -1,3 +1,9 @@
+mud_object_t *                _mud_list_sort_lambda;
+mud_object_casting_pool_t *   _mud_list_sort_pool;
+mud_object_t **               _mud_list_sort_args;
+mud_scope_t *                 _mud_list_sort_scope;
+mud_gc_stack_t *              _mud_list_sort_stack;
+
 mud_list_t * mud_list_alloc() {
   mud_list_t * list = (mud_list_t *)malloc(sizeof(mud_list_t));
   list->count   = 0;
