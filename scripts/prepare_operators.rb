@@ -4,7 +4,8 @@ require 'optparse'
 require 'yaml'
 
 options = {
-  operators_dirs: []
+  operators_dirs: [],
+  excludes: []
 }
 options[:verbose] = []
 OptionParser.new do |opts|
@@ -17,6 +18,10 @@ OptionParser.new do |opts|
   opts.on("-oDIR", "--output=DIR", "Output Operators Directory") do |dir|
     options[:output_dir] = dir
   end
+
+  opts.on("-eDIR", "--exclude=FILE", "Exclude Operators File") do |exclude|
+    options[:excludes].push exclude
+  end
 end.parse!
 
 mud_operators = {}
@@ -24,7 +29,11 @@ mud_operators = {}
 options[:operators_dirs].each do |dir|
   files = dir + '/*'
   Dir[files].each do |path|
-    unless FileTest.directory? path
+    valid = !FileTest.directory?(path)
+    options[:excludes].each do |exclude|
+      valid = false if path.include?(exclude)
+    end
+    if valid
       # parse operators
       File.open(path, 'r') do |f|
         codes = f.to_a.map(&:strip).delete_if(&:empty?)
