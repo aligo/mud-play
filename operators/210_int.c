@@ -30,7 +30,7 @@ mud_object_t * _mud_op_int_ceil_evaluate(mud_expr_evaluator_t * evaluator) {
 
 mud_object_t * _mud_op_int_rand_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 213
-  unsigned int range = ME_ARG_INT(0);
+  mud_int_t range = ME_ARG_INT(0);
   if ( ME_ARGC > 0 && range > 0 ) {
     return mud_int_init(evaluator->stack, rand() % range );
   } else {
