@@ -8,3 +8,7 @@ mud_object_t * _mud_expr_evaluate_func(mud_expr_t * expr, mud_scope_t * scope, m
 
 // auto-generated: operators declaration - begin
 // auto-generated: operators declaration - end
+
+#ifdef MUD_MANUALLY_INIT
+  #define MUD_INIT() _mud_expr_evaluate = &_mud_expr_evaluate_func;
+#end
