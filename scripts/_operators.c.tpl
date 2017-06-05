@@ -16,6 +16,6 @@ mud_object_t * _mud_expr_evaluate_func(mud_expr_t * expr, mud_scope_t * scope, m
   return ret;
 }
 
-#ifndef MUD_MANUALLY_INIT
+#ifdef MUD_AUTO_INIT
   mud_object_t * (* _mud_expr_evaluate)(mud_expr_t * expr, mud_scope_t * scope, mud_gc_stack_t * stack) = &_mud_expr_evaluate_func;
 #endif

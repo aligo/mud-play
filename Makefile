@@ -3,7 +3,7 @@ define \n
 
 endef
 
-CC=clang
+CC=clang -D MUD_AUTO_INIT
 LD=ld
 
 FRAMEWORKS:= -framework Foundation
