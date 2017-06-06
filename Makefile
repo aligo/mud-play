@@ -3,13 +3,13 @@ define \n
 
 endef
 
-CC=clang -D MUD_AUTO_INIT
+CC=clang
 LD=ld
 
 FRAMEWORKS:= -framework Foundation
 LIBRARIES:= -lobjc
 
-CFLAGS=-Wall -Werror -g
+CFLAGS=-Wall -Werror -g -D MUD_AUTO_INIT -Ideps/uthash/
 LDFLAGS=$(LIBRARIES) $(FRAMEWORKS)
 
 BINDIR   									= build
@@ -18,7 +18,7 @@ TMP_DIR             			= tmp
 
 MUD_CORE_DIR							=	src
 MUD_CORE_INCLUDE					=	-include $(MUD_CORE_DIR)/mud.h
-MUD_CORE_SRCS							=	$(wildcard $(MUD_CORE_DIR)/*.c) $(wildcard $(MUD_CORE_DIR)/*/*.c)
+MUD_CORE_SRCS							=	$(wildcard $(MUD_CORE_DIR)/*.c)
 MUD_CORE_OBJS							=	$(MUD_CORE_SRCS:$(MUD_CORE_DIR)/%.c=mud/%.o)
 
 MUD_CORE_OPERATORS_DIR  	= operators
@@ -49,19 +49,19 @@ mud_core: $(MUD_CORE_OBJS)
 
 $(MUD_CORE_OBJS):
 	@mkdir -p $(BINDIR)/$(@D)
-	$(CC) $(MUD_CORE_INCLUDE) -c $(@:mud/%.o=$(MUD_CORE_DIR)/%.c) -o $(BINDIR)/$@
+	$(CC) $(CFLAGS) $(MUD_CORE_INCLUDE) -c $(@:mud/%.o=$(MUD_CORE_DIR)/%.c) -o $(BINDIR)/$@
 
 ns_bridge: make_dir
-	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) $(NS_BRIDGE_DEFINES) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
+	$(CC) $(CFLAGS) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) $(NS_BRIDGE_DEFINES) -c $(BRIDGES_DIR)/ns/bridge.m -o $(BINDIR)/ns_bridge.o
 
 ns_operators: make_dir
 	./scripts/prepare_operators.rb -a $(MUD_CORE_OPERATORS_DIR) -a $(NS_BRIDGE_OPERATORS_DIR) -o $(TMP_DIR)
 	@rm -rf $(BINDIR)/operators
 	@mkdir -p $(BINDIR)/operators
-	$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -include $(TMP_DIR)/_operators.h -c $(TMP_DIR)/_operators.c -o $(BINDIR)/operators/_operators.o
+	$(CC) $(CFLAGS) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -include $(TMP_DIR)/_operators.h -c $(TMP_DIR)/_operators.c -o $(BINDIR)/operators/_operators.o
 	$(foreach operator, $(MUD_CORE_OPERATORS_SRCS) $(NS_BRIDGE_OPERATORS_SRCS), \
 		@mkdir -p $(dir $(BINDIR)/operators/$(notdir $(basename $(operator)))) $(\n) \
-		$(CC) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -include $(TMP_DIR)/_operators.h -c $(operator) -o $(BINDIR)/operators/$(notdir $(basename $(operator))).o $(\n) \
+		$(CC) $(CFLAGS) $(MUD_CORE_INCLUDE) $(NS_BRIDGE_INCLUDE) -include $(TMP_DIR)/_operators.h -c $(operator) -o $(BINDIR)/operators/$(notdir $(basename $(operator))).o $(\n) \
 	)
 	$(LD) -r \
 		$(foreach operator, $(MUD_CORE_OPERATORS_SRCS) $(NS_BRIDGE_OPERATORS_SRCS), $(BINDIR)/operators/$(notdir $(basename $(operator))).o) \

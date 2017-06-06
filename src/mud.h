@@ -3,23 +3,23 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "../deps/uthash/uthash.h"
+#include "uthash.h"
 
 #include "mud_objects.h"
 
-#include "evaluators/scope.h"
-#include "evaluators/casting.h"
+#include "mud_evaluator_scope.h"
+#include "mud_evaluator_casting.h"
 
-#include "helpers/regex.h"
+#include "mud_regex.h"
 
-#include "objects/list.h"
-#include "objects/hash_table.h"
-#include "objects/lambda.h"
-#include "objects/date.h"
+#include "mud_objects_list.h"
+#include "mud_objects_hash_table.h"
+#include "mud_objects_lambda.h"
+#include "mud_objects_date.h"
 
 #include "mud_evaluator.h"
-#include "evaluators/compare.h"
-#include "evaluators/expr.h"
+#include "mud_evaluator_compare.h"
+#include "mud_evaluator_expr.h"
 
-#include "helpers/expr_arg.h"
+#include "mud_expr_arg.h"
 
