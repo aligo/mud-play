@@ -4,12 +4,17 @@ require 'optparse'
 require 'yaml'
 
 options = {
+  operators_files:[],
   operators_dirs: [],
-  excludes: []
+  excludes: [],
 }
 options[:verbose] = []
 OptionParser.new do |opts|
   opts.banner = "Usage: prepare_operators [options]"
+
+  opts.on("-fFILE", "--add-file=FILE", "Add Operators File") do |file|
+    options[:operators_files].push file
+  end
 
   opts.on("-aDIR", "--add=DIR", "Add Operators Directory") do |dir|
     options[:operators_dirs].push dir
@@ -24,39 +29,43 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-mud_operators = {}
+paths = options[:operators_files]
 
 options[:operators_dirs].each do |dir|
   files = dir + '/*'
   Dir[files].each do |path|
-    valid = !FileTest.directory?(path)
-    options[:excludes].each do |exclude|
-      valid = false if path.include?(exclude)
-    end
-    if valid
-      # parse operators
-      File.open(path, 'r') do |f|
-        codes = f.to_a.map(&:strip).delete_if(&:empty?)
-        codes.each_with_index do |line, i|
-          if r = /.*(_(mud_op_\w+)_evaluate).*{.*/.match(line)
-            operator = {
-              func: r[1],
-              name: r[2].upcase
-            }
-            unless m = /.*Enum\:\D*(\d+)/.match(codes[i + 1])
-              raise "Not Enum for Operator '#{operator[:name]}'"
-            end
-            enum = m[1].to_i
-            if mud_operators[enum]
-              raise "Conflicting Operator Enum #{enum}"
-            end
-            mud_operators[enum] = operator
-          end
-        end
+    if !FileTest.directory?(path)
+      if !options[:excludes].any?{|e| path.include?(e)}
+        paths.push path
       end
     end
   end
 end
+
+mud_operators = {}
+
+paths.each do |path|
+  File.open(path, 'r') do |f|
+    codes = f.to_a.map(&:strip).delete_if(&:empty?)
+    codes.each_with_index do |line, i|
+      if r = /.*(_(mud_op_\w+)_evaluate).*{.*/.match(line)
+        operator = {
+          func: r[1],
+          name: r[2].upcase
+        }
+        unless m = /.*Enum\:\D*(\d+)/.match(codes[i + 1])
+          raise "Not Enum for Operator '#{operator[:name]}'"
+        end
+        enum = m[1].to_i
+        if mud_operators[enum]
+          raise "Conflicting Operator Enum #{enum}"
+        end
+        mud_operators[enum] = operator
+      end
+    end
+  end
+end
+
 
 def prepare_codes src_path, dest_path = nil, sections = {}
   dest_path ||= src_path
