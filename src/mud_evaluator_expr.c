@@ -8,7 +8,7 @@ mud_expr_evaluator_t * mud_expr_evaluator_init(mud_expr_t * expr, mud_scope_t * 
   evaluator->argc = expr->argc;
   evaluator->scope = scope;
   evaluator->stack = stack;
-  evaluator->pool = mud_object_casting_pool_init();
+  evaluator->pool = NULL;
   return evaluator;
 }
 
@@ -18,7 +18,9 @@ void mud_expr_evaluator_free(mud_expr_evaluator_t * evaluator) {
   evaluator->orgs = NULL;
   evaluator->scope = NULL;
   evaluator->stack = NULL;
-  mud_object_casting_pool_free(evaluator->pool);
+  if ( evaluator->pool ) {
+    mud_object_casting_pool_free(evaluator->pool);
+  }
   evaluator->pool = NULL;
   evaluator->argc = 0;
   free(evaluator);

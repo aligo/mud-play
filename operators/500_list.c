@@ -133,7 +133,7 @@ mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 508
   mud_object_t * obj = ME_ARG(0);
   if ( _mud_list_check(obj) ) {
-    mud_int_t pos = mud_list_find((mud_list_t *)obj->ptr, evaluator->pool, ME_ARG(1));
+    mud_int_t pos = mud_list_find(evaluator, (mud_list_t *)obj->ptr, ME_ARG(1));
     if ( pos == -1 ) {
       return mud_nil_init(evaluator->stack);
     } else {

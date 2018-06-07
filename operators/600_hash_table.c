@@ -23,10 +23,10 @@ mud_object_t * _mud_op_hash_table_ht_evaluate(mud_expr_evaluator_t * evaluator) 
       continue;
     } else if ( arg->type == MUD_OBJ_TYPE_LIST ) {
       mud_list_t * list = (mud_list_t *)arg->ptr;
-      key = mud_object_try_cast_str(evaluator->pool, list->objects[0]);
+      key = mud_object_try_cast_str(evaluator, list->objects[0]);
       value = list->objects[1];
     } else {
-      key = mud_object_try_cast_str(evaluator->pool, arg);
+      key = mud_object_try_cast_str(evaluator, arg);
       value = ME_ARG(i + 1);
       i += 1;
     }
@@ -141,7 +141,7 @@ mud_object_t * _mud_op_hash_table_invert_evaluate(mud_expr_evaluator_t * evaluat
     ret->ptr = mud_hash_table_alloc();
     mud_hash_table_t * tmp, * cur_hash = NULL;
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
-      ret->ptr = mud_hash_table_set(ret->ptr, mud_object_try_cast_str(evaluator->pool, cur_hash->value), mud_string_init(evaluator->stack, cur_hash->key));
+      ret->ptr = mud_hash_table_set(ret->ptr, mud_object_try_cast_str(evaluator, cur_hash->value), mud_string_init(evaluator->stack, cur_hash->key));
     }
     return ret;
   } else {

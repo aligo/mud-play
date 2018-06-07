@@ -46,7 +46,7 @@ mud_object_t * _mud_op_list_uniq_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * obj = ME_ARG(0);
   if ( _mud_list_check(obj) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc_uniq((mud_list_t *)obj->ptr, evaluator->pool);
+    ret->ptr = mud_list_alloc_uniq((mud_list_t *)obj->ptr, evaluator);
     return ret;
   } else {
     return obj;
@@ -59,7 +59,7 @@ mud_object_t * _mud_op_list_intersection_evaluate(mud_expr_evaluator_t * evaluat
   mud_object_t * b_obj = ME_ARG(1);
   if ( _mud_list_check(a_obj) && _mud_list_check(b_obj) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc_intersection((mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr, evaluator->pool);
+    ret->ptr = mud_list_alloc_intersection(evaluator, (mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr);
     return ret;
   } else {
     return mud_nil_init(evaluator->stack);
@@ -72,7 +72,7 @@ mud_object_t * _mud_op_list_difference_evaluate(mud_expr_evaluator_t * evaluator
   mud_object_t * b_obj = ME_ARG(1);
   if ( _mud_list_check(a_obj) && _mud_list_check(b_obj) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc_difference((mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr, evaluator->pool);
+    ret->ptr = mud_list_alloc_difference(evaluator, (mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr);
     return ret;
   } else {
     return mud_nil_init(evaluator->stack);
@@ -85,7 +85,7 @@ mud_object_t * _mud_op_list_concat_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * b_obj = ME_ARG(1);
   if ( _mud_list_check(a_obj) && _mud_list_check(b_obj) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc_concat((mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr, evaluator->pool);
+    ret->ptr = mud_list_alloc_concat(evaluator, (mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr);
     return ret;
   } else {
     return mud_nil_init(evaluator->stack);
@@ -98,7 +98,7 @@ mud_object_t * _mud_op_list_union_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * b_obj = ME_ARG(1);
   if ( _mud_list_check(a_obj) && _mud_list_check(b_obj) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc_union((mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr, evaluator->pool);
+    ret->ptr = mud_list_alloc_union(evaluator, (mud_list_t *)a_obj->ptr, (mud_list_t *)b_obj->ptr);
     return ret;
   } else {
     return mud_nil_init(evaluator->stack);

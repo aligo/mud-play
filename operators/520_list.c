@@ -84,7 +84,7 @@ mud_object_t * _mud_op_list_filter_evaluate(mud_expr_evaluator_t * evaluator) {
     for ( unsigned i = 0; i < list->count; i++ ) {
       args[0] = list->objects[i];
       args[1] = mud_int_init(evaluator->stack, i);
-      if ( mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
+      if ( mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
         mud_list_append((mud_list_t *)ret->ptr, list->objects[i]); 
       }
     }
@@ -108,7 +108,7 @@ mud_object_t * _mud_op_list_reject_evaluate(mud_expr_evaluator_t * evaluator) {
     for ( unsigned i = 0; i < list->count; i++ ) {
       args[0] = list->objects[i];
       args[1] = mud_int_init(evaluator->stack, i);
-      if ( ! mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
+      if ( ! mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
         mud_list_append((mud_list_t *)ret->ptr, list->objects[i]); 
       }
     }
@@ -142,7 +142,7 @@ mud_object_t * _mud_op_list_sort_by_evaluate(mud_expr_evaluator_t * evaluator) {
       if ( i == 0 ) {
         sort_by_type = sort_by_object->type;
       }
-      sort_bies[i] = (mud_list_sort_by_t *)mud_list_sort_by_alloc(sort_by_object, evaluator->pool, sort_by_type);
+      sort_bies[i] = (mud_list_sort_by_t *)mud_list_sort_by_alloc(evaluator, sort_by_object, sort_by_type);
       sort_bies[i]->object = list->objects[i];
     }
 
@@ -168,7 +168,7 @@ mud_object_t * _mud_op_list_sort_evaluate(mud_expr_evaluator_t * evaluator) {
       _mud_list_sort_scope = mud_scope_push(evaluator->scope);
       _mud_list_sort_args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
       _mud_list_sort_lambda = ME_ARG(1);
-      _mud_list_sort_pool = evaluator->pool;
+      _mud_list_sort_evaluator = evaluator;
       _mud_list_sort_stack = evaluator->stack;
       qsort(list->objects, list->count, sizeof(mud_object_t *), _mud_list_sort_by_compare_lambda);
       mud_scope_free(_mud_list_sort_scope);
@@ -191,7 +191,7 @@ mud_object_t * _mud_op_list_all_evaluate(mud_expr_evaluator_t * evaluator) {
     for ( unsigned i = 0; i < list->count; i++ ) {
       args[0] = list->objects[i];
       args[1] = mud_int_init(evaluator->stack, i);
-      ret = ret && mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2));
+      ret = ret && mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2));
       if ( !ret ) {
         break;
       }
@@ -213,7 +213,7 @@ mud_object_t * _mud_op_list_any_evaluate(mud_expr_evaluator_t * evaluator) {
     for ( unsigned i = 0; i < list->count; i++ ) {
       args[0] = list->objects[i];
       args[1] = mud_int_init(evaluator->stack, i);
-      ret = ret || mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2));
+      ret = ret || mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2));
       if ( ret ) {
         break;
       }

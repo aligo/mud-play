@@ -15,7 +15,7 @@ mud_object_t * _mud_op_lambda_lambda_evaluate(mud_expr_evaluator_t * evaluator) 
       mud_list_t * largs_names = (mud_list_t *)largs->ptr;
       char ** args_names = (char **)malloc(largs_names->count * sizeof(char *));
       for ( unsigned i = 0; i < largs_names->count; i++ ) {
-        args_names[i] = strdup((char *)mud_object_try_cast_str(evaluator->pool, largs_names->objects[i]));
+        args_names[i] = strdup((char *)mud_object_try_cast_str(evaluator, largs_names->objects[i]));
       }
       _mud_lambda_set_args_names(lambda, largs_names->count, args_names);
     } else {

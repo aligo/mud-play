@@ -14,6 +14,8 @@ typedef enum {
   MUD_OBJ_TYPE_BRIDGE     = 300
 } mud_object_type_e;
 
+typedef struct mud_expr_evaluator_s mud_expr_evaluator_t;
+
 typedef signed char   mud_boolean_t;
 typedef long          mud_int_t;
 typedef double        mud_float_t;

@@ -1,5 +1,5 @@
 mud_object_t *                _mud_list_sort_lambda;
-mud_object_casting_pool_t *   _mud_list_sort_pool;
+mud_expr_evaluator_t *        _mud_list_sort_evaluator;
 mud_object_t **               _mud_list_sort_args;
 mud_scope_t *                 _mud_list_sort_scope;
 mud_gc_stack_t *              _mud_list_sort_stack;
@@ -94,55 +94,55 @@ void mud_list_flatten_to(mud_list_t * new_list, mud_list_t * list, mud_boolean_t
   }
 }
 
-mud_int_t mud_list_find(mud_list_t * list, mud_object_casting_pool_t * pool, mud_object_t * to_find) {
+mud_int_t mud_list_find(mud_expr_evaluator_t * evaluator, mud_list_t * list, mud_object_t * to_find) {
   for ( unsigned i = 0; i < list->count; i++ ) {
-    if ( mud_object_compare(pool, to_find, list->objects[i]) == 0 ) {
+    if ( mud_object_compare(evaluator, to_find, list->objects[i]) == 0 ) {
       return i;
     }
   }
   return -1;
 }
 
-mud_list_t * mud_list_alloc_uniq(mud_list_t * list, mud_object_casting_pool_t * pool) {
+mud_list_t * mud_list_alloc_uniq(mud_list_t * list, mud_expr_evaluator_t * evaluator) {
   mud_list_t * new_list = mud_list_alloc();
   for ( unsigned i = 0; i < list->count; i++ ) {
     mud_object_t * obj = list->objects[i];
-    if ( mud_list_find(new_list, pool, obj) == -1 ){
+    if ( mud_list_find(evaluator, new_list, obj) == -1 ){
       mud_list_append(new_list, obj);
     }
   }
   return new_list;
 }
 
-mud_list_t * mud_list_alloc_intersection(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+mud_list_t * mud_list_alloc_intersection(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
   mud_list_t * new_list = mud_list_alloc();
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
-    if ( ( mud_list_find(new_list, pool, obj) == -1 ) && ( mud_list_find(b_list, pool, obj) != -1 ) ) {
+    if ( ( mud_list_find(evaluator, new_list, obj) == -1 ) && ( mud_list_find(evaluator, b_list, obj) != -1 ) ) {
       mud_list_append(new_list, obj);
     }
   }
   return new_list;
 }
 
-mud_list_t * mud_list_alloc_difference(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+mud_list_t * mud_list_alloc_difference(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
   mud_list_t * new_list = mud_list_alloc();
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
-    if ( ( mud_list_find(new_list, pool, obj) == -1 ) && ( mud_list_find(b_list, pool, obj) == -1 ) ) {
+    if ( ( mud_list_find(evaluator, new_list, obj) == -1 ) && ( mud_list_find(evaluator, b_list, obj) == -1 ) ) {
       mud_list_append(new_list, obj);
     }
   }
   for ( unsigned i = 0; i < b_list->count; i++ ) {
     mud_object_t * obj = b_list->objects[i];
-    if ( ( mud_list_find(new_list, pool, obj) == -1 ) && ( mud_list_find(a_list, pool, obj) == -1 ) ) {
+    if ( ( mud_list_find(evaluator, new_list, obj) == -1 ) && ( mud_list_find(evaluator, a_list, obj) == -1 ) ) {
       mud_list_append(new_list, obj);
     }
   }
   return new_list;
 }
 
-mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+mud_list_t * mud_list_alloc_concat(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
   mud_list_t * new_list = mud_list_alloc();
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_list_append(new_list, a_list->objects[i]);
@@ -153,34 +153,34 @@ mud_list_t * mud_list_alloc_concat(mud_list_t * a_list, mud_list_t * b_list, mud
   return new_list;
 }
 
-mud_list_t * mud_list_alloc_union(mud_list_t * a_list, mud_list_t * b_list, mud_object_casting_pool_t * pool) {
+mud_list_t * mud_list_alloc_union(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
   mud_list_t * new_list = mud_list_alloc();
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
-    if ( mud_list_find(new_list, pool, obj) == -1 ){
+    if ( mud_list_find(evaluator, new_list, obj) == -1 ){
       mud_list_append(new_list, obj);
     }
   }
   for ( unsigned i = 0; i < b_list->count; i++ ) {
     mud_object_t * obj = b_list->objects[i];
-    if ( mud_list_find(new_list, pool, obj) == -1 ){
+    if ( mud_list_find(evaluator, new_list, obj) == -1 ){
       mud_list_append(new_list, obj);
     }
   }
   return new_list;
 }
 
-mud_list_sort_by_t * mud_list_sort_by_alloc(mud_object_t * object, mud_object_casting_pool_t * pool, mud_object_type_e sort_by_type) {
+mud_list_sort_by_t * mud_list_sort_by_alloc(mud_expr_evaluator_t * evaluator, mud_object_t * object, mud_object_type_e sort_by_type) {
   mud_list_sort_by_t * sort_by = (mud_list_sort_by_t *)malloc(sizeof(mud_list_sort_by_t));
   switch ( sort_by_type ) {
     case MUD_OBJ_TYPE_INT:
-      sort_by->_int = mud_object_try_cast_int(pool, object);
+      sort_by->_int = mud_object_try_cast_int(evaluator, object);
       break;
     case MUD_OBJ_TYPE_FLOAT:
-      sort_by->_float = mud_object_try_cast_float(pool, object);
+      sort_by->_float = mud_object_try_cast_float(evaluator, object);
       break;
     case MUD_OBJ_TYPE_STRING:
-      sort_by->_ptr = (void *)mud_object_try_cast_str(pool, object);
+      sort_by->_ptr = (void *)mud_object_try_cast_str(evaluator, object);
       break;
     default:
       sort_by->_ptr = object->ptr;
@@ -203,7 +203,7 @@ int _mud_list_sort_by_compare_lambda(const void * a, const void * b) {
         return 0;
       }
     default:
-      return (int)mud_object_try_cast_int(_mud_list_sort_pool, ret);
+      return (int)mud_object_try_cast_int(_mud_list_sort_evaluator, ret);
   }
   
 }

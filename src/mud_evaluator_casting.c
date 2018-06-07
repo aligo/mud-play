@@ -17,14 +17,13 @@ void mud_object_casting_pool_free(mud_object_casting_pool_t * pool) {
   free(pool);
 }
 
-void * _mud_object_casting_pool_malloc(mud_object_casting_pool_t * pool, size_t size) {
+void * _mud_object_casting_pool_malloc(mud_expr_evaluator_t * evaluator, size_t size) {
   mud_object_casting_pool_t * new_pool = mud_object_casting_pool_init();
   new_pool->ptr = malloc(size);
-  if ( pool->prev ) {
-    new_pool->prev = pool->prev;
+  if ( evaluator-> pool ) {
+    new_pool->prev = evaluator->pool;
   }
-  pool->prev = new_pool;
-
+  evaluator->pool = new_pool;
   return new_pool->ptr;
 }
 
@@ -48,21 +47,21 @@ int _mud_object_try_cast_sprintf(mud_object_t * object, char * ret, const char *
   }
 }
 
-const char * mud_object_try_cast_str_format(mud_object_casting_pool_t * pool, mud_object_t * object, const char * fmt) {
+const char * mud_object_try_cast_str_format(mud_expr_evaluator_t * evaluator, mud_object_t * object, const char * fmt) {
   size_t len = _mud_object_try_cast_snprintf(object, NULL, 0, fmt);
-  char * ret = (char *)_mud_object_casting_pool_malloc(pool, (len + 1) * sizeof(char));
+  char * ret = (char *)_mud_object_casting_pool_malloc(evaluator, (len + 1) * sizeof(char));
   _mud_object_try_cast_sprintf(object, ret, fmt);
   return ret;
 }
 
-const char * mud_object_try_cast_str_with_default(mud_object_casting_pool_t * pool, mud_object_t * object, const char * _default) {
+const char * mud_object_try_cast_str_with_default(mud_expr_evaluator_t * evaluator, mud_object_t * object, const char * _default) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_STRING:
       return object->ptr;
     case MUD_OBJ_TYPE_INT:
-      return mud_object_try_cast_str_format(pool, object, "%ld");
+      return mud_object_try_cast_str_format(evaluator, object, "%ld");
     case MUD_OBJ_TYPE_FLOAT:
-      return mud_object_try_cast_str_format(pool, object, "%lf");
+      return mud_object_try_cast_str_format(evaluator, object, "%lf");
     case MUD_OBJ_TYPE_BOOLEAN:
       return ( *(mud_boolean_t *)object->ptr != 0 ) ? "true" : "false";
     default:
@@ -73,7 +72,7 @@ const char * mud_object_try_cast_str_with_default(mud_object_casting_pool_t * po
   }
 }
 
-mud_boolean_t mud_object_try_cast_boolean_with_default(mud_object_casting_pool_t * pool, mud_object_t * object, mud_boolean_t _default) {
+mud_boolean_t mud_object_try_cast_boolean_with_default(mud_expr_evaluator_t * evaluator, mud_object_t * object, mud_boolean_t _default) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_STRING:
       // if ( strcmp("false", (char *)object->ptr) == 0 ) {
@@ -99,7 +98,7 @@ mud_boolean_t mud_object_try_cast_boolean_with_default(mud_object_casting_pool_t
   }
 }
 
-mud_int_t mud_object_try_cast_int_with_default(mud_object_casting_pool_t * pool, mud_object_t * object, mud_int_t _default) {
+mud_int_t mud_object_try_cast_int_with_default(mud_expr_evaluator_t * evaluator, mud_object_t * object, mud_int_t _default) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_STRING:
       return atol(object->ptr);
@@ -117,7 +116,7 @@ mud_int_t mud_object_try_cast_int_with_default(mud_object_casting_pool_t * pool,
   }
 }
 
-mud_float_t mud_object_try_cast_float_with_default(mud_object_casting_pool_t * pool, mud_object_t * object, mud_float_t _default) {
+mud_float_t mud_object_try_cast_float_with_default(mud_expr_evaluator_t * evaluator, mud_object_t * object, mud_float_t _default) {
   switch ( object->type ) {
     case MUD_OBJ_TYPE_STRING:
       return atof(object->ptr);

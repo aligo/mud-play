@@ -117,7 +117,7 @@ mud_object_t * _mud_op_regex_rep_all_evaluate(mud_expr_evaluator_t * evaluator) 
           matched->ptr = _mud_regmatch_get_str(groups, &to_match[match_start], i);
           args[i] = matched;
         }
-        rep_str = (char *)mud_object_try_cast_str(evaluator->pool, _mud_lambda_object_apply(rep_obj, new_scope, evaluator->stack, args, groups_count));
+        rep_str = (char *)mud_object_try_cast_str(evaluator, _mud_lambda_object_apply(rep_obj, new_scope, evaluator->stack, args, groups_count));
       }
       if ( rep_str ) {
         rep_len = strlen(rep_str);

@@ -1,6 +1,3 @@
-#define MUD_EXPR_EVALUATOR_TMP_POOL_ALLOC_SIZE 128
-
-typedef struct mud_expr_evaluator_s mud_expr_evaluator_t;
 struct mud_expr_evaluator_s {
   mud_object_t **               args;
   mud_object_t **               orgs;

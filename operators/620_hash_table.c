@@ -61,7 +61,7 @@ mud_object_t * _mud_op_hash_table_filter_evaluate(mud_expr_evaluator_t * evaluat
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
       args[0] = mud_string_init(evaluator->stack, cur_hash->key);
       args[1] = cur_hash->value;
-      if ( mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
+      if ( mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
         ret->ptr = mud_hash_table_set(ret->ptr, cur_hash->key, cur_hash->value);
       }
     }
@@ -85,7 +85,7 @@ mud_object_t * _mud_op_hash_table_reject_evaluate(mud_expr_evaluator_t * evaluat
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
       args[0] = mud_string_init(evaluator->stack, cur_hash->key);
       args[1] = cur_hash->value;
-      if ( ! mud_object_try_cast_boolean(evaluator->pool, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
+      if ( ! mud_object_try_cast_boolean(evaluator, _mud_lambda_object_apply(ME_ARG(1), new_scope, evaluator->stack, args, 2)) ) {
         ret->ptr = mud_hash_table_set(ret->ptr, cur_hash->key, cur_hash->value);
       }
     }
@@ -122,7 +122,7 @@ mud_object_t * _mud_op_hash_table_sort_by_evaluate(mud_expr_evaluator_t * evalua
       if ( i == 0 ) {
         sort_by_type = sort_by_object->type;
       }
-      sort_bies[i] = (mud_list_sort_by_t *)mud_list_sort_by_alloc(sort_by_object, evaluator->pool, sort_by_type);
+      sort_bies[i] = (mud_list_sort_by_t *)mud_list_sort_by_alloc(evaluator, sort_by_object, sort_by_type);
       sort_bies[i]->object = (void *)cur_hash;
       i++;
     }
@@ -151,7 +151,7 @@ mud_object_t * _mud_op_hash_table_sort_evaluate(mud_expr_evaluator_t * evaluator
       _mud_list_sort_scope = mud_scope_push(evaluator->scope);
       _mud_list_sort_args = (mud_object_t **)malloc(4 * sizeof(mud_object_t *));
       _mud_list_sort_lambda = ME_ARG(1);
-      _mud_list_sort_pool = evaluator->pool;
+      _mud_list_sort_evaluator = evaluator;
       _mud_list_sort_stack = evaluator->stack;
       mud_hash_table_t * ht = ret->ptr;
       HASH_SORT(ht, _mud_hash_table_sort_by_compare_lambda);
