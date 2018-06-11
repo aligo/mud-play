@@ -71,7 +71,7 @@ mud_object_t * _mud_op_hash_table_keys_evaluate(mud_expr_evaluator_t * evaluator
   mud_object_t * org = ME_ARG(0);
   if ( _mud_hash_table_check(org) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) HASH_COUNT((mud_hash_table_t *)org->ptr));
     mud_hash_table_t * tmp, * cur_hash = NULL;
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
       mud_list_append((mud_list_t *)ret->ptr, mud_string_init(evaluator->stack, cur_hash->key));
@@ -87,7 +87,7 @@ mud_object_t * _mud_op_hash_table_values_evaluate(mud_expr_evaluator_t * evaluat
   mud_object_t * org = ME_ARG(0);
   if ( _mud_hash_table_check(org) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) HASH_COUNT((mud_hash_table_t *)org->ptr));
     mud_hash_table_t * tmp, * cur_hash = NULL;
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
       mud_list_append((mud_list_t *)ret->ptr, cur_hash->value);
@@ -103,11 +103,11 @@ mud_object_t * _mud_op_hash_table_pairs_evaluate(mud_expr_evaluator_t * evaluato
   mud_object_t * org = ME_ARG(0);
   if ( _mud_hash_table_check(org) ) {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) HASH_COUNT((mud_hash_table_t *)org->ptr));
     mud_hash_table_t * tmp, * cur_hash = NULL;
     HASH_ITER(hh, (mud_hash_table_t *)org->ptr, cur_hash, tmp) {
       mud_object_t * pair = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-      pair->ptr = mud_list_alloc();
+      pair->ptr = mud_list_alloc_with_size(2);
       mud_list_append((mud_list_t *)pair->ptr, mud_string_init(evaluator->stack, cur_hash->key));
       mud_list_append((mud_list_t *)pair->ptr, cur_hash->value);
       mud_list_append((mud_list_t *)ret->ptr, pair);

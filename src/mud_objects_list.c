@@ -5,9 +5,13 @@ mud_scope_t *                 _mud_list_sort_scope;
 mud_gc_stack_t *              _mud_list_sort_stack;
 
 mud_list_t * mud_list_alloc() {
+  return mud_list_alloc_with_size(MUD_LIST_ALLOC_SIZE);
+}
+
+mud_list_t * mud_list_alloc_with_size(size_t size) {
   mud_list_t * list = (mud_list_t *)malloc(sizeof(mud_list_t));
   list->count   = 0;
-  list->size    = MUD_LIST_ALLOC_SIZE;
+  list->size    = size;
   list->objects = (mud_object_t **)malloc(list->size * sizeof(mud_object_t *));
   return list;
 }
@@ -104,7 +108,7 @@ mud_int_t mud_list_find(mud_expr_evaluator_t * evaluator, mud_list_t * list, mud
 }
 
 mud_list_t * mud_list_alloc_uniq(mud_list_t * list, mud_expr_evaluator_t * evaluator) {
-  mud_list_t * new_list = mud_list_alloc();
+  mud_list_t * new_list = mud_list_alloc_with_size(list->count);
   for ( unsigned i = 0; i < list->count; i++ ) {
     mud_object_t * obj = list->objects[i];
     if ( mud_list_find(evaluator, new_list, obj) == -1 ){
@@ -115,7 +119,7 @@ mud_list_t * mud_list_alloc_uniq(mud_list_t * list, mud_expr_evaluator_t * evalu
 }
 
 mud_list_t * mud_list_alloc_intersection(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
-  mud_list_t * new_list = mud_list_alloc();
+  mud_list_t * new_list = mud_list_alloc_with_size(a_list->count + b_list->count);
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
     if ( ( mud_list_find(evaluator, new_list, obj) == -1 ) && ( mud_list_find(evaluator, b_list, obj) != -1 ) ) {
@@ -126,7 +130,7 @@ mud_list_t * mud_list_alloc_intersection(mud_expr_evaluator_t * evaluator, mud_l
 }
 
 mud_list_t * mud_list_alloc_difference(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
-  mud_list_t * new_list = mud_list_alloc();
+  mud_list_t * new_list = mud_list_alloc_with_size(a_list->count + b_list->count);
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
     if ( ( mud_list_find(evaluator, new_list, obj) == -1 ) && ( mud_list_find(evaluator, b_list, obj) == -1 ) ) {
@@ -143,7 +147,7 @@ mud_list_t * mud_list_alloc_difference(mud_expr_evaluator_t * evaluator, mud_lis
 }
 
 mud_list_t * mud_list_alloc_concat(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
-  mud_list_t * new_list = mud_list_alloc();
+  mud_list_t * new_list = mud_list_alloc_with_size(a_list->count + b_list->count);
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_list_append(new_list, a_list->objects[i]);
   }
@@ -154,7 +158,7 @@ mud_list_t * mud_list_alloc_concat(mud_expr_evaluator_t * evaluator, mud_list_t 
 }
 
 mud_list_t * mud_list_alloc_union(mud_expr_evaluator_t * evaluator, mud_list_t * a_list, mud_list_t * b_list) {
-  mud_list_t * new_list = mud_list_alloc();
+  mud_list_t * new_list = mud_list_alloc_with_size(a_list->count + b_list->count);
   for ( unsigned i = 0; i < a_list->count; i++ ) {
     mud_object_t * obj = a_list->objects[i];
     if ( mud_list_find(evaluator, new_list, obj) == -1 ){

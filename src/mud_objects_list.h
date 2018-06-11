@@ -1,4 +1,4 @@
-#define MUD_LIST_ALLOC_SIZE 256
+#define MUD_LIST_ALLOC_SIZE 8
 
 typedef struct mud_list_s mud_list_t;
 struct mud_list_s {
@@ -16,6 +16,7 @@ struct mud_list_sort_by_s {
 };
 
 mud_list_t * mud_list_alloc();
+mud_list_t * mud_list_alloc_with_size(size_t size);
 void mud_list_free(mud_list_t * list);
 
 mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count);

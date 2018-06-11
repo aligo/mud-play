@@ -22,7 +22,7 @@ mud_int_t _mud_list_prepare_index(mud_list_t * list, mud_int_t i) {
 mud_object_t * _mud_op_list_list_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 500
   mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-  ret->ptr = mud_list_alloc();
+  ret->ptr = mud_list_alloc_with_size(ME_ARGC);
   for ( size_t i = 0; i < ME_ARGC; i++ ) {
     mud_object_t * arg = ME_ARG(i);
     if ( arg->type != MUD_OBJ_TYPE_NIL ) {
@@ -147,9 +147,9 @@ mud_object_t * _mud_op_list_find_evaluate(mud_expr_evaluator_t * evaluator) {
 mud_object_t * _mud_op_list_str_evaluate(mud_expr_evaluator_t * evaluator) {
 // Enum: 509
   mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-  ret->ptr = mud_list_alloc();
   char * str = (char *)ME_ARG_STR(0);
   size_t str_len = strlen(str);
+  ret->ptr = mud_list_alloc_with_size(str_len);
   size_t i = 0, j = 0, si = 0;
   if ( ME_ARGC > 1 ) {
     char * spr = (char *)ME_ARG_STR(1);

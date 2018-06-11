@@ -17,7 +17,7 @@ mud_object_t * _mud_op_list_reverse_evaluate(mud_expr_evaluator_t * evaluator) {
   mud_object_t * ret = ME_ARG(0);
   if ( _mud_list_check(ret) ) {
     mud_list_t * old_list = (mud_list_t *)ret->ptr;
-    mud_list_t * new_list = mud_list_alloc();
+    mud_list_t * new_list = mud_list_alloc_with_size(old_list->count);
     for ( size_t i = old_list->count; i > 0; ) {
       mud_list_append(new_list, old_list->objects[--i]);
     }
@@ -116,7 +116,7 @@ mud_object_t * _mud_op_list_head_evaluate(mud_expr_evaluator_t * evaluator) {
     }
   
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) limit);
     for ( size_t i = 0; i < limit; i++) {
       mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
     }
@@ -137,7 +137,7 @@ mud_object_t * _mud_op_list_tail_evaluate(mud_expr_evaluator_t * evaluator) {
     }
 
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) limit);
     for ( size_t i = list->count - limit; i < list->count; i++) {
       mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
     }
@@ -159,7 +159,7 @@ mud_object_t * _mud_op_list_slice_evaluate(mud_expr_evaluator_t * evaluator) {
     }
     
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size((size_t) end - start);
     for ( size_t i = start; i < end; i++) {
       mud_list_append((mud_list_t *)ret->ptr, list->objects[i]);
     }

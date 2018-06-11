@@ -29,7 +29,7 @@ mud_object_t * _mud_op_regex_match_evaluate(mud_expr_evaluator_t * evaluator) {
     return mud_boolean_init(evaluator->stack, 0);
   } else {
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size(groups_count);
     for ( unsigned i = 0; i < groups_count; i++ ) {
       mud_object_t * matched = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_STRING);
       matched->ptr = _mud_regmatch_get_str(groups, to_match, i);
@@ -52,13 +52,13 @@ mud_object_t * _mud_op_regex_match_all_evaluate(mud_expr_evaluator_t * evaluator
   } else {
     mud_object_t * matched;
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size(groups_count);
     mud_boolean_t sub_groups = ME_ARG_BOOLEAN(2);
     unsigned match_start = 0;
     do {
       if ( sub_groups ) {
         matched = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-        matched->ptr = mud_list_alloc();
+        matched->ptr = mud_list_alloc_with_size(groups_count);
       } else {
         matched = obj;
       }

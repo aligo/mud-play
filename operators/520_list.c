@@ -34,7 +34,7 @@ mud_object_t * _mud_op_list_map_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( _mud_list_check(org) ) {
     mud_list_t * list = (mud_list_t *)org->ptr;
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size(list->count);
     mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
     mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
     for ( unsigned i = 0; i < list->count; i++ ) {
@@ -78,7 +78,7 @@ mud_object_t * _mud_op_list_filter_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( _mud_list_check(org) ) {
     mud_list_t * list = (mud_list_t *)org->ptr;
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size(list->count);
     mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
     mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
     for ( unsigned i = 0; i < list->count; i++ ) {
@@ -102,7 +102,7 @@ mud_object_t * _mud_op_list_reject_evaluate(mud_expr_evaluator_t * evaluator) {
   if ( _mud_list_check(org) ) {
     mud_list_t * list = (mud_list_t *)org->ptr;
     mud_object_t * ret = mud_object_alloc(evaluator->stack, MUD_OBJ_TYPE_LIST);
-    ret->ptr = mud_list_alloc();
+    ret->ptr = mud_list_alloc_with_size(list->count);
     mud_scope_t * new_scope = mud_scope_push(evaluator->scope);
     mud_object_t ** args = (mud_object_t **)malloc(2 * sizeof(mud_object_t *));
     for ( unsigned i = 0; i < list->count; i++ ) {

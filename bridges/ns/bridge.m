@@ -23,7 +23,7 @@ void MudWarningToNSLog(char * formatString, ...) {
   #endif
 }
 
-void MudInfoToNSLog(char * formatString, ...) {
+void MudInfoToNSLog(char * formatString, ...) { 
   #ifndef MUD_MUTE_WARNING
   va_list args;
   va_start(args, formatString);
@@ -242,8 +242,8 @@ mud_object_t * _initMudStringWithNSString(mud_gc_stack_t * stack, NSString * ns_
 
 mud_object_t * _initMudListWithNSArray(mud_gc_stack_t * stack, NSArray * ns_array) {
   mud_object_t * ret = mud_object_alloc(stack, MUD_OBJ_TYPE_LIST);
-  ret->ptr = mud_list_alloc();
   NSUInteger count = [ns_array count];
+  ret->ptr = mud_list_alloc_with_size((size_t) count);
   for (NSUInteger i = 0; i < count; i++ ) {
     mud_list_append((mud_list_t * )ret->ptr, initMudObjectWithNSObject(stack, [ns_array objectAtIndex: i]));
   }
