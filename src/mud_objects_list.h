@@ -23,6 +23,7 @@ mud_list_t * _mud_list_init_with_args(mud_object_t ** args, size_t count);
 mud_object_t * _mud_object_list_init_with_args(mud_gc_stack_t * stack, mud_object_t ** args, size_t count);
 
 mud_boolean_t _mud_list_check(mud_object_t * object);
+void _mud_list_resize(mud_list_t * list);
 
 void mud_list_append(mud_list_t * list, mud_object_t * item);
 void mud_list_prepend(mud_list_t * list, mud_object_t * item);

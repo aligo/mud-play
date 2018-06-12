@@ -41,21 +41,25 @@ mud_boolean_t _mud_list_check(mud_object_t * object) {
   return object->type == MUD_OBJ_TYPE_LIST;
 }
 
+void _mud_list_resize(mud_list_t * list) {
+  if ( list->size < MUD_LIST_ALLOC_SIZE ) {
+    list->size += MUD_LIST_ALLOC_SIZE;
+    list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
+  } else if (list->count == list->size) {
+    list->size *= 2;
+    list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
+  }
+}
+
 void mud_list_append(mud_list_t * list, mud_object_t * item) {
   if ( item ) {
-    if (list->count == list->size) {
-      list->size *= 2;
-      list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
-    }
+    _mud_list_resize(list);
     list->objects[list->count++] = item;
   }
 }
 
 void mud_list_prepend(mud_list_t * list, mud_object_t * item) {
-  if (list->count == list->size) {
-    list->size *= 2;
-    list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
-  }
+  _mud_list_resize(list);
   memcpy(&list->objects[1], list->objects, list->count * sizeof(mud_object_t *));
   list->objects[0] = item;
   list->count++;
@@ -63,10 +67,7 @@ void mud_list_prepend(mud_list_t * list, mud_object_t * item) {
 
 void mud_list_push(mud_list_t * list, mud_object_t * item, mud_int_t pos) {
   if ( pos <= list->count ) {
-    if (list->count == list->size) {
-      list->size *= 2;
-      list->objects = (mud_object_t **)realloc(list->objects, list->size * sizeof(void *));
-    }
+    _mud_list_resize(list);
     memcpy(&list->objects[pos + 1], &list->objects[pos], (list->count - pos) * sizeof(mud_object_t *));
     list->objects[pos] = item;
     list->count++;
